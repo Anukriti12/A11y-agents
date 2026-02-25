@@ -5,7 +5,7 @@
     "wcag_criteria": ["2.4.4"],
     "issues": [
       {
-        "title": "An a element with its semantic role changed from link to another role."
+        "title": "An element with its semantic role changed from link to another role."
       }
     ]
   }
