@@ -1,0 +1,16 @@
+{
+  "persona": "ade",
+  "wcag_criterion": "2.4.7",
+  "expected_label": "NOT_APPLICABLE",
+  "source": "ACT_INSPIRED",
+  "filename": "inapplicable_2.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.4.7 | Persona: ade",
+  "act_reference": {
+    "rule_id": "oj04fd",
+    "rule_name": "Element in sequential focus order has visible focus",
+    "testcase_id": "b12f1f45eef29c30197ca3bda79d793cd90eeadd",
+    "testcase_title": "Inapplicable Example 2",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/oj04fd/b12f1f45eef29c30197ca3bda79d793cd90eeadd.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/oj04fd/proposed/"
+  }
+}

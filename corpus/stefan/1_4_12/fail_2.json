@@ -1,0 +1,16 @@
+{
+  "persona": "stefan",
+  "wcag_criterion": "1.4.12",
+  "expected_label": "FAIL",
+  "source": "ACT_INSPIRED",
+  "filename": "fail_2.html",
+  "notes": "Based on ACT rule patterns for WCAG 1.4.12 | Persona: stefan",
+  "act_reference": {
+    "rule_id": "24afc2",
+    "rule_name": "Important letter spacing in style attributes is wide enough",
+    "testcase_id": "b5a8fe74fbbea40e8bbee407f167ae808e14ea49",
+    "testcase_title": "Failed Example 2",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/24afc2/b5a8fe74fbbea40e8bbee407f167ae808e14ea49.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/24afc2/"
+  }
+}

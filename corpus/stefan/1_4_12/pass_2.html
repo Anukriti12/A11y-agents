@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 1.4.12 | PASS | Personas: Stefan (ADHD/dyslexia), Elias (low vision)
+     Form inputs use min-height not fixed height. Labels remain visible after spacing override. -->
+<head><meta charset="utf-8"><title>Login</title>
+<style>
+  .form-group { margin-bottom: 1.5em; }
+  label { display: block; margin-bottom: 0.5em; font-weight: bold; }
+  input { width: 100%; padding: 8px; min-height: 44px; box-sizing: border-box; border: 1px solid #666; }
+</style></head>
+<body>
+  <h1>Sign In</h1>
+  <form>
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input id="email" type="email" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password">
+    </div>
+    <button type="submit">Sign in</button>
+  </form>
+</body>
+</html>

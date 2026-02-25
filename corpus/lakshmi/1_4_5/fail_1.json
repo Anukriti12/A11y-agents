@@ -1,0 +1,16 @@
+{
+  "persona": "lakshmi",
+  "wcag_criterion": "1.4.5",
+  "expected_label": "FAIL",
+  "source": "ACT_INSPIRED",
+  "filename": "fail_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 1.4.5 | Persona: lakshmi",
+  "act_reference": {
+    "rule_id": "0va7u6",
+    "rule_name": "HTML images contain no text",
+    "testcase_id": "80ff3d6a9f2de0b2b9f179a13d91d47ce8c9ab26",
+    "testcase_title": "Failed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/0va7u6/80ff3d6a9f2de0b2b9f179a13d91d47ce8c9ab26.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/0va7u6/proposed/"
+  }
+}

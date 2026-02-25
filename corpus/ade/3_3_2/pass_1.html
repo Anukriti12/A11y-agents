@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 3.3.2 | PASS | SYNTHETIC | Persona: Ade (limited mobility, voice control)
+     All form fields have visible, descriptive labels. Format requirements are explained.
+     Ade uses voice control — visible labels are the exact words she speaks to activate fields. -->
+<head><meta charset="utf-8"><title>Appointment Booking</title>
+<style>
+  .form-group { margin-bottom: 1.5em; }
+  label { display: block; font-weight: bold; margin-bottom: 4px; }
+  .hint { font-size: 14px; color: #555; margin-top: 4px; }
+  input, select { width: 300px; padding: 8px; border: 1px solid #666; }
+</style></head>
+<body>
+  <h1>Book an Appointment</h1>
+  <form>
+    <div class="form-group">
+      <label for="appt-date">Appointment date</label>
+      <input id="appt-date" type="date" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="appt-time">Preferred time</label>
+      <select id="appt-time">
+        <option value="">Select a time</option>
+        <option value="09:00">9:00 AM</option>
+        <option value="10:00">10:00 AM</option>
+        <option value="14:00">2:00 PM</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone number</label>
+      <input id="phone" type="tel" autocomplete="tel">
+      <p class="hint">Format: (555) 555-0100 — we will call to confirm your appointment</p>
+    </div>
+    <button type="submit">Book appointment</button>
+  </form>
+</body>
+</html>

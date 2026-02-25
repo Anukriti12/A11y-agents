@@ -1,0 +1,16 @@
+{
+  "persona": "elias",
+  "wcag_criterion": "1.4.6",
+  "expected_label": "FAIL",
+  "source": "ACT_INSPIRED",
+  "filename": "fail_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 1.4.6 | Persona: elias",
+  "act_reference": {
+    "rule_id": "afw4f7",
+    "rule_name": "Text has minimum contrast",
+    "testcase_id": "eaf0a926896f045a498073da42ea6263a4d6d36c",
+    "testcase_title": "Failed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/eaf0a926896f045a498073da42ea6263a4d6d36c.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/proposed/"
+  }
+}

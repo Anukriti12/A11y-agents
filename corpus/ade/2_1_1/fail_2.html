@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 2.1.1 | FAIL | Personas: Lakshmi (blind), Ade (limited mobility)
+     Map tooltip only triggers on hover. No keyboard or focus equivalent.
+     Severity: CRITICAL - information is completely inaccessible without a mouse. -->
+<head><meta charset="utf-8"><title>Store Locator</title>
+<style>
+  .pin { position: absolute; cursor: pointer; }
+  .tooltip { display: none; }
+  .pin:hover .tooltip { display: block; background: white; border: 1px solid #ccc; padding: 8px; }
+</style></head>
+<body>
+  <div class="map" style="position:relative; width:600px; height:400px; background:#e8e8e8;">
+    <div class="pin" style="top:100px;left:200px;">
+      📍
+      <div class="tooltip">Main Street Store<br>123 Main St<br>Open 9am–9pm</div>
+    </div>
+  </div>
+</body>
+</html>

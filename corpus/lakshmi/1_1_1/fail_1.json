@@ -1,0 +1,16 @@
+{
+  "persona": "lakshmi",
+  "wcag_criterion": "1.1.1",
+  "expected_label": "FAIL",
+  "source": "ACT_INSPIRED",
+  "filename": "fail_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 1.1.1 | Persona: lakshmi",
+  "act_reference": {
+    "rule_id": "59796f",
+    "rule_name": "Image button has non-empty accessible name",
+    "testcase_id": "04342a3834e0003f3057807937d617e432e83d33",
+    "testcase_title": "Failed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/04342a3834e0003f3057807937d617e432e83d33.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/proposed/"
+  }
+}

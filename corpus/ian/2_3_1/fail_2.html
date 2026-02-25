@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 2.3.1 | FAIL | SYNTHETIC | Persona: Ian (autism)
+     Video background auto-plays with rapid strobing light effect at approximately 5Hz.
+     Severity: CRITICAL - covers a large portion of the visual field; seizure risk. -->
+<head><meta charset="utf-8"><title>Club Night Event</title>
+<style>
+  @keyframes strobe {
+    0%,49%{ background:#fff; }
+    50%,100%{ background:#000; }
+  }
+  /* 5 flashes per second = 200ms period = 5Hz — greatly exceeds 3Hz limit */
+  .strobe-bg { width:100%; height:300px; animation:strobe 200ms step-end infinite; }
+</style></head>
+<body>
+  <div class="strobe-bg" aria-hidden="true"></div>
+  <div style="position:relative;z-index:10;padding:20px;">
+    <h1>Saturday Night Live</h1>
+    <p>Doors open at 9pm · 18+ · Dress code applies</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 3.3.1 | PASS | Persona: Sophie (cognitive/reading disability)
+     Error identified in text, linked to field via aria-describedby, announced by screen reader.
+     Sophie needs text errors, not just red borders, to understand what went wrong. -->
+<head><meta charset="utf-8"><title>Registration Form</title>
+<style>
+  .error-msg { color: #cc0000; font-size: 14px; margin-top: 4px; }
+  .field-error { border: 2px solid #cc0000; }
+</style></head>
+<body>
+  <h1>Create Account</h1>
+  <form>
+    <div>
+      <label for="email">Email address</label>
+      <input id="email" type="email" class="field-error"
+             aria-describedby="email-error" aria-invalid="true"
+             value="not-an-email">
+      <p id="email-error" class="error-msg" role="alert">
+        Error: Please enter a valid email address (for example: name@example.com)
+      </p>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input id="password" type="password" class="field-error"
+             aria-describedby="pw-error" aria-invalid="true">
+      <p id="pw-error" class="error-msg" role="alert">
+        Error: Password must be at least 8 characters and include one number
+      </p>
+    </div>
+    <button type="submit">Create account</button>
+  </form>
+</body>
+</html>

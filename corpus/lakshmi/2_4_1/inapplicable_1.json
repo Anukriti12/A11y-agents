@@ -1,0 +1,16 @@
+{
+  "persona": "lakshmi",
+  "wcag_criterion": "2.4.1",
+  "expected_label": "NOT_APPLICABLE",
+  "source": "ACT_INSPIRED",
+  "filename": "inapplicable_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.4.1 | Persona: lakshmi",
+  "act_reference": {
+    "rule_id": "cf77f2",
+    "rule_name": "Bypass Blocks of Repeated Content",
+    "testcase_id": "ecc29b73e37b6a125b3fd9767068dcaa368d467a",
+    "testcase_title": "Inapplicable Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/cf77f2/ecc29b73e37b6a125b3fd9767068dcaa368d467a.svg",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/cf77f2/proposed/"
+  }
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 2.4.7 | PASS | Persona: Ade (limited mobility, keyboard-only)
+     Custom focus style replaces browser default but is clearly visible. -->
+<head><meta charset="utf-8"><title>App Interface</title>
+<style>
+  :focus { outline: none; box-shadow: 0 0 0 3px #ff6b00; }
+  button { padding: 10px 20px; border: 2px solid #333; background: #fff; cursor: pointer; border-radius: 4px; }
+  input { padding: 8px; border: 2px solid #666; border-radius: 4px; }
+</style></head>
+<body>
+  <h1>Settings</h1>
+  <label for="notify">Email for notifications</label>
+  <input id="notify" type="email" autocomplete="email">
+  <button type="button">Save settings</button>
+  <button type="button">Cancel</button>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "persona": "stefan",
+  "wcag_criterion": "2.2.2",
+  "expected_label": "NOT_APPLICABLE",
+  "source": "ACT_INSPIRED",
+  "filename": "inapplicable_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.2.2 | Persona: stefan",
+  "act_reference": {
+    "rule_id": "efbfc7",
+    "rule_name": "Text content that changes automatically can be paused, stopped or hidden",
+    "testcase_id": "37668beb45f00408309f73569e36e63dc9327620",
+    "testcase_title": "Inapplicable Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/efbfc7/37668beb45f00408309f73569e36e63dc9327620.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/efbfc7/proposed/"
+  }
+}

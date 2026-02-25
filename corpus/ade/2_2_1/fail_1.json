@@ -1,0 +1,16 @@
+{
+  "persona": "ade",
+  "wcag_criterion": "2.2.1",
+  "expected_label": "FAIL",
+  "source": "ACT_INSPIRED",
+  "filename": "fail_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.2.1 | Persona: ade",
+  "act_reference": {
+    "rule_id": "bc659a",
+    "rule_name": "Meta element has no refresh delay",
+    "testcase_id": "56857820788db21498e95a5cbba65d59a9a2b892",
+    "testcase_title": "Failed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/bc659a/56857820788db21498e95a5cbba65d59a9a2b892.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/bc659a/proposed/"
+  }
+}

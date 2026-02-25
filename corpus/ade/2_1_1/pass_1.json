@@ -1,0 +1,16 @@
+{
+  "persona": "ade",
+  "wcag_criterion": "2.1.1",
+  "expected_label": "PASS",
+  "source": "ACT_INSPIRED",
+  "filename": "pass_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.1.1 | Persona: ade",
+  "act_reference": {
+    "rule_id": "akn7bn",
+    "rule_name": "Iframe with interactive elements is not excluded from tab-order",
+    "testcase_id": "1e3939d9f8e0f78f9c564ec6feb12cc5635c0acb",
+    "testcase_title": "Passed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/akn7bn/1e3939d9f8e0f78f9c564ec6feb12cc5635c0acb.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/akn7bn/"
+  }
+}

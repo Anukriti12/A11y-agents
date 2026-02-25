@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 2.3.1 | PASS | SYNTHETIC | Persona: Ian (autism)
+     CSS animation cycles at 0.5Hz (once every 2 seconds) — well below the 3Hz threshold.
+     Safe for photosensitive users. Ian also benefits from slow, predictable animations. -->
+<head><meta charset="utf-8"><title>Status Indicator</title>
+<style>
+  @keyframes pulse-safe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  /* Animation period = 2000ms = 0.5Hz — far below 3Hz limit */
+  .status-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background-color: #2e7d32;
+    animation: pulse-safe 2000ms ease-in-out infinite;
+    display: inline-block;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .status-dot { animation: none; }
+  }
+</style></head>
+<body>
+  <h1>System Status</h1>
+  <p>
+    <span class="status-dot" aria-hidden="true"></span>
+    <span>All systems operational</span>
+  </p>
+</body>
+</html>

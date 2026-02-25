@@ -1,0 +1,16 @@
+{
+  "persona": "ian",
+  "wcag_criterion": "1.3.5",
+  "expected_label": "PASS",
+  "source": "ACT_INSPIRED",
+  "filename": "pass_2.html",
+  "notes": "Based on ACT rule patterns for WCAG 1.3.5 | Persona: ian",
+  "act_reference": {
+    "rule_id": "73f2c2",
+    "rule_name": "`autocomplete` attribute has valid value",
+    "testcase_id": "93ac216a885112ab9882b119a62532c7f6b6c528",
+    "testcase_title": "Passed Example 2",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/73f2c2/93ac216a885112ab9882b119a62532c7f6b6c528.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/73f2c2/proposed/"
+  }
+}

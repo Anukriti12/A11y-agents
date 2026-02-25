@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 1.3.1 | PASS | Persona: Ian (autism)
+     ARIA roles correctly supplement native semantics on a custom widget. -->
+<head><meta charset="utf-8"><title>Status Dashboard</title></head>
+<body>
+  <h1>System Status</h1>
+  <ul role="list">
+    <li>
+      <span role="status" aria-label="API: Operational">
+        <span aria-hidden="true">✅</span> API
+      </span>
+    </li>
+    <li>
+      <span role="status" aria-label="Database: Degraded performance">
+        <span aria-hidden="true">⚠️</span> Database
+      </span>
+    </li>
+  </ul>
+</body>
+</html>

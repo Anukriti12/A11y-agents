@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 1.4.8 | FAIL | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)
+     Text is fully justified and line length exceeds 80 characters.
+     Foreground/background colors are hardcoded and cannot be overridden.
+     Severity for Stefan: SERIOUS - justified text with long lines creates reading rivers;
+     fixed colors prevent use of dyslexia-friendly color overlays. -->
+<head><meta charset="utf-8"><title>Legal Document</title>
+<style>
+  body { background: #f5f5dc; color: #333333; font-family: Times New Roman, serif; }
+  .legal-text {
+    text-align: justify;    /* FAILS: full justification */
+    max-width: 95%;         /* FAILS: far exceeds 80 char width */
+    line-height: 1.2;       /* FAILS: below 1.5 */
+    /* Colors hardcoded - user cannot override to preferred dyslexia palette */
+  }
+</style></head>
+<body>
+  <div class="legal-text">
+    <h1>Terms and Conditions of Service</h1>
+    <p>By accessing, browsing, or otherwise using this website and its associated services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. These terms constitute a legally binding agreement between you and the Company and govern your use of all features, content, and services provided through this platform.</p>
+    <p>The Company reserves the right to modify, amend, or update these Terms and Conditions at any time and without prior notice. Your continued use of the service after any such modification constitutes your acceptance of the new Terms and Conditions in their entirety.</p>
+  </div>
+</body>
+</html>

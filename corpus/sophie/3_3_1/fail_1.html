@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 3.3.1 | FAIL | Persona: Sophie (cognitive/reading disability)
+     Error indicated only by red border and icon — no text error message.
+     Severity for Sophie: CRITICAL - cannot perceive the error at all.
+     Even sighted users with color vision deficiency cannot detect this error. -->
+<head><meta charset="utf-8"><title>Booking Form</title>
+<style>
+  .invalid { border: 2px solid #e53935; }
+  .error-icon { color: #e53935; font-size: 18px; }
+</style></head>
+<body>
+  <h1>Book Appointment</h1>
+  <form>
+    <label for="date">Preferred date</label>
+    <input id="date" type="date" class="invalid">
+    <span class="error-icon">⚠️</span>
+    <label for="time">Preferred time</label>
+    <input id="time" type="time">
+    <button type="submit">Book now</button>
+  </form>
+</body>
+</html>

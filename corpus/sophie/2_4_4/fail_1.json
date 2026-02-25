@@ -1,0 +1,16 @@
+{
+  "persona": "sophie",
+  "wcag_criterion": "2.4.4",
+  "expected_label": "FAIL",
+  "source": "ACT_INSPIRED",
+  "filename": "fail_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.4.4 | Persona: sophie",
+  "act_reference": {
+    "rule_id": "c487ae",
+    "rule_name": "Link has non-empty accessible name",
+    "testcase_id": "97b115a032fc4178230306e2d0f4e334b2cfe8a9",
+    "testcase_title": "Failed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/c487ae/97b115a032fc4178230306e2d0f4e334b2cfe8a9.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/c487ae/proposed/"
+  }
+}

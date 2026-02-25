@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 3.3.2 | FAIL | SYNTHETIC | Persona: Ade (limited mobility, voice control)
+     Labels are visually hidden with CSS. Voice control cannot find them.
+     No format instructions for the date field.
+     Severity: CRITICAL - Ade cannot identify or activate unlabeled fields by voice. -->
+<head><meta charset="utf-8"><title>Registration</title>
+<style>
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); border: 0;
+  }
+  input { display: block; margin-bottom: 12px; padding: 8px; width: 280px; }
+</style></head>
+<body>
+  <h1>Event Registration</h1>
+  <form>
+    <label class="sr-only" for="r-name">Full name</label>
+    <input id="r-name" type="text" autocomplete="name">
+    <label class="sr-only" for="r-dob">Date of birth</label>
+    <input id="r-dob" type="text" placeholder="DD/MM/YYYY">
+    <!-- No format instruction shown visually -->
+    <label class="sr-only" for="r-email">Email</label>
+    <input id="r-email" type="email" autocomplete="email">
+    <button type="submit">Register</button>
+  </form>
+</body>
+</html>

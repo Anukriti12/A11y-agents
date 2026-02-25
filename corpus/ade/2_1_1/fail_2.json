@@ -1,0 +1,16 @@
+{
+  "persona": "ade",
+  "wcag_criterion": "2.1.1",
+  "expected_label": "FAIL",
+  "source": "ACT_INSPIRED",
+  "filename": "fail_2.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.1.1 | Persona: ade",
+  "act_reference": {
+    "rule_id": "0ssw9k",
+    "rule_name": "Scrollable content can be reached with sequential focus navigation",
+    "testcase_id": "5fa34d0a7eea03109cd12c0e7c21fce793c268db",
+    "testcase_title": "Failed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/0ssw9k/5fa34d0a7eea03109cd12c0e7c21fce793c268db.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/0ssw9k/proposed/"
+  }
+}

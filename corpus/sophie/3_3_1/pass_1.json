@@ -1,0 +1,16 @@
+{
+  "persona": "sophie",
+  "wcag_criterion": "3.3.1",
+  "expected_label": "PASS",
+  "source": "ACT_INSPIRED",
+  "filename": "pass_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 3.3.1 | Persona: sophie",
+  "act_reference": {
+    "rule_id": "36b590",
+    "rule_name": "Error message describes invalid form field value",
+    "testcase_id": "e2cc934a42be5a597106214fa0fbcefd6ceac599",
+    "testcase_title": "Passed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/36b590/e2cc934a42be5a597106214fa0fbcefd6ceac599.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/36b590/proposed/"
+  }
+}

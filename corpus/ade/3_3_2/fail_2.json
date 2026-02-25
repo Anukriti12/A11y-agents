@@ -1,0 +1,8 @@
+{
+  "persona": "ade",
+  "wcag_criterion": "3.3.2",
+  "expected_label": "FAIL",
+  "source": "SYNTHETIC",
+  "filename": "fail_2.html",
+  "notes": "Synthetic test case for WCAG 3.3.2 | Persona: ade"
+}

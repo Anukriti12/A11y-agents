@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 4.1.2 | FAIL | Persona: Lakshmi (blind, screen reader)
+     Custom dropdown has no ARIA role or state. NVDA ignores expand/collapse.
+     Severity: CRITICAL - Lakshmi cannot interact with or understand the widget. -->
+<head><meta charset="utf-8"><title>Account Menu</title></head>
+<body>
+  <div class="dropdown" onclick="toggleMenu()">
+    <span>My Account ▼</span>
+    <div class="dropdown-content" style="display:none">
+      <a href="/profile">Profile</a>
+      <a href="/orders">Orders</a>
+      <a href="/logout">Sign out</a>
+    </div>
+  </div>
+</body>
+</html>

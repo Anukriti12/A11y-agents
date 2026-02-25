@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 1.4.8 | PASS | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)
+     Text uses CSS custom properties allowing user to override colors via injected stylesheet. -->
+<head><meta charset="utf-8"><title>Documentation</title>
+<style>
+  :root { --fg: #000; --bg: #fff; --line-h: 1.7; }
+  body { color: var(--fg); background-color: var(--bg); font-family: Arial, sans-serif; }
+  .content { max-width: 70ch; margin: 0 auto; }
+  p { line-height: var(--line-h); text-align: left; }
+</style></head>
+<body>
+  <div class="content">
+    <h1>API Reference</h1>
+    <p>This page documents all available endpoints. Each section describes the expected
+       request format, required parameters, and the structure of the response object.</p>
+    <p>Authentication is handled via bearer tokens. Include the token in the
+       Authorization header of each request.</p>
+  </div>
+</body>
+</html>

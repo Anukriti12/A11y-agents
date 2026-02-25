@@ -1,0 +1,16 @@
+{
+  "persona": "ade",
+  "wcag_criterion": "2.4.1",
+  "expected_label": "PASS",
+  "source": "ACT_INSPIRED",
+  "filename": "pass_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.4.1 | Persona: ade",
+  "act_reference": {
+    "rule_id": "cf77f2",
+    "rule_name": "Bypass Blocks of Repeated Content",
+    "testcase_id": "fa30de1d9c2d3a313f7f18bc4e2cf6843ea10a89",
+    "testcase_title": "Passed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/cf77f2/fa30de1d9c2d3a313f7f18bc4e2cf6843ea10a89.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/cf77f2/proposed/"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "persona": "sophie",
+  "wcag_criterion": "2.2.1",
+  "expected_label": "PASS",
+  "source": "ACT_INSPIRED",
+  "filename": "pass_1.html",
+  "notes": "Based on ACT rule patterns for WCAG 2.2.1 | Persona: sophie",
+  "act_reference": {
+    "rule_id": "bc659a",
+    "rule_name": "Meta element has no refresh delay",
+    "testcase_id": "49d79a4e4e4a994a8eb7cf2eaf59c99d2251cac5",
+    "testcase_title": "Passed Example 1",
+    "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/bc659a/49d79a4e4e4a994a8eb7cf2eaf59c99d2251cac5.html",
+    "rule_page": "https://www.w3.org/WAI/standards-guidelines/act/rules/bc659a/proposed/"
+  }
+}
