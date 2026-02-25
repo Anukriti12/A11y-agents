@@ -1,0 +1,266 @@
+[
+  {
+    "scenario_id": "stefan_audio_001",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:pass_1",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/769b057778b000851f50a2569768652d506ef25d.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "PASS",
+        "reasoning": "No automatic audio detected, or I found a control to silence it.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  },
+  {
+    "scenario_id": "stefan_audio_002",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:pass_2",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/18adb94ce561c2d1f29dec32d91f3dd39a8e45b2.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "PASS",
+        "reasoning": "No automatic audio detected, or I found a control to silence it.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  },
+  {
+    "scenario_id": "stefan_audio_003",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:pass_3",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/337477ac8e969c4d134079babf891b0f1fd33eba.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "PASS",
+        "reasoning": "No automatic audio detected, or I found a control to silence it.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  },
+  {
+    "scenario_id": "stefan_audio_004",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:fail_1",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/07b1d6438848483864a7f0581452c938c5314781.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "PASS",
+        "reasoning": "No automatic audio detected, or I found a control to silence it.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  },
+  {
+    "scenario_id": "stefan_audio_005",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:fail_2",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/8f0a05348afb0a218f3934157dad1b4d1673ea6a.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "PASS",
+        "reasoning": "No automatic audio detected, or I found a control to silence it.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  },
+  {
+    "scenario_id": "stefan_audio_006",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:fail_3",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/a17f7d747d85f4a7e1f071b6278e7234e445ac13.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "PASS",
+        "reasoning": "No automatic audio detected, or I found a control to silence it.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  },
+  {
+    "scenario_id": "stefan_audio_007",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:inapplicable_1",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/6920f782c55b253b342045618193f41f71a93868.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "N/A",
+        "reasoning": "No auto-playing audio content found on this page.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  },
+  {
+    "scenario_id": "stefan_audio_008",
+    "scenario_type": "persona-specific",
+    "title": "Audio Control Audit: act:4c31df:inapplicable_2",
+    "category": "Audio & Cognitive Load",
+    "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4c31df/7e37318b6f7708dd98b0a86e72c501eeaf6ef721.html",
+    "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"><head>\n  <title>Error 404 - Not found</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"Help\" href=\"/Help/\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/minimum\" type=\"text/css\" media=\"all\">\n  <style type=\"text/css\" media=\"print, screen and (min-width: 481px)\">@import url(\"/2008/site/css/advanced\");</style>\n  <link href=\"/2008/site/css/minimum\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (max-width: 480px)\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <link rel=\"stylesheet\" href=\"/2008/site/css/print\" type=\"text/css\" media=\"print\">\n  <link rel=\"shortcut icon\" href=\"/2008/site/images/favicon.ico\" type=\"image/x-icon\">\n  </head>\n<body id=\"www-w3-org\" class=\"w3c_public w3c_javascript w3c_screen\">\n <div id=\"w3c_container\">\n  <div id=\"w3c_mast\"> <!-- #w3c_mast / Page top header -->\n   <h1 class=\"logo\"><a tabindex=\"2\" accesskey=\"1\" href=\"/\"><img src=\"/2008/site/images/",
+    "wcag_violation": {
+      "criterion": "1.4.2",
+      "name": "Audio Control",
+      "level": "A"
+    },
+    "manual_testing": {
+      "persona": "Stefan",
+      "date": "2026-02-24",
+      "tool": "Selenium + Audio State Audit",
+      "method": "Check for autoplay state via JS and inventory visible mute/stop buttons.",
+      "observed": "Audio Playing: False, Controls Found: False",
+      "issue_found": false,
+      "severity": "N/A"
+    },
+    "expected_results": {
+      "Stefan": {
+        "result": "N/A",
+        "reasoning": "No auto-playing audio content found on this page.",
+        "severity": "N/A"
+      }
+    },
+    "baseline_comparison": {
+      "axe_core": "6 violations.",
+      "our_value_add": "Monitors actual playback state which static analysis cannot confirm."
+    }
+  }
+]
