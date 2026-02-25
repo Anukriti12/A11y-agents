@@ -1,0 +1,11 @@
+{
+    "persona": "Ian",
+    "scenario_id": "act-1.4.2-audio-control-001",
+    "label": "PASS",
+    "wcag_criteria": ["1.4.2"],
+    "issues": [
+      {
+        "title": "This audio element has an instrument to pause, stop, or turn the audio volume off."
+      }
+    ]
+  }

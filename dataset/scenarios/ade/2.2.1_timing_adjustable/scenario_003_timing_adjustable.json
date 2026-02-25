@@ -1,0 +1,22 @@
+{
+    "persona": "Ade",
+    "scenario_id": "act-2.2.1-timing-adjustable-003",
+    "label": "FAIL",
+    "severity": "serious",
+    "wcag_criteria": ["2.2.1"],
+    "issues": [
+      {
+        "title": "This meta element refreshes the page after 30 seconds.",
+        "why_it_matters_for_persona": "As a keyboard-only user, the page refreshing without my control is disorienting. It resets my focus position, forcing me to navigate from the top of the page again. This can be very frustrating and time-consuming if I am trying to read content or interact with controls further down the page.",
+        "remediation_instructions": [
+          "Remove the `<meta http-equiv=\"refresh\">` tag to prevent the page from automatically refreshing.",
+          "If the refresh is essential, provide a control for the user to pause, stop, or adjust the frequency of the refresh."
+        ],
+        "expected_tool_change": [
+          "An automated accessibility tool should flag the use of `<meta http-equiv=\"refresh\">` as a potential violation of timing adjustable criteria.",
+          "A manual review would confirm that the page refreshes automatically without providing any user control."
+        ]
+      }
+    ],
+    "confidence": 0.95
+  }

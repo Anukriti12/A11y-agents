@@ -1,0 +1,22 @@
+{
+    "persona": "Ian",
+    "scenario_id": "act-1.3.5-identify-input-purpose-004",
+    "label": "FAIL",
+    "severity": "serious",
+    "wcag_criteria": ["1.3.5"],
+    "issues": [
+      {
+        "title": "This autocomplete attribute value has the work token which is a correct autocomplete field. However, work can not be used with photo.",
+        "why_it_matters_for_persona": "As an autistic person, I value predictable and efficient web forms. Autocomplete helps me fill out forms without having to manually select and upload files like a profile photo, which reduces my cognitive load. When an autocomplete value like 'work photo' is invalid, my browser can't help me, and I have to find and upload the correct image myself. This breaks the predictable pattern and causes unnecessary friction and frustration.",
+        "remediation_instructions": [
+          "The `work` token is not a valid modifier for the `photo` autocomplete field. Remove it.",
+          "The correct value should be `autocomplete=\"photo\"`."
+        ],
+        "expected_tool_change": [
+          "An automated tool should validate autocomplete tokens against the HTML specification and flag 'work photo' as an invalid combination.",
+          "A code linter with HTML validation rules should report an error for the invalid token."
+        ]
+      }
+    ],
+    "confidence": 0.95
+}

@@ -1,0 +1,24 @@
+{
+    "persona": "Ian",
+    "scenario_id": "act-2.4.4-link-purpose-004",
+    "label": "FAIL",
+    "severity": "serious",
+    "wcag_criteria": ["2.4.4"],
+    "issues": [
+      {
+        "title": "The accessible name (from the link’s text), together with the absence of programmatically determined link context, does not describe the purpose of the link.",
+        "why_it_matters_for_persona": "As an autistic person, ambiguous links like 'More' are a significant source of anxiety and cognitive friction. I need to know exactly where a link will take me before I click it to maintain a predictable browsing experience. When I see a generic link, I have to stop and read the surrounding text to figure out its purpose, which breaks my concentration and adds unnecessary mental effort.",
+        "remediation_instructions": [
+          "The best practice is to use a native `<a>` element with a descriptive `href` attribute instead of a `div` with a link role. For example: `<a href=\"#main\">More about the main content</a>`.",
+          "If you must use a `div`, provide a more descriptive accessible name. You can change the text content: `<div role=\"link\" ...>More about the main content</div>`.",
+          "Alternatively, add an `aria-label` to the `div`: `<div role=\"link\" ... aria-label=\"More about the main content\">More</div>`.",
+          "Additionally, ensure the element is keyboard accessible by adding a JavaScript `keydown` event listener that triggers the `click` action when the Enter key is pressed."
+        ],
+        "expected_tool_change": [
+          "An automated accessibility checker will flag the ambiguous accessible name 'More'. It may also flag the use of a non-interactive element as a link.",
+          "A screen reader currently announces 'More, link'. After fixing, it will announce the full descriptive name, such as 'More about the main content, link'."
+        ]
+      }
+    ],
+    "confidence": 0.95
+  }

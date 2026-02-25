@@ -1,0 +1,23 @@
+{
+    "persona": "Ade",
+    "scenario_id": "act-2.4.7-focus-visible-003",
+    "label": "FAIL",
+    "severity": "critical",
+    "wcag_criteria": ["2.4.7"],
+    "issues": [
+      {
+        "title": "The focusable element does not have any pixel changing color when it is focused because the default styling has been overwritten by a style that removes the outline.",
+        "why_it_matters_for_persona": "As a keyboard-only user, I rely on a visible focus indicator to know where I am on the page. When the focus is not visible on the 'ACT rules' link, I can get lost and cannot confidently navigate or interact with the page.",
+        "remediation_instructions": [
+          "Ensure that all focusable elements have a visible focus indicator.",
+          "Remove the CSS that suppresses the default focus outline (e.g., `outline: none;` or `outline: 0;`) on the anchor element.",
+          "If removing the default outline, provide a highly visible alternative focus style, such as a prominent border or background color change."
+        ],
+        "expected_tool_change": [
+          "A keyboard navigation test should show a visible focus indicator on the 'ACT rules' link when it is focused.",
+          "An automated tool should detect that a focusable element is missing a visible focus style."
+        ]
+      }
+    ],
+    "confidence": 0.95
+  }

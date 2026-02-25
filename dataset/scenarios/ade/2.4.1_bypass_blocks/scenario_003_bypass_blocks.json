@@ -1,0 +1,22 @@
+{
+    "persona": "Ade",
+    "scenario_id": "act-2.4.1-bypass-blocks-003",
+    "label": "FAIL",
+    "severity": "serious",
+    "wcag_criteria": ["2.4.1"],
+    "issues": [
+      {
+        "title": "No mechanism is available to bypass blocks of content, such as a skip link or landmark regions.",
+        "why_it_matters_for_persona": "As a keyboard-only user, I have to tab through every single element before the main content on every page. Without a 'skip link' or proper page structure with landmarks, navigating websites with repeated navigation blocks becomes tedious and time-consuming, creating a significant barrier to accessing the content I need.",
+        "remediation_instructions": [
+          "Add a 'skip to main content' link as the first focusable element on the page that links to the main content container.",
+          "Structure the page using HTML5 landmark elements, such as `<header>`, `<nav>`, `<main>`, and `<aside>`, to allow assistive technologies to navigate directly to different sections of the page."
+        ],
+        "expected_tool_change": [
+          "An automated tool should report the absence of a `<main>` landmark or other page structure mechanisms.",
+          "A keyboard navigation test will show that there is no way to skip the navigation and go directly to the main content."
+        ]
+      }
+    ],
+    "confidence": 0.95
+  }

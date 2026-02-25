@@ -1,0 +1,22 @@
+{
+    "persona": "Ian",
+    "scenario_id": "act-1.4.2-audio-control-004",
+    "label": "FAIL",
+    "severity": "serious",
+    "wcag_criteria": ["1.4.2"],
+    "issues": [
+      {
+        "title": "This video element does not have an instrument to pause, stop, or turn the audio volume off.",
+        "why_it_matters_for_persona": "As an autistic person, unexpected audio that starts playing automatically is highly distracting and can feel overwhelming. It makes it difficult for me to focus on the content I'm trying to read or interact with. Without any controls to stop or mute the sound, I can become frustrated and may be forced to leave the page altogether.",
+        "remediation_instructions": [
+          "Remove the `autoplay` attribute from the `<video>` element to prevent it from playing automatically.",
+          "Alternatively, if autoplay is necessary, add the `controls` attribute to the `<video>` element to provide visible user controls for pausing, stopping, or adjusting the volume."
+        ],
+        "expected_tool_change": [
+          "An automated tool should flag a `<video>` element with the `autoplay` attribute that plays for more than 3 seconds without available controls and is not muted.",
+          "A manual review will confirm that video and audio begin on page load and no mechanism is available to stop or pause it."
+        ]
+      }
+    ],
+    "confidence": 0.95
+  }

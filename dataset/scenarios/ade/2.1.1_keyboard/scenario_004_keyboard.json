@@ -1,0 +1,23 @@
+{
+    "persona": "Ade",
+    "scenario_id": "act-2.1.1-keyboard-004",
+    "label": "FAIL",
+    "severity": "serious",
+    "wcag_criteria": ["2.1.1"],
+    "issues": [
+      {
+        "title": "This vertically scrollable section element is not included in sequential focus navigation, nor does it have any descendants that are.",
+        "why_it_matters_for_persona": "As a keyboard-only user, I cannot access the content that is hidden within the scrollable section. Because the section itself is not focusable, I cannot use my keyboard's arrow keys to scroll down and read the full text. This effectively locks me out of the content.",
+        "remediation_instructions": [
+          "Make the scrollable `<section>` focusable by adding the `tabindex=\"0\"` attribute to it.",
+          "This will include the element in the default tab order, allowing keyboard users to navigate to it and use arrow keys to scroll.",
+          "Ensure there is a visible focus indicator for the section when it receives focus, so users know they can interact with it."
+        ],
+        "expected_tool_change": [
+          "A keyboard navigation test will show that the scrollable section can be tabbed to and scrolled using the up and down arrow keys.",
+          "An automated tool might not flag this issue directly, as it often requires manual testing to verify keyboard operability of custom widgets or scrollable regions."
+        ]
+      }
+    ],
+    "confidence": 0.95
+  }

@@ -1,0 +1,11 @@
+{
+    "persona": "Ade",
+    "scenario_id": "act-2.4.7-focus-visible-001",
+    "label": "PASS",
+    "wcag_criteria": ["2.4.7"],
+    "issues": [
+      {
+        "title": "The focusable element is part of sequential focus navigation. It has an outline when it is focused (due to default User Agent’s styling). The outline has a different hsl value compared to the hsl value of the background over which the outline appears (the exact values depend on the type of browser being used)."
+      }
+    ]
+  }

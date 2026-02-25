@@ -1,0 +1,23 @@
+{
+    "persona": "Ade",
+    "scenario_id": "act-3.2.2-labels-or-instructions-003",
+    "label": "FAIL",
+    "severity": "critical",
+    "wcag_criteria": ["3.3.2"],
+    "issues": [
+      {
+        "title": "This input element does not have an attribute that gives an accessible name to it.",
+        "why_it_matters_for_persona": "As a keyboard-only user, there is no programmatic association between the visible label 'last name' and the input field. This can be confusing and may cause me to enter incorrect information, especially in complex forms. If I were using a screen reader, it would not announce the purpose of the input field, making it difficult for me to use the form.",
+        "remediation_instructions": [
+          "To fix this, programmatically associate the visible label 'last name' with the input field. The best way is to use a `<label>` element.",
+          "Add an `id` attribute to the `<input>` element and use a `<label>` element with a `for` attribute that matches the input's `id`. For example: `<label for='last_name'>last name</label><input id='last_name' />`.",
+          "Alternatively, you can wrap the input and its label text in a `<label>` element: `<label>last name <input /></label>`"
+        ],
+        "expected_tool_change": [
+          "An automated accessibility checker will no longer flag the input for having a missing accessible name.",
+          "A screen reader will announce 'last name, edit text' when the input field receives focus."
+        ]
+      }
+    ],
+    "confidence": 0.95
+  }

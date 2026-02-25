@@ -1,0 +1,11 @@
+{
+    "persona": "Ian",
+    "scenario_id": "act-2.4.4-link-purpose-001",
+    "label": "PASS",
+    "wcag_criteria": ["2.4.4"],
+    "issues": [
+      {
+        "title": "The accessible name describes the purpose of the link."
+      }
+    ]
+  }

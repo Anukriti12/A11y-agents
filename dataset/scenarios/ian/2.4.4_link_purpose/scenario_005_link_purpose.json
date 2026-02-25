@@ -1,0 +1,11 @@
+{
+    "persona": "Ian",
+    "scenario_id": "act-2.4.4-link-purpose-005",
+    "label": "NA",
+    "wcag_criteria": ["2.4.4"],
+    "issues": [
+      {
+        "title": "An a element with its semantic role changed from link to another role."
+      }
+    ]
+  }
