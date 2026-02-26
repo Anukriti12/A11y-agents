@@ -1,7 +1,7 @@
 """
 Animation Detector Tool Agent
 Detects CSS animations and autoplay media
-Used by: Stefan, Ian, Elias
+Used by: Stefan, Elias
 """
 
 from selenium import webdriver
