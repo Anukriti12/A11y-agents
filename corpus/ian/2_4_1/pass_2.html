@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- WCAG 2.4.1 | PASS | Personas: Lakshmi (blind), Ade (limited mobility)
+     ARIA landmarks let screen reader users jump directly to <main>. -->
+<head><meta charset="utf-8"><title>University Portal</title></head>
+<body>
+  <a href="#content" style="position:absolute;left:-9999px" onfocus="this.style.left='0'">
+    Skip to content
+  </a>
+  <header role="banner">
+    <img src="logo.png" alt="State University">
+  </header>
+  <nav role="navigation" aria-label="Main menu">
+    <a href="/courses">Courses</a>
+    <a href="/library">Library</a>
+    <a href="/support">Support</a>
+  </nav>
+  <main role="main" id="content">
+    <h1>Welcome to the Student Portal</h1>
+  </main>
+</body>
+</html>
