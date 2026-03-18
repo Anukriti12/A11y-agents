@@ -1,7 +1,7 @@
 """
 Consistency Validator Tool Agent
 Analyzes multiple pages to detect inconsistencies in layout and navigation.
-Used by: Ian
+Used by: Ian, Ade
 """
 
 import time
