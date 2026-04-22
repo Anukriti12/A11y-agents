@@ -1,29 +1,27 @@
+import requests
 from playwright.sync_api import sync_playwright
 
-class ContrastAAA_URL_Agent:
-    """
-    Analyzes a live URL for WCAG 2.1 AAA Contrast (Enhanced) requirements.
-    """
+# Download once at module level
+AXE_CORE_JS = requests.get(
+    "https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.8.2/axe.min.js"
+).text
 
-    def execute(self, url):
-        """
-        Args:
-            url (str): The full URL (including http/https) to analyze.
-        """
+class ContrastAAA_HTML_Agent:
+    def execute(self, html_content):
         with sync_playwright() as p:
-            # Launching chromium
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()
             
             try:
-                print(f"Navigating to: {url}...")
-                # wait_until="networkidle" ensures the CSS and assets are loaded
-                page.goto(url, wait_until="networkidle")
+                page.set_content(html_content, wait_until="domcontentloaded")
                 
-                # Injecting axe-core
-                page.add_script_tag(url="https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.8.2/axe.min.js")
+                # Inject axe-core as inline script, not a URL fetch
+                page.add_script_tag(content=AXE_CORE_JS)
+
+                # Sanity check — remove once confirmed working
+                axe_loaded = page.evaluate("typeof axe !== 'undefined'")
+                print(f"axe loaded: {axe_loaded}")
                 
-                # Run axe-core specifically for AAA contrast
                 results = page.evaluate("""
                     axe.run({
                         runOnly: {
@@ -37,9 +35,9 @@ class ContrastAAA_URL_Agent:
                     })
                 """)
 
+
                 violations = results.get("violations", [])
                 
-                # Format the output to be scannable
                 formatted_violations = []
                 for v in violations:
                     for node in v['nodes']:
@@ -50,35 +48,52 @@ class ContrastAAA_URL_Agent:
                         })
 
                 return {
-                    "url": url,
                     "status": "FAIL" if formatted_violations else "PASS",
                     "violation_count": len(formatted_violations),
                     "violations": formatted_violations,
-                    "tool_name": "ContrastAAA_URL_Agent"
+                    "tool_name": "ContrastAAA_HTML_Agent"
                 }
 
             except Exception as e:
-                return {"error": str(e), "url": url}
+                return {"error": str(e)}
             finally:
                 browser.close()
 
+
 # Example Usage
 if __name__ == "__main__":
-    agent = ContrastAAA_URL_Agent()
-    
-    # Input a live URL here
-    target_url = "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/67fe402a5de9743bf9882d7d52deb9749005d16c.html" # FAIL CASE
-    # target_url = "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/fd406bedf0bb3bdc4c2a718f49a3dd0f7aaa7556.html" # PASS CASE
-    
-    result = agent.execute(target_url)
-    
-    print("\n" + "="*50)
-    print(f"ANALYSIS FOR: {result['url']}")
-    print(f"STATUS: {result['status']}")
-    print(f"TOTAL AAA VIOLATIONS: {result.get('violation_count', 0)}")
-    print("="*50)
+    agent = ContrastAAA_HTML_Agent()
 
-    if result.get("violations"):
-        for i, v in enumerate(result['violations'], 1):
-            print(f"{i}. Element: {v['element']}")
-            print(f"   Issue: {v['summary']}\n")
+    # FAIL CASE
+    fail_html = """
+    <html>
+    <body>
+        <p style="color: #777777; background-color: #ffffff;">
+            This text has low contrast and will fail AAA.
+        </p>
+    </body>
+    </html>
+    """
+
+    # PASS CASE
+    pass_html = """
+    <html>
+    <body>
+        <p style="color: #000000; background-color: #ffffff;">
+            This text has high contrast and will pass AAA.
+        </p>
+    </body>
+    </html>
+    """
+
+    for label, html_content in [("FAIL", fail_html), ("PASS", pass_html)]:
+        result = agent.execute(html_content)
+        print("\n" + "="*50)
+        print(f"TEST CASE: {label}")
+        print(f"STATUS: {result['status']}")
+        print(f"TOTAL AAA VIOLATIONS: {result.get('violation_count', 0)}")
+        print("="*50)
+        if result.get("violations"):
+            for i, v in enumerate(result['violations'], 1):
+                print(f"{i}. Element: {v['element']}")
+                print(f"   Issue: {v['summary']}\n")
