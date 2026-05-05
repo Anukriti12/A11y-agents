@@ -8,6 +8,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+# from urllib.parse import quote
 
 class FormValidationAgent:
     """
@@ -25,7 +26,7 @@ class FormValidationAgent:
         """
         driver = self._start_browser()
         try:
-            driver.get(f"data:text/html;charset=utf-8,{html}")
+            driver.get(f"data:text/html;charset=utf-8,{(html)}")
             time.sleep(1)
 
             forms = driver.find_elements(By.TAG_NAME, 'form')

@@ -7,7 +7,8 @@ AXE_CORE_JS = requests.get(
 ).text
 
 class ContrastAAA_HTML_Agent:
-    def execute(self, html_content):
+    def execute(self, html: str) -> dict:
+        html_content = html
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()

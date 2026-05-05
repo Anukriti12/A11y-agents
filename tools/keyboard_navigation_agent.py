@@ -10,7 +10,8 @@ import html
 class KeyboardNavigationAgent:
     """Analyzes HTML for keyboard navigation accessibility issues."""
 
-    def execute(self, html_content):
+    def execute(self, html: str) -> dict:
+        html_content = html
         """
         Analyzes the HTML to find all focusable elements and checks for potential
         keyboard navigation issues.

@@ -172,7 +172,8 @@ class TextFormattingAgent:
         print(f"WCAG 1.4.12 spacing applied: {input_path} → {output_path}\n")
 
     #----- Execution Interface -----#
-    def execute(self, html_content: str) -> dict:
+    def execute(self, html: str) -> dict:
+        html_content = html
         """
         Main execution method. Takes an HTML string directly.
         Returns a report with:

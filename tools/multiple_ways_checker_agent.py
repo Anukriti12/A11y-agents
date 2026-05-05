@@ -33,7 +33,8 @@ class MultipleWaysCheckerAgent:
     least two methods are found.
     """
 
-    def execute(self, url_or_html: str) -> dict:
+    def execute(self, html: str) -> dict:
+        url_or_html = html
         """
         Run the WCAG 2.4.5 check.
         Returns:
