@@ -15,8 +15,7 @@ class ConsistencyValidatorAgent:
     Aims to address issues faced by users like Ian, who benefit from predictable layouts.
     """
 
-    def execute(self, html: str) -> dict:
-        html_pages = [html]
+    def execute(self, html_pages: list) -> dict:
         """
         Analyzes a list of HTML pages for inconsistencies.
 
