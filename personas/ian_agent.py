@@ -1,240 +1,282 @@
 """
-Ian agent evaluating HTML
-Demonstrates persona-grounded agentic tool selection
+Ian Agent - Autism
+Needs predictability, consistency, and literal language
 """
 
-import openai
 import os
-import json
-from dotenv import load_dotenv
 import sys
+from dotenv import load_dotenv
 
-# Ensure we can import from the root directory
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from personas.base_agent import BaseAgenticAgent
 from tools import animation_detector_agent
-from tools import consistency_validator_agent
-from tools import heading_structure_agent
+from tools import autocomplete_validator_agent
+from tools import keyboard_navigation_agent
 from tools import readability_analyzer_agent
-from prompts.ian_system_prompt import IAN_SYSTEM_PROMPT
+from tools import form_validator_agent
 
 load_dotenv()
 
-client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+IAN_PROMPT = """
+You are Ian, a software developer with autism.
 
-# Ian's tools
-tools = [
-    {
-        "type": "function",
-        "function": {
-            "name": "detect_animations",
-            "description": "Detects CSS animations and autoplay media. Autoplaying videos and animations are highly distracting and overwhelming for Ian.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "html": {
-                        "type": "string",
-                        "description": "The full HTML source code to evaluate."
-                    }
-                },
-                "required": ["html"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "validate_consistency",
-            "description": "Analyzes multiple pages to detect inconsistencies in layout and navigation. Ian thrives on consistency and predictability; sudden changes cause panic.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "html_pages": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of HTML source code strings from different pages to compare."
-                    }
-                },
-                "required": ["html_pages"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "analyze_heading_structure",
-            "description": "Analyzes heading hierarchy, logical structure, and content quality. Ian needs clear, descriptive headings and struggles with long blocks of text without structure.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "html": {
-                        "type": "string",
-                        "description": "The full HTML source code to evaluate."
-                    }
-                },
-                "required": ["html"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "analyze_readability",
-            "description": "Calculates readability scores and checks for unmarked abbreviations. Ian has difficulty with non-literal language, metaphors, and corporate jargon.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "html": {
-                        "type": "string",
-                        "description": "The full HTML source code to evaluate."
-                    }
-                },
-                "required": ["html"]
-            }
-        }
-    }
-]
+You rely heavily on predictability and consistency. Unexpected changes in navigation, inconsistent labeling, or sudden animations cause significant distress and cognitive overload.
 
-# The tool agents instantiated
-animation_agent = animation_detector_agent.AnimationDetectorAgent()
-consistency_agent = consistency_validator_agent.ConsistencyValidatorAgent()
-heading_agent = heading_structure_agent.HeadingStructureAgent()
-readability_agent = readability_analyzer_agent.ReadabilityAnalyzerAgent()
+Critical barriers for you:
+- Unexpected animations → SENSORY OVERLOAD
+- Inconsistent navigation → DISORIENTED
+- Ambiguous language → CAN'T UNDERSTAND
+- Vague errors → ANXIOUS
+- Unpredictable interactions → STRESSED
 
-TOOL_DISPATCHER = {
-    "detect_animations": lambda args: animation_agent.execute(args["html"]),
-    "validate_consistency": lambda args: consistency_agent.execute(args["html_pages"]),
-    "analyze_heading_structure": lambda args: heading_agent.execute(args["html"]),
-    "analyze_readability": lambda args: readability_agent.execute(args["html"])
+You need:
+- Consistent navigation patterns (WCAG 3.2.3)
+- Predictable behaviors (WCAG 3.2.4)
+- No unexpected animations (WCAG 2.2.2)
+- Literal, clear language (WCAG 3.1.3)
+- Consistent error messages (WCAG 3.3.1)
+
+Output ONLY valid JSON:
+{
+  "label": "passed" | "failed",
+  "severity": "critical" | "serious" | "moderate" | "minor" | "N/A",
+  "issues": [{
+    "wcag": "X.X.X",
+    "evidence": "What found",
+    "persona_impact": "Why affects Ian",
+    "recommendation": "Fix"
+  }],
+  "overall_assessment": "Summary"
 }
 
-# Tool execution
-def execute_ian_tool(tool_name, arguments):
-    if tool_name in TOOL_DISPATCHER:
-        # Calls the actual tool's execute function
-        return TOOL_DISPATCHER[tool_name](arguments)
-    return {"error": f"Tool '{tool_name}' not implemented in the dispatcher."}
-
-test_html_page1 = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Corporate Dashboard - Home</title>
-  <style>
-    @keyframes flash { 50% { opacity: 0; } }
-    .alert { animation: flash 1s infinite; color: red; font-weight: bold; }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>Synergistic Solutions Dashboard</h1>
-    <nav>
-      <a href="/home">Home</a>
-      <a href="/reports">Reports</a>
-      <a href="/settings">Settings</a>
-    </nav>
-  </header>
-
-  <main>
-    <div class="alert">URGENT: Paradigm shift required!</div>
-    
-    <video autoplay loop src="corporate_broll.mp4"></video>
-
-    <!-- Missing headings, wall of text, corporate jargon -->
-    <p>
-      We need to boil the ocean and think outside the box to leverage our core competencies. 
-      By synergizing our bandwidth, we can move the needle on our KPIs and achieve a win-win scenario.
-      Please ensure all deliverables are aligned with our strategic vision before the end of play.
-      The ROI on this initiative will be off the charts if we can just get all our ducks in a row.
-      Let's touch base offline to discuss the low-hanging fruit and ensure we're comparing apples to apples.
-      We must pivot our approach to maximize the bottom line and drive disruptive innovation.
-    </p>
-    
-    <p>
-      Please review the <abbr>Q3</abbr> <abbr>YTD</abbr> metrics and cross-reference with the <abbr>EBITDA</abbr> projections.
-    </p>
-
-  </main>
-
-</body>
-</html>
+INTERPRETING TOOLS:
+- If unexpected_animations > 0 → FAILED (serious)
+- If inconsistent_navigation found → FAILED (serious)
+- If ambiguous_language found → FAILED (moderate)
+- If vague_errors is NOT EMPTY → FAILED (moderate)
 """
 
-test_html_page2 = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Corporate Dashboard - Reports</title>
-</head>
-<body>
 
-  <header>
-    <h1>Reports</h1>
-  </header>
-
-  <!-- Inconsistent navigation layout -->
-  <main>
-    <nav>
-      <a href="/dashboard">Dashboard</a>
-      <a href="/analytics">Analytics</a>
-      <a href="/preferences">Preferences</a>
-    </nav>
-
-    <h2>Quarterly Review</h2>
-    <p>Data goes here.</p>
-  </main>
-
-</body>
-</html>
-"""
-
-messages = [
-    {"role": "system", "content": IAN_SYSTEM_PROMPT},
-    {"role": "user", "content": f"Evaluate these two HTML pages for consistency and accessibility:\n\nPage 1:\n{test_html_page1}\n\nPage 2:\n{test_html_page2}"}
-]
-
-print("=== IAN AGENT EVALUATION ===\n")
-
-for iteration in range(10):
-    print(f"--- Iteration {iteration + 1} ---")
-    
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=messages, # Pass the WHOLE history every time
-        tools=tools,
-        tool_choice="auto"
-    )
-    
-    assistant_message = response.choices[0].message
-    
-    if assistant_message.tool_calls:
-        print(f"Ian wants to call: {len(assistant_message.tool_calls)} tool(s)")
-        messages.append(assistant_message) 
+class IanAgent(BaseAgenticAgent):
+    def __init__(self, api_key):
+        super().__init__(api_key, persona_name="Ian")
         
-        for tool_call in assistant_message.tool_calls:
-            tool_name = tool_call.function.name
-            arguments = json.loads(tool_call.function.arguments)
-            
-            print(f"  → {tool_name}")
-            
-            result = execute_ian_tool(tool_name, arguments)
-            
-            messages.append({
-                "role": "tool",
-                "tool_call_id": tool_call.id, # Link it to the specific request
-                "name": tool_name,
-                "content": json.dumps(result)
-            })
-    
-    else:
-        print(f"\nIan's Final Persona-Based Evaluation:")
-        print("------------------------------------------")
-        print(assistant_message.content)
-        break
+        self.animation_agent = animation_detector_agent.AnimationDetectorAgent()
+        self.autocomplete_agent = autocomplete_validator_agent.AutocompleteValidatorAgent()
+        self.keyboard_agent = keyboard_navigation_agent.KeyboardNavigationAgent()
+        self.readability_agent = readability_analyzer_agent.ReadabilityAnalyzerAgent()
+        self.form_agent = form_validator_agent.FormValidationAgent()
         
-print("\n=== EVALUATION COMPLETE ===")
+        self.tool_dispatcher = {
+            "detect_animations": self.animation_agent.execute,
+            "validate_autocomplete": self.autocomplete_agent.execute,
+            "check_keyboard_navigation": self.keyboard_agent.execute,
+            "analyze_readability": self.readability_agent.execute,
+            "validate_forms": self.form_agent.execute
+        }
+    
+    def get_system_prompt(self):
+        return IAN_PROMPT
+    
+    def get_tools(self):
+        return [
+            {
+                "type": "function",
+                "function": {
+                    "name": "detect_animations",
+                    "description": """
+[WHAT] Detects unexpected animations or auto-updating content.
+
+[WHEN] Use when:
+- HTML has <video>, <audio>, CSS animations
+- Checking for unpredictable content changes
+- Page has auto-refresh or dynamic content
+
+[WHO] CRITICAL for Ian (autism - unexpected changes cause distress)
+- Ian: Sudden animations → sensory overload, can't focus
+- Also helps: Stefan (ADHD - distraction)
+
+[RETURNS]
+- animation_count: If >0 AND no user control → FAILED (serious)
+- autoplay_videos, unexpected_motion
+
+[DON'T USE] When page is entirely static
+                    """,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {"html": {"type": "string"}},
+                        "required": ["html"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "validate_autocomplete",
+                    "description": """
+[WHAT] Checks form autocomplete attributes for predictable data entry.
+
+[WHEN] Use when HTML contains forms asking for personal data.
+
+[WHO] Important for Ian (autism - predictable form filling reduces anxiety)
+- Ian: Autocomplete = predictable, consistent data entry
+
+[RETURNS]
+- missing_autocomplete: Fields that should have it
+
+[DON'T USE] When no forms present
+                    """,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {"html": {"type": "string"}},
+                        "required": ["html"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "check_keyboard_navigation",
+                    "description": """
+[WHAT] Validates predictable keyboard navigation order.
+
+[WHEN] Use when HTML has interactive elements.
+
+[WHO] Important for Ian (autism - needs predictable tab order)
+- Ian: Unpredictable focus order → confused, anxious
+
+[RETURNS]
+- tab_order_issues: Illogical sequence (if present → FAILED moderate)
+- keyboard_traps
+
+[DON'T USE] When no interactive elements
+                    """,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {"html": {"type": "string"}},
+                        "required": ["html"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "analyze_readability",
+                    "description": """
+[WHAT] Checks for literal, clear language (no idioms/ambiguity).
+
+[WHEN] Use when page has text content.
+
+[WHO] CRITICAL for Ian (autism - needs literal language)
+- Ian: "Things are heating up!" → confusing metaphor
+- Needs direct, concrete language
+
+[RETURNS]
+- complex_words, ambiguous_phrases
+- idioms_found: If present → FAILED (moderate)
+
+[DON'T USE] When minimal text
+                    """,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {"html": {"type": "string"}},
+                        "required": ["html"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "validate_forms",
+                    "description": """
+[WHAT] Checks for consistent, predictable form validation and errors.
+
+[WHEN] Use when HTML contains forms.
+
+[WHO] CRITICAL for Ian (autism - needs consistent error patterns)
+- Ian: Vague or inconsistent errors → anxious, confused
+
+[RETURNS]
+- vague_errors: If NOT EMPTY → FAILED (moderate)
+- consistent_error_patterns: Boolean
+
+[DON'T USE] When no forms
+                    """,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {"html": {"type": "string"}},
+                        "required": ["html"]
+                    }
+                }
+            }
+        ]
+    
+    def execute_tool(self, tool_name, arguments):
+        html = arguments.get("html", "")
+        if not html:
+            return {"error": "Missing 'html' parameter"}
+        
+        if tool_name in self.tool_dispatcher:
+            try:
+                return self.tool_dispatcher[tool_name](html=html)
+            except Exception as e:
+                return {"error": str(e), "tool_name": tool_name}
+        
+        return {"error": f"Unknown tool: {tool_name}"}
+
+
+# Test code - ONLY runs when you execute this file directly
+if __name__ == "__main__":
+    import json
+    
+    test_html = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Project Updates</title>
+      <style>
+        .flash { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+      </style>
+    </head>
+    <body>
+      <nav>
+        <a href="/home">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </nav>
+      <main>
+        <h1>Latest Updates</h1>
+        <p>Things are heating up! Click here for more info.</p>
+        <div class="flash">NEW!</div>
+        
+        <h2>Submit Feedback</h2>
+        <form>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name">
+          
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+          
+          <label for="comment">Comment:</label>
+          <textarea id="comment" name="comment"></textarea>
+          
+          <!-- Vague error -->
+          <div class="error" style="display:none;">Error!</div>
+          
+          <button type="submit">Send</button>
+        </form>
+      </main>
+    </body>
+    </html>
+    """
+    
+    agent = IanAgent(os.environ["OPENAI_API_KEY"])
+    result = agent.evaluate(test_html)
+    
+    print("=" * 70)
+    print("IAN AGENT TEST")
+    print("=" * 70)
+    print(json.dumps(result, indent=2))

@@ -1,0 +1,475 @@
+[
+    {
+      "snippet_id": "lakshmi_1_1_1_inapplicable",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.1.1 | INAPPLICABLE | Persona: Lakshmi (blind, screen reader)\n     Page contains no images. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Terms of Service</title></head>\n<body>\n  <main>\n    <h1>Terms of Service</h1>\n    <p>By using this service, you agree to the following terms and conditions.</p>\n    <h2>1. Acceptance of Terms</h2>\n    <p>Access to and use of this website is subject to the following terms.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_1_4_5_fail",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.5 | FAIL | Persona: Lakshmi (blind, screen reader)\n     Navigation links are baked into a PNG. alt text is generic, not the link text.\n     Severity: CRITICAL - Lakshmi cannot read or navigate using these links. -->\n<head><meta charset=\"utf-8\"><title>Restaurant Menu</title></head>\n<body>\n  <nav>\n    <img src=\"nav-links.png\" alt=\"navigation menu\">\n  </nav>\n  <main>\n    <h1>Today's Specials</h1>\n    <p>Please use our navigation image above to browse the menu.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_1_4_5_pass",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.5 | PASS | Persona: Lakshmi (blind, screen reader)\n     Page title is real HTML text, not an image. Screen reader reads it directly. -->\n<head><meta charset=\"utf-8\"><title>Bank Homepage</title>\n<style>\n  h1 { font-family: Georgia, serif; font-size: 2.5rem; color: #1a1a2e; }\n</style></head>\n<body>\n  <header>\n    <h1>First National Bank</h1>\n    <nav aria-label=\"Main navigation\">\n      <a href=\"/accounts\">Accounts</a>\n      <a href=\"/loans\">Loans</a>\n    </nav>\n  </header>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_1_4_5_inapplicable",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.5 | INAPPLICABLE | Persona: Lakshmi (blind, screen reader)\n     Page contains no images at all. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>FAQ</title></head>\n<body>\n  <main>\n    <h1>Frequently Asked Questions</h1>\n    <h2>What is your return policy?</h2>\n    <p>We accept returns within 30 days of purchase with original receipt.</p>\n    <h2>How do I contact support?</h2>\n    <p>Email us at support@example.com or call 1-800-555-0199.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_2_1_1_fail",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.1.1 | FAIL | Personas: Lakshmi (blind), Ade (limited mobility)\n     Drag-and-drop reorder has no keyboard alternative.\n     Severity for Ade: CRITICAL - cannot reorder items without a mouse.\n     Severity for Lakshmi: CRITICAL - no interaction available at all. -->\n<head><meta charset=\"utf-8\"><title>Task Manager</title>\n<style>.task { cursor: grab; padding: 8px; margin: 4px; background: #f0f0f0; }</style></head>\n<body>\n  <h1>My Tasks</h1>\n  <p>Drag tasks to reorder them.</p>\n  <div id=\"task-list\">\n    <div class=\"task\" draggable=\"true\" ondragstart=\"drag(event)\" id=\"t1\">Write report</div>\n    <div class=\"task\" draggable=\"true\" ondragstart=\"drag(event)\" id=\"t2\">Send email</div>\n    <div class=\"task\" draggable=\"true\" ondragstart=\"drag(event)\" id=\"t3\">Review PR</div>\n  </div>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_2_1_1_pass",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.1.1 | PASS | Personas: Lakshmi (blind), Ade (limited mobility)\n     All interactive elements are keyboard accessible. No focus traps. -->\n<head><meta charset=\"utf-8\"><title>Course Registration</title></head>\n<body>\n  <main>\n    <h1>Register for Course</h1>\n    <form>\n      <label for=\"course\">Select course</label>\n      <select id=\"course\" name=\"course\">\n        <option value=\"a11y\">Web Accessibility</option>\n        <option value=\"html\">HTML Fundamentals</option>\n      </select>\n      <label for=\"name\">Full name</label>\n      <input id=\"name\" type=\"text\" autocomplete=\"name\">\n      <button type=\"submit\">Register</button>\n    </form>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_2_1_1_inapplicable",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.1.1 | INAPPLICABLE | Personas: Lakshmi (blind), Ade (limited mobility)\n     Page contains no interactive elements. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Press Release</title></head>\n<body>\n  <article>\n    <h1>Company Announces Record Q3 Results</h1>\n    <p>Published: October 15, 2025</p>\n    <p>Acme Corp today announced record quarterly revenue of $2.3 billion,\n       representing 18% growth year-over-year.</p>\n  </article>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_2_4_1_fail",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.4.1 | FAIL | Personas: Lakshmi (blind), Ade (limited mobility)\n     No skip link and no ARIA landmarks. Ade must Tab through all 8 nav links on every page.\n     Severity for Ade: CRITICAL - significant physical effort on every page load.\n     Severity for Lakshmi: CRITICAL - must listen through entire nav on every page. -->\n<head><meta charset=\"utf-8\"><title>E-commerce Site</title></head>\n<body>\n  <div id=\"header\">\n    <div id=\"nav\">\n      <a href=\"/\">Home</a> |\n      <a href=\"/shop\">Shop</a> |\n      <a href=\"/new\">New Arrivals</a> |\n      <a href=\"/sale\">Sale</a> |\n      <a href=\"/brands\">Brands</a> |\n      <a href=\"/account\">Account</a> |\n      <a href=\"/wishlist\">Wishlist</a> |\n      <a href=\"/cart\">Cart</a>\n    </div>\n  </div>\n  <div id=\"content\">\n    <h1>Welcome to our store</h1>\n    <p>Browse thousands of products.</p>\n  </div>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_2_4_1_pass",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.4.1 | PASS | Personas: Lakshmi (blind), Ade (limited mobility)\n     Skip-to-main link is first focusable element. Moves focus to <main>. -->\n<head><meta charset=\"utf-8\"><title>News Website</title>\n<style>\n  .skip-link { position: absolute; transform: translateY(-100%); }\n  .skip-link:focus { transform: translateY(0); background: #000; color: #fff; padding: 8px; }\n</style></head>\n<body>\n  <a class=\"skip-link\" href=\"#main-content\">Skip to main content</a>\n  <header>\n    <nav aria-label=\"Primary navigation\">\n      <ul>\n        <li><a href=\"/\">Home</a></li>\n        <li><a href=\"/world\">World</a></li>\n        <li><a href=\"/tech\">Technology</a></li>\n        <li><a href=\"/sports\">Sports</a></li>\n      </ul>\n    </nav>\n  </header>\n  <main id=\"main-content\">\n    <h1>Latest Headlines</h1>\n    <p>Today's top stories from around the world.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_2_4_1_inapplicable",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.4.1 | INAPPLICABLE | Personas: Lakshmi (blind), Ade (limited mobility)\n     Single-page content with no repeated navigation blocks. No need for skip link. -->\n<head><meta charset=\"utf-8\"><title>Print Receipt</title></head>\n<body>\n  <h1>Order Confirmation</h1>\n  <p>Order #: 2025-00847</p>\n  <p>Date: February 25, 2025</p>\n  <table>\n    <tr><th>Item</th><th>Qty</th><th>Price</th></tr>\n    <tr><td>Blue Hoodie (M)</td><td>1</td><td>$49.99</td></tr>\n  </table>\n  <p>Total: $49.99</p>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_4_1_2_fail",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 4.1.2 | FAIL | Persona: Lakshmi (blind, screen reader)\n     Icon button has no accessible name. NVDA announces \"button\" with no context.\n     Severity: CRITICAL - Lakshmi cannot identify what this button does. -->\n<head><meta charset=\"utf-8\"><title>Music Player</title></head>\n<body>\n  <div class=\"player-controls\">\n    <button><img src=\"play-icon.png\"></button>\n    <button><img src=\"pause-icon.png\"></button>\n    <button><img src=\"stop-icon.png\"></button>\n  </div>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_4_1_2_pass",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 4.1.2 | PASS | Persona: Lakshmi (blind, screen reader)\n     Button has accessible name. NVDA announces \"Submit form, button\". -->\n<head><meta charset=\"utf-8\"><title>Contact Form</title></head>\n<body>\n  <form>\n    <label for=\"email\">Email address</label>\n    <input id=\"email\" type=\"email\" autocomplete=\"email\">\n    <button type=\"submit\">Submit form</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "lakshmi_4_1_2_inapplicable",
+      "primary_persona": "lakshmi",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 4.1.2 | INAPPLICABLE | Persona: Lakshmi (blind, screen reader)\n     Page is purely static informational text. No interactive elements. -->\n<head><meta charset=\"utf-8\"><title>About Our Company</title></head>\n<body>\n  <main>\n    <h1>About Us</h1>\n    <p>Founded in 2005, we provide accessible technology solutions.</p>\n    <h2>Our Mission</h2>\n    <p>We believe digital experiences should be inclusive for everyone.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "lakshmi": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_1_3_5_fail",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.3.5 | FAIL | Personas: Ian (autism), Elias (tremor), Sophie (cognitive)\n     Personal data fields have no autocomplete attributes. Browser cannot autofill.\n     Severity for Elias: CRITICAL - tremor makes manual typing extremely difficult.\n     Severity for Ian: SERIOUS - must recall and type personal info manually.\n     Severity for Sophie: SERIOUS - cognitive load of remembering account details. -->\n<head><meta charset=\"utf-8\"><title>Profile Setup</title></head>\n<body>\n  <h1>Create Your Profile</h1>\n  <form>\n    <label for=\"fn\">First name</label>\n    <input id=\"fn\" type=\"text\" name=\"firstname\"><br>\n    <label for=\"ln\">Last name</label>\n    <input id=\"ln\" type=\"text\" name=\"lastname\"><br>\n    <label for=\"em\">Email</label>\n    <input id=\"em\" type=\"text\" name=\"email\"><br>\n    <label for=\"ph\">Phone number</label>\n    <input id=\"ph\" type=\"text\" name=\"phone\"><br>\n    <button type=\"submit\">Save profile</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_1_3_5_pass",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.3.5 | PASS | Personas: Ian (autism), Elias (tremor), Sophie (cognitive)\n     All personal data fields have correct autocomplete tokens. Browser can autofill. -->\n<head><meta charset=\"utf-8\"><title>Checkout</title></head>\n<body>\n  <h1>Shipping Address</h1>\n  <form>\n    <label for=\"fname\">First name</label>\n    <input id=\"fname\" type=\"text\" autocomplete=\"given-name\"><br>\n    <label for=\"lname\">Last name</label>\n    <input id=\"lname\" type=\"text\" autocomplete=\"family-name\"><br>\n    <label for=\"addr\">Street address</label>\n    <input id=\"addr\" type=\"text\" autocomplete=\"street-address\"><br>\n    <label for=\"city\">City</label>\n    <input id=\"city\" type=\"text\" autocomplete=\"address-level2\"><br>\n    <label for=\"email\">Email</label>\n    <input id=\"email\" type=\"email\" autocomplete=\"email\"><br>\n    <label for=\"phone\">Phone</label>\n    <input id=\"phone\" type=\"tel\" autocomplete=\"tel\"><br>\n    <button type=\"submit\">Continue to payment</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_1_3_5_inapplicable",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.3.5 | INAPPLICABLE | Personas: Ian (autism), Elias (tremor), Sophie (cognitive)\n     Form collects no personal data. Only a search query. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Search</title></head>\n<body>\n  <form role=\"search\">\n    <label for=\"q\">Search our catalogue</label>\n    <input id=\"q\" type=\"search\" name=\"q\" placeholder=\"e.g. running shoes\">\n    <button type=\"submit\">Search</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_2_2_1_fail",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.2.1 | FAIL | Personas: Ade (limited mobility), Sophie (cognitive/reading)\n     Page uses meta refresh to redirect after 30 seconds with no warning or way to extend.\n     Severity for Ade: CRITICAL - slow keyboard navigation means she rarely completes tasks in time.\n     Severity for Sophie: CRITICAL - reading speed is slower; form data is lost. -->\n<head>\n  <meta charset=\"utf-8\">\n  <meta http-equiv=\"refresh\" content=\"30; url=/session-expired\">\n  <title>Complete Your Order</title>\n</head>\n<body>\n  <h1>Order Review</h1>\n  <p>Please review your order before confirming.</p>\n  <table>\n    <tr><th>Item</th><th>Price</th></tr>\n    <tr><td>Ergonomic Keyboard</td><td>$89.99</td></tr>\n  </table>\n  <form>\n    <button type=\"submit\">Confirm order</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_2_2_1_pass",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.2.1 | PASS | Personas: Ade (limited mobility), Sophie (cognitive/reading)\n     Session warning appears before timeout with keyboard-accessible extend option. -->\n<head><meta charset=\"utf-8\"><title>Banking Portal</title>\n<script>\n// Simulates a session timeout warning at 19 minutes (with 1 min to respond)\nfunction showTimeoutWarning() {\n  document.getElementById('timeout-dialog').removeAttribute('hidden');\n  document.getElementById('extend-btn').focus();\n}\nfunction extendSession() {\n  document.getElementById('timeout-dialog').setAttribute('hidden', '');\n  // Reset session timer\n}\nfunction logout() { window.location.href = '/logout'; }\n</script></head>\n<body>\n  <main>\n    <h1>Account Overview</h1>\n    <p>Balance: $4,230.50</p>\n  </main>\n  <div id=\"timeout-dialog\" role=\"alertdialog\" aria-modal=\"true\" \n       aria-labelledby=\"timeout-title\" aria-describedby=\"timeout-desc\" hidden>\n    <h2 id=\"timeout-title\">Session expiring soon</h2>\n    <p id=\"timeout-desc\">Your session will expire in 60 seconds due to inactivity.\n       Would you like to continue?</p>\n    <button id=\"extend-btn\" onclick=\"extendSession()\">Continue session</button>\n    <button onclick=\"logout()\">Sign out now</button>\n  </div>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_2_2_1_inapplicable",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.2.1 | INAPPLICABLE | Personas: Ade (limited mobility), Sophie (cognitive/reading)\n     No time limits, session timers, or auto-advancing content present. -->\n<head><meta charset=\"utf-8\"><title>Recipe</title></head>\n<body>\n  <article>\n    <h1>Classic Pancake Recipe</h1>\n    <h2>Ingredients</h2>\n    <ul>\n      <li>1 cup flour</li>\n      <li>1 tbsp sugar</li>\n      <li>1 egg</li>\n      <li>1 cup milk</li>\n      <li>2 tbsp butter</li>\n    </ul>\n    <h2>Method</h2>\n    <ol>\n      <li>Mix dry ingredients in a bowl.</li>\n      <li>Add wet ingredients and whisk until smooth.</li>\n      <li>Cook on medium heat for 2 minutes per side.</li>\n    </ol>\n  </article>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_2_4_4_fail",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.4.4 | FAIL | Personas: Ian (autism), Sophie (cognitive/reading disability)\n     Multiple \"click here\" links with no context. Screen reader link list is meaningless.\n     Severity for Ian: SERIOUS - ambiguous links cause anxiety and confusion.\n     Severity for Sophie: SERIOUS - requires re-reading surrounding context repeatedly. -->\n<head><meta charset=\"utf-8\"><title>News Articles</title></head>\n<body>\n  <h1>Latest News</h1>\n  <p>The city council approved a new housing plan. <a href=\"/news/housing\">Click here</a> to read the full article.</p>\n  <p>Local schools receive new technology funding. <a href=\"/news/schools\">Click here</a> for details.</p>\n  <p>Annual marathon returns to downtown. <a href=\"/news/marathon\">Click here</a> to find out more.</p>\n  <p>For all news stories <a href=\"/news\">click here</a>.</p>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_2_4_4_pass",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.4.4 | PASS | Personas: Ian (autism), Sophie (cognitive/reading disability)\n     All links have descriptive text that communicates destination or action. -->\n<head><meta charset=\"utf-8\"><title>Research Library</title></head>\n<body>\n  <main>\n    <h1>Recent Publications</h1>\n    <article>\n      <h2>Accessible Design Patterns for Mobile Apps</h2>\n      <p>Published March 2025 · 14-page report</p>\n      <a href=\"/papers/mobile-a11y-2025.pdf\">\n        Download Accessible Design Patterns for Mobile Apps (PDF, 1.2 MB)\n      </a>\n    </article>\n    <article>\n      <h2>Color Contrast in Data Visualization</h2>\n      <p>Published January 2025 · 8-page report</p>\n      <a href=\"/papers/color-dataviz-2025.pdf\">\n        Download Color Contrast in Data Visualization (PDF, 890 KB)\n      </a>\n    </article>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_2_4_4_inapplicable",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.4.4 | INAPPLICABLE | Personas: Ian (autism), Sophie (cognitive/reading disability)\n     Page contains no hyperlinks. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Printed Confirmation</title></head>\n<body>\n  <h1>Booking Confirmation</h1>\n  <p>Your reservation at The Grand Hotel has been confirmed.</p>\n  <p>Check-in: March 10, 2025 · Check-out: March 13, 2025</p>\n  <p>Confirmation number: HTL-2025-88472</p>\n  <p>Please present this confirmation at the front desk upon arrival.</p>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_3_1_5_fail",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.5 | FAIL | SYNTHETIC | Persona: Sophie (Down syndrome, cognitive disability)\n     Legal/medical text at approximately Grade 16 reading level (post-graduate).\n     Flesch-Kincaid Grade Level ≈ 16+. No plain-language summary provided.\n     Severity for Sophie: CRITICAL - completely excludes her from accessing this content. -->\n<head><meta charset=\"utf-8\"><title>Insurance Policy</title></head>\n<body>\n  <main>\n    <h1>Health Insurance Policy Terms and Conditions</h1>\n    <p>The indemnification obligations hereunder shall not apply to the extent that the\n       Policyholder's liability arises from the Policyholder's own gross negligence or\n       willful misconduct. Notwithstanding any provision to the contrary, the aggregate\n       liability of the Insurer under this Policy shall not exceed the Maximum Indemnity\n       Amount specified in the Schedule of Benefits appended hereto.</p>\n    <p>Preauthorization requirements are applicable to all elective procedures and\n       non-emergent inpatient hospitalizations. The Policyholder must obtain prior\n       authorization from the Plan Administrator as delineated in the Utilization\n       Management Protocol. Failure to obtain preauthorization may result in\n       reduction or denial of benefits pursuant to Section 14(b)(iii) of this Policy.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_3_1_5_pass",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.5 | PASS | SYNTHETIC | Persona: Sophie (Down syndrome, cognitive disability)\n     Text is written at Grade 6 reading level (Flesch-Kincaid ≈ 6, Flesch Reading Ease ≈ 72).\n     Short sentences. Common words. Active voice. Sophie can understand independently. -->\n<head><meta charset=\"utf-8\"><title>How to Vote</title></head>\n<body>\n  <main>\n    <h1>How to Vote in Your Local Election</h1>\n    <p>Voting is easy. Here are the steps to follow on election day.</p>\n    <ol>\n      <li>Go to your polling place. You can find it on your voter registration card.</li>\n      <li>Show your ID to the person at the desk.</li>\n      <li>They will give you a ballot.</li>\n      <li>Go to a private booth. Mark your choices on the ballot.</li>\n      <li>Put your ballot in the box.</li>\n      <li>You have voted! You may get a sticker.</li>\n    </ol>\n    <p>If you need help, ask a poll worker. They are there to help you.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_3_1_5_inapplicable",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.5 | INAPPLICABLE | SYNTHETIC | Persona: Sophie (Down syndrome, cognitive disability)\n     Page contains no user-facing text content (video player only). Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Video Player</title></head>\n<body>\n  <video controls width=\"640\" height=\"360\" aria-label=\"Introduction to our services, 3 minutes\">\n    <source src=\"intro.mp4\" type=\"video/mp4\">\n    <track kind=\"captions\" src=\"captions.vtt\" srclang=\"en\" label=\"English captions\">\n  </video>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_3_3_1_fail",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.3.1 | FAIL | Persona: Sophie (cognitive/reading disability)\n     Error indicated only by red border and icon — no text error message.\n     Severity for Sophie: CRITICAL - cannot perceive the error at all.\n     Even sighted users with color vision deficiency cannot detect this error. -->\n<head><meta charset=\"utf-8\"><title>Booking Form</title>\n<style>\n  .invalid { border: 2px solid #e53935; }\n  .error-icon { color: #e53935; font-size: 18px; }\n</style></head>\n<body>\n  <h1>Book Appointment</h1>\n  <form>\n    <label for=\"date\">Preferred date</label>\n    <input id=\"date\" type=\"date\" class=\"invalid\">\n    <span class=\"error-icon\">⚠️</span>\n    <label for=\"time\">Preferred time</label>\n    <input id=\"time\" type=\"time\">\n    <button type=\"submit\">Book now</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_3_3_1_pass",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.3.1 | PASS | Persona: Sophie (cognitive/reading disability)\n     Error identified in text, linked to field via aria-describedby, announced by screen reader.\n     Sophie needs text errors, not just red borders, to understand what went wrong. -->\n<head><meta charset=\"utf-8\"><title>Registration Form</title>\n<style>\n  .error-msg { color: #cc0000; font-size: 14px; margin-top: 4px; }\n  .field-error { border: 2px solid #cc0000; }\n</style></head>\n<body>\n  <h1>Create Account</h1>\n  <form>\n    <div>\n      <label for=\"email\">Email address</label>\n      <input id=\"email\" type=\"email\" class=\"field-error\"\n             aria-describedby=\"email-error\" aria-invalid=\"true\"\n             value=\"not-an-email\">\n      <p id=\"email-error\" class=\"error-msg\" role=\"alert\">\n        Error: Please enter a valid email address (for example: name@example.com)\n      </p>\n    </div>\n    <div>\n      <label for=\"password\">Password</label>\n      <input id=\"password\" type=\"password\" class=\"field-error\"\n             aria-describedby=\"pw-error\" aria-invalid=\"true\">\n      <p id=\"pw-error\" class=\"error-msg\" role=\"alert\">\n        Error: Password must be at least 8 characters and include one number\n      </p>\n    </div>\n    <button type=\"submit\">Create account</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "sophie_3_3_1_inapplicable",
+      "primary_persona": "sophie",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.3.1 | INAPPLICABLE | Persona: Sophie (cognitive/reading disability)\n     Page has no form fields. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Thank You</title></head>\n<body>\n  <main>\n    <h1>Thank you for your order!</h1>\n    <p>Your order number is <strong>ORD-2025-04817</strong>.</p>\n    <p>You will receive a confirmation email at the address you provided.</p>\n    <p>Estimated delivery: March 12–14, 2025.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "sophie": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_1_4_12_fail",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.12 | FAIL | Personas: Stefan (ADHD/dyslexia), Elias (low vision)\n     Fixed-height container clips text when line-height is increased.\n     When user applies 1.5x line-height override, text overflows and is cut off.\n     Severity for Stefan: SERIOUS - reading override tools cause content loss.\n     Severity for Elias: SERIOUS - screen magnifier + font modifier breaks layout. -->\n<head><meta charset=\"utf-8\"><title>Event Card</title>\n<style>\n  .event-card { height: 80px; overflow: hidden; border: 1px solid #ccc; padding: 8px; width: 300px; }\n  .event-title { line-height: 1.2; font-size: 16px; }\n</style></head>\n<body>\n  <div class=\"event-card\">\n    <p class=\"event-title\">Annual Accessibility Conference — Improving Digital Inclusion for\n    Everyone, Everywhere in 2025</p>\n    <p class=\"event-date\">March 15, 2025 · San Francisco</p>\n  </div>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_1_4_12_pass",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.12 | PASS | Personas: Stefan (ADHD/dyslexia), Elias (low vision)\n     No hardcoded height constraints. Content reflows when spacing is overridden. -->\n<head><meta charset=\"utf-8\"><title>Article</title>\n<style>\n  body { font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 16px; }\n  p { margin-bottom: 1em; }\n  .card { border: 1px solid #ccc; padding: 16px; border-radius: 4px; }\n</style></head>\n<body>\n  <article>\n    <h1>The Benefits of Regular Exercise</h1>\n    <div class=\"card\">\n      <p>Regular physical activity improves cardiovascular health, strengthens muscles,\n         and boosts mental wellbeing. Even 30 minutes of moderate exercise per day\n         can make a significant difference to your long-term health outcomes.</p>\n    </div>\n    <p>Start with activities you enjoy to build a sustainable habit.</p>\n  </article>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_1_4_12_inapplicable",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.12 | INAPPLICABLE | Personas: Stefan (ADHD/dyslexia), Elias (low vision)\n     Page contains only a video with no text content subject to spacing constraints. -->\n<head><meta charset=\"utf-8\"><title>Tutorial Video</title></head>\n<body>\n  <main>\n    <h1>Getting Started Tutorial</h1>\n    <video controls width=\"640\" height=\"360\">\n      <source src=\"tutorial.mp4\" type=\"video/mp4\">\n      <track kind=\"captions\" src=\"captions.vtt\" srclang=\"en\" label=\"English\">\n    </video>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_1_4_8_fail",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.8 | FAIL | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)\n     Text is fully justified and line length exceeds 80 characters.\n     Foreground/background colors are hardcoded and cannot be overridden.\n     Severity for Stefan: SERIOUS - justified text with long lines creates reading rivers;\n     fixed colors prevent use of dyslexia-friendly color overlays. -->\n<head><meta charset=\"utf-8\"><title>Legal Document</title>\n<style>\n  body { background: #f5f5dc; color: #333333; font-family: Times New Roman, serif; }\n  .legal-text {\n    text-align: justify;    /* FAILS: full justification */\n    max-width: 95%;         /* FAILS: far exceeds 80 char width */\n    line-height: 1.2;       /* FAILS: below 1.5 */\n    /* Colors hardcoded - user cannot override to preferred dyslexia palette */\n  }\n</style></head>\n<body>\n  <div class=\"legal-text\">\n    <h1>Terms and Conditions of Service</h1>\n    <p>By accessing, browsing, or otherwise using this website and its associated services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. These terms constitute a legally binding agreement between you and the Company and govern your use of all features, content, and services provided through this platform.</p>\n    <p>The Company reserves the right to modify, amend, or update these Terms and Conditions at any time and without prior notice. Your continued use of the service after any such modification constitutes your acceptance of the new Terms and Conditions in their entirety.</p>\n  </div>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_1_4_8_pass",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.8 | PASS | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)\n     Text block meets all 1.4.8 requirements: ≤80 char width, left-aligned,\n     1.5 line-height, adjustable font/color. No justified text. -->\n<head><meta charset=\"utf-8\"><title>Blog Article</title>\n<style>\n  body { background: #ffffff; color: #1a1a1a; font-family: Georgia, serif; }\n  article { max-width: 66ch; margin: 0 auto; padding: 16px; }\n  p {\n    line-height: 1.6;\n    text-align: left;       /* NOT justified */\n    margin-bottom: 1.5em;\n  }\n  /* Colors and font can be overridden by user stylesheet */\n</style></head>\n<body>\n  <article>\n    <h1>Making Text Readable for Everyone</h1>\n    <p>Good typographic choices make a real difference for readers with dyslexia.\n       Short line lengths, generous spacing, and left-aligned text all reduce the\n       visual strain that comes from tracking long lines across a page.</p>\n    <p>Avoiding justified text is especially important. Justified text creates\n       irregular spaces between words that can cause \"rivers\" of white space,\n       making it harder for the eye to follow the reading line.</p>\n  </article>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_1_4_8_inapplicable",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 1.4.8 | INAPPLICABLE | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)\n     Page contains only form elements, no blocks of body text. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Quick Search</title></head>\n<body>\n  <form role=\"search\">\n    <label for=\"search\">Search</label>\n    <input id=\"search\" type=\"search\" placeholder=\"Search...\">\n    <button type=\"submit\">Go</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_2_2_2_fail",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.2.2 | FAIL | Personas: Stefan (ADHD/dyslexia), Elias (low vision/tremor)\n     Auto-playing carousel has no pause/stop control. Runs indefinitely.\n     Severity for Stefan: CRITICAL - constant motion prevents reading and focus.\n     Severity for Elias: SERIOUS - cannot stop motion to use screen magnifier. -->\n<head><meta charset=\"utf-8\"><title>Promotional Carousel</title>\n<style>\n  @keyframes carousel { 0%{opacity:1} 33%{opacity:0} 66%{opacity:0} 100%{opacity:1} }\n  .slide { position:absolute; top:0; left:0; width:100%; animation: carousel 9s infinite; }\n  .slide:nth-child(2) { animation-delay: 3s; }\n  .slide:nth-child(3) { animation-delay: 6s; }\n  .carousel { position:relative; height:200px; overflow:hidden; }\n</style></head>\n<body>\n  <div class=\"carousel\" aria-label=\"Promotions\">\n    <div class=\"slide\" style=\"background:#e8f4fd\"><h2>50% off all shoes</h2></div>\n    <div class=\"slide\" style=\"background:#fef9e7\"><h2>Free shipping over $50</h2></div>\n    <div class=\"slide\" style=\"background:#eafaf1\"><h2>New arrivals weekly</h2></div>\n  </div>\n  <main><h1>Our Products</h1></main>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_2_2_2_pass",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.2.2 | PASS | Personas: Stefan (ADHD/dyslexia), Elias (low vision/tremor)\n     Auto-playing banner has visible, keyboard-accessible Pause button. -->\n<head><meta charset=\"utf-8\"><title>Homepage</title>\n<style>\n  @keyframes slide { 0%{transform:translateX(0)} 100%{transform:translateX(-100%)} }\n  .banner { overflow:hidden; width:100%; }\n  .banner-inner { animation: slide 8s linear infinite; white-space:nowrap; }\n  .banner-inner.paused { animation-play-state: paused; }\n</style>\n<script>\nfunction toggleBanner() {\n  const b = document.querySelector('.banner-inner');\n  const btn = document.getElementById('pause-btn');\n  if (b.classList.contains('paused')) {\n    b.classList.remove('paused'); btn.textContent = 'Pause banner';\n  } else {\n    b.classList.add('paused'); btn.textContent = 'Resume banner';\n  }\n}\n</script></head>\n<body>\n  <div class=\"banner\">\n    <div class=\"banner-inner\">Breaking: New accessibility standards announced · Free webinar this Friday ·</div>\n  </div>\n  <button id=\"pause-btn\" onclick=\"toggleBanner()\">Pause banner</button>\n  <main><h1>Welcome</h1></main>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_2_2_2_inapplicable",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 2.2.2 | INAPPLICABLE | Personas: Stefan (ADHD/dyslexia), Elias (low vision/tremor)\n     Page has no animated, blinking, or scrolling content. -->\n<head><meta charset=\"utf-8\"><title>Patient Intake Form</title></head>\n<body>\n  <h1>Patient Information Form</h1>\n  <form>\n    <label for=\"dob\">Date of birth</label>\n    <input id=\"dob\" type=\"date\" autocomplete=\"bday\">\n    <label for=\"condition\">Primary concern</label>\n    <textarea id=\"condition\" rows=\"4\"></textarea>\n    <button type=\"submit\">Submit form</button>\n  </form>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_3_1_3_fail",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.3 | FAIL | SYNTHETIC | Personas: Stefan (ADHD/dyslexia), Ian (autism)\n     Technical jargon used without any definition mechanism.\n     Severity for Stefan: SERIOUS - unfamiliar vocabulary interrupts reading comprehension.\n     Severity for Ian: SERIOUS - literal interpretation of idioms causes confusion. -->\n<head><meta charset=\"utf-8\"><title>IT Security Policy</title></head>\n<body>\n  <main>\n    <h1>Information Security Policy</h1>\n    <p>All endpoints must be hardened against CVEs before deployment to production.\n       The SOC team will perform penetration testing to identify attack vectors.\n       Any PII found in logs must be redacted to ensure GDPR compliance.</p>\n    <p>Ingress traffic is filtered via WAF rules at the perimeter. \n       Zero-trust architecture means lateral movement is mitigated by microsegmentation.\n       The CISO has final sign-off on all changes to the DMZ topology.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_3_1_3_pass",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.3 | PASS | SYNTHETIC | Personas: Stefan (ADHD/dyslexia), Ian (autism)\n     Technical terms are defined using <abbr> with title and linked glossary entries.\n     Stefan and Ian both benefit from inline word definitions. -->\n<head><meta charset=\"utf-8\"><title>Developer Guide</title></head>\n<body>\n  <main>\n    <h1>Getting Started with the API</h1>\n    <p>\n      This guide explains how to use our \n      <a href=\"/glossary#rest-api\"><abbr title=\"Representational State Transfer Application Programming Interface\">REST API</abbr></a>\n      to retrieve data from our service.\n    </p>\n    <p>\n      Each request requires an \n      <a href=\"/glossary#auth-token\"><abbr title=\"Authentication Token — a secret string that proves your identity\">auth token</abbr></a>\n      in the request header.\n    </p>\n    <p>\n      Responses are returned in \n      <a href=\"/glossary#json\"><abbr title=\"JavaScript Object Notation — a text format for storing structured data\">JSON</abbr></a> format.\n    </p>\n    <aside>\n      <h2>Glossary</h2>\n      <dl>\n        <dt id=\"rest-api-def\">REST API</dt>\n        <dd>A way for programs to communicate over the internet using standard web requests.</dd>\n        <dt id=\"auth-token-def\">Auth Token</dt>\n        <dd>A unique code that identifies you to the service, like a digital key card.</dd>\n      </dl>\n    </aside>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_3_1_3_inapplicable",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.3 | INAPPLICABLE | SYNTHETIC | Personas: Stefan (ADHD/dyslexia), Ian (autism)\n     Page contains only a photograph. No user-readable text to evaluate. -->\n<head><meta charset=\"utf-8\"><title>Staff Photo</title></head>\n<body>\n  <figure>\n    <img src=\"team-photo-2025.jpg\" \n         alt=\"The twelve-person Acme Corp team standing in front of the office building, \n              smiling and wearing company t-shirts, on a sunny day\">\n    <figcaption>The Acme Corp team, January 2025</figcaption>\n  </figure>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_3_1_4_fail",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.4 | FAIL | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)\n     Abbreviations used without any expansion mechanism.\n     Severity for Stefan: SERIOUS - TTS reads letters individually (\"S-S-A\") with no context;\n     comprehension of the sentence is broken. -->\n<head><meta charset=\"utf-8\"><title>Tax Filing Guide</title></head>\n<body>\n  <main>\n    <h1>How to File Your Taxes</h1>\n    <p>Download the W-2 form from your employer's HR portal by January 31.</p>\n    <p>If you have income from freelance work, you will also need a 1099 form.\n       File your return with the IRS by April 15 to avoid penalties.</p>\n    <p>Consider using EITC if you qualify — this can significantly reduce your AGI\n       and lower the amount you owe to the IRS.</p>\n    <p>For complex returns, consult a CPA. VITA offers free tax prep for qualifying filers.</p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "FAIL",
+          "severity": "high"
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_3_1_4_pass",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.4 | PASS | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)\n     All abbreviations are wrapped in <abbr> with full expansion in title attribute.\n     Stefan's text-to-speech can read the full form; reading flow is preserved. -->\n<head><meta charset=\"utf-8\"><title>Government Benefits</title></head>\n<body>\n  <main>\n    <h1>Applying for Benefits</h1>\n    <p>\n      The <abbr title=\"Social Security Administration\">SSA</abbr> processes all benefit \n      applications within 90 days.\n    </p>\n    <p>\n      You may qualify for \n      <abbr title=\"Supplemental Nutrition Assistance Program\">SNAP</abbr> if your \n      household income is below 130% of the federal poverty level.\n    </p>\n    <p>\n      To apply online, you will need your \n      <abbr title=\"Social Security Number\">SSN</abbr> and a valid \n      <abbr title=\"Identification\">ID</abbr>.\n    </p>\n  </main>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "PASS",
+          "severity": ""
+        }
+      }
+    },
+    {
+      "snippet_id": "stefan_3_1_4_inapplicable",
+      "primary_persona": "stefan",
+      "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<!-- WCAG 3.1.4 | INAPPLICABLE | SYNTHETIC | Persona: Stefan (ADHD/dyslexia)\n     Page contains no abbreviations or acronyms. Criterion does not apply. -->\n<head><meta charset=\"utf-8\"><title>Kids Story</title></head>\n<body>\n  <article>\n    <h1>The Little Red Hen</h1>\n    <p>Once upon a time, there was a little red hen who lived on a farm.</p>\n    <p>One day she found some wheat seeds and asked her friends to help her plant them.</p>\n    <p>\"Not I,\" said the dog. \"Not I,\" said the cat. \"Not I,\" said the pig.</p>\n    <p>\"Then I will do it myself,\" said the little red hen.</p>\n  </article>\n</body>\n</html>",
+      "ground_truth": {
+        "stefan": {
+          "label": "NOT_APPLICABLE",
+          "severity": ""
+        }
+      }
+    }
+  ]

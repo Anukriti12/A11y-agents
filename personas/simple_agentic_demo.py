@@ -59,7 +59,7 @@ for iteration in range(5):  # Max 5 iterations
     
     # Call LLM
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=messages,
         tools=tools,
         tool_choice="auto"

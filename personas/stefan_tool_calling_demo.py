@@ -102,7 +102,7 @@ for iteration in range(10):
     print(f"--- Iteration {iteration + 1} ---")
     
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=messages,
         tools=tools,
         tool_choice="auto"
