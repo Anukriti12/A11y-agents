@@ -1,0 +1,20 @@
+{
+  "testcaseId": "1b172036f8e219ef9b6f591d7f5df26e4ba11327",
+  "testcaseTitle": "Passed Example 3",
+  "expected": "passed",
+  "ruleId": "8fc3b6",
+  "ruleName": "Object element rendering non-text content has non-empty accessible name",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/8fc3b6/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/8fc3b6/1b172036f8e219ef9b6f591d7f5df26e4ba11327.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "1.1.1",
+  "persona_folder": "lakshmi",
+  "ruleAccessibilityRequirements": {
+    "wcag20:1.1.1": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

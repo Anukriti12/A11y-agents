@@ -1,0 +1,27 @@
+{
+  "testcaseId": "0d1564a1311c77d8693a9f839e1d752df501d441",
+  "testcaseTitle": "Inapplicable Example 5",
+  "expected": "inapplicable",
+  "ruleId": "efbfc7",
+  "ruleName": "Text content that changes automatically can be paused, stopped or hidden",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/efbfc7/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/efbfc7/0d1564a1311c77d8693a9f839e1d752df501d441.html",
+  "approved": null,
+  "wcag_criterion_in_corpus": "2.2.2",
+  "persona_folder": "ian",
+  "ruleAccessibilityRequirements": {
+    "wcag20:2.2.2": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-text:cc5": {
+      "title": "WCAG Non-Interference",
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

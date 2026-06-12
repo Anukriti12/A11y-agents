@@ -1,0 +1,20 @@
+{
+  "testcaseId": "52be6331dc0978990a8b806a9a4a84bf738a43e1",
+  "testcaseTitle": "Passed Example 1",
+  "expected": "passed",
+  "ruleId": "oj04fd",
+  "ruleName": "Element in sequential focus order has visible focus",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/oj04fd/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/oj04fd/52be6331dc0978990a8b806a9a4a84bf738a43e1.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "2.4.7",
+  "persona_folder": "ade",
+  "ruleAccessibilityRequirements": {
+    "wcag20:2.4.7": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

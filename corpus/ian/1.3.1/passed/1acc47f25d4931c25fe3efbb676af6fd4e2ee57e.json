@@ -1,0 +1,20 @@
+{
+  "testcaseId": "1acc47f25d4931c25fe3efbb676af6fd4e2ee57e",
+  "testcaseTitle": "Passed Example 6",
+  "expected": "passed",
+  "ruleId": "ff89c9",
+  "ruleName": "ARIA required context role",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/ff89c9/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/ff89c9/1acc47f25d4931c25fe3efbb676af6fd4e2ee57e.html",
+  "approved": null,
+  "wcag_criterion_in_corpus": "1.3.1",
+  "persona_folder": "ian",
+  "ruleAccessibilityRequirements": {
+    "wcag20:1.3.1": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

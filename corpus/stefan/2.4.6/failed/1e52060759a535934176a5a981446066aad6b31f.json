@@ -1,0 +1,26 @@
+{
+  "testcaseId": "1e52060759a535934176a5a981446066aad6b31f",
+  "testcaseTitle": "Failed Example 2",
+  "expected": "failed",
+  "ruleId": "cc0f0a",
+  "ruleName": "Form field label is descriptive",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/cc0f0a/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/cc0f0a/1e52060759a535934176a5a981446066aad6b31f.html",
+  "approved": null,
+  "wcag_criterion_in_corpus": "2.4.6",
+  "persona_folder": "stefan",
+  "ruleAccessibilityRequirements": {
+    "wcag20:2.4.6": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G131": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}
