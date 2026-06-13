@@ -1,8 +1,0 @@
-{
-  "persona": "stefan",
-  "wcag_criterion": "3.1.4",
-  "expected_label": "PASS",
-  "source": "SYNTHETIC",
-  "filename": "pass_1.html",
-  "notes": "Synthetic test case for WCAG 3.1.4 | Persona: stefan"
-}

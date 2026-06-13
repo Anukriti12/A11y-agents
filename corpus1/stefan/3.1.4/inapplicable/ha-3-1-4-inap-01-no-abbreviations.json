@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-3-1-4-inap-01-no-abbreviations",
+  "testcaseTitle": "Page contains no abbreviations",
+  "expected": "inapplicable",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/abbreviations.html",
+  "authoring_notes": "Body text uses no abbreviations or acronyms, so the criterion does not apply.",
+  "wcag_criterion_in_corpus": "3.1.4",
+  "persona_folder": "stefan"
+}
