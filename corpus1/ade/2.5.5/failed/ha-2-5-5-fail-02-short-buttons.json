@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-5-5-fail-02-short-buttons",
+  "testcaseTitle": "Standard buttons styled below 44px height",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/target-size.html",
+  "authoring_notes": "Buttons are wide enough horizontally but only 28px tall, below the 44px AAA threshold.",
+  "wcag_criterion_in_corpus": "2.5.5",
+  "persona_folder": "ade"
+}

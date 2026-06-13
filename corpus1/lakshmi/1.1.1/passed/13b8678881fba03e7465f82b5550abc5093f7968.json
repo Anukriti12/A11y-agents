@@ -1,0 +1,32 @@
+{
+  "testcaseId": "13b8678881fba03e7465f82b5550abc5093f7968",
+  "testcaseTitle": "Passed Example 7",
+  "expected": "passed",
+  "ruleId": "23a2a8",
+  "ruleName": "Image has non-empty accessible name",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/23a2a8/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/23a2a8/13b8678881fba03e7465f82b5550abc5093f7968.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "1.1.1",
+  "persona_folder": "lakshmi",
+  "ruleAccessibilityRequirements": {
+    "wcag20:1.1.1": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G94": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G95": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

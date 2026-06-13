@@ -1,0 +1,23 @@
+{
+  "testcaseId": "19123c99ec390011b87736827720d5e1e794bad2",
+  "testcaseTitle": "Failed Example 10",
+  "expected": "failed",
+  "ruleId": "afw4f7",
+  "ruleName": "Text has minimum contrast",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/19123c99ec390011b87736827720d5e1e794bad2.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "1.4.3",
+  "persona_folder": "elias",
+  "ruleAccessibilityRequirements": {
+    "wcag20:1.4.3": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag20:1.4.6": {
+      "secondary": "This success criterion is **more strict** than this rule. This is because this criterion has a higher minimum contrast. Some of the passed examples do not satisfy this success criterion."
+    }
+  }
+}

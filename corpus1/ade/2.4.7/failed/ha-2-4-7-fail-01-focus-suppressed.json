@@ -1,0 +1,13 @@
+{
+  "testcaseId": "ha-2-4-7-fail-01-focus-suppressed",
+  "testcaseTitle": "Focus indicator suppressed via CSS outline removal",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [
+    "F78"
+  ],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/focus-visible.html",
+  "authoring_notes": "Global CSS sets outline:none on focusable elements with no replacement, eliminating any visible focus indicator. Failure F78.",
+  "wcag_criterion_in_corpus": "2.4.7",
+  "persona_folder": "ade"
+}

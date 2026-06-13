@@ -1,0 +1,50 @@
+{
+  "testcaseId": "07c0b535c3c68a3deeb9fde43c4ba5aca09fb94e",
+  "testcaseTitle": "Passed Example 9",
+  "expected": "passed",
+  "ruleId": "cf77f2",
+  "ruleName": "Bypass Blocks of Repeated Content",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/cf77f2/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/cf77f2/07c0b535c3c68a3deeb9fde43c4ba5aca09fb94e.html",
+  "approved": null,
+  "wcag_criterion_in_corpus": "2.4.1",
+  "persona_folder": "lakshmi",
+  "ruleAccessibilityRequirements": {
+    "wcag20:2.4.1": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G1": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G123": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G124": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:H69": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:SCR28": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

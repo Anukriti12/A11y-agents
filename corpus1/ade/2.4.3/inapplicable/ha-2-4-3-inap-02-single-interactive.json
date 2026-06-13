@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-3-inap-02-single-interactive",
+  "testcaseTitle": "Page has only one focusable element",
+  "expected": "inapplicable",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/focus-order.html",
+  "authoring_notes": "Page has a single button. With only one focusable element, focus order has no sequence to evaluate.",
+  "wcag_criterion_in_corpus": "2.4.3",
+  "persona_folder": "ade"
+}

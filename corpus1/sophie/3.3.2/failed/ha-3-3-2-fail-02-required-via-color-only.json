@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-3-3-2-fail-02-required-via-color-only",
+  "testcaseTitle": "Required fields indicated by color alone, no text instructions",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/labels-or-instructions.html",
+  "authoring_notes": "Form has labels but indicates required fields only with red background coloring. No text marker (asterisk, '(required)', or instructions paragraph) tells a screen reader user which fields are required. Format constraints (date format, phone format) are not stated.",
+  "wcag_criterion_in_corpus": "3.3.2",
+  "persona_folder": "sophie"
+}

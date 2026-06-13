@@ -1,0 +1,13 @@
+{
+  "testcaseId": "ha-3-3-2-fail-01-unlabeled-inputs",
+  "testcaseTitle": "Form inputs have no label, no aria-label, no instructions",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [
+    "F82"
+  ],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/labels-or-instructions.html",
+  "authoring_notes": "Form inputs identified only by placeholder text (which disappears on focus) or position. No <label>, no aria-label, no aria-labelledby, no title, no instructions text. Failure F82 (visual cue without programmatic label).",
+  "wcag_criterion_in_corpus": "3.3.2",
+  "persona_folder": "sophie"
+}

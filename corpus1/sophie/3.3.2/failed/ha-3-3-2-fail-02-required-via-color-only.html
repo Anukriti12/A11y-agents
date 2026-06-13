@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Account registration</title>
+</head>
+<body>
+  <style>
+    .req { background: #ffcccc; }
+  </style>
+  <main>
+    <h1>Register</h1>
+    <form action="/register" method="post">
+      <p>
+        <label for="r-name">Name</label>
+        <input id="r-name" name="name" type="text" class="req">
+      </p>
+      <p>
+        <label for="r-dob">Date of birth</label>
+        <input id="r-dob" name="dob" type="text" class="req">
+      </p>
+      <p>
+        <label for="r-phone">Phone</label>
+        <input id="r-phone" name="phone" type="tel">
+      </p>
+      <p><button type="submit">Register</button></p>
+    </form>
+  </main>
+</body>
+</html>

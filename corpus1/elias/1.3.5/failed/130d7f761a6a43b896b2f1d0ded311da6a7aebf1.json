@@ -1,0 +1,20 @@
+{
+  "testcaseId": "130d7f761a6a43b896b2f1d0ded311da6a7aebf1",
+  "testcaseTitle": "Failed Example 8",
+  "expected": "failed",
+  "ruleId": "73f2c2",
+  "ruleName": "Autocomplete attribute has valid value",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/73f2c2/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/73f2c2/130d7f761a6a43b896b2f1d0ded311da6a7aebf1.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "1.3.5",
+  "persona_folder": "elias",
+  "ruleAccessibilityRequirements": {
+    "wcag21:1.3.5": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

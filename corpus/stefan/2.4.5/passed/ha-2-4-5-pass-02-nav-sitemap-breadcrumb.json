@@ -1,0 +1,14 @@
+{
+  "testcaseId": "ha-2-4-5-pass-02-nav-sitemap-breadcrumb",
+  "testcaseTitle": "Navigation, sitemap link, and breadcrumb",
+  "expected": "passed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [
+    "G125",
+    "G63"
+  ],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/multiple-ways.html",
+  "authoring_notes": "Three independent ways to locate content: primary nav, sitemap, and breadcrumb path.",
+  "wcag_criterion_in_corpus": "2.4.5",
+  "persona_folder": "stefan"
+}

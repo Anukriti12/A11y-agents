@@ -1,0 +1,38 @@
+{
+  "testcaseId": "04342a3834e0003f3057807937d617e432e83d33",
+  "testcaseTitle": "Failed Example 1",
+  "expected": "failed",
+  "ruleId": "59796f",
+  "ruleName": "Image button has non-empty accessible name",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/04342a3834e0003f3057807937d617e432e83d33.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "4.1.2",
+  "persona_folder": "lakshmi",
+  "ruleAccessibilityRequirements": {
+    "wcag20:1.1.1": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag20:4.1.2": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G94": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    },
+    "wcag-technique:G95": {
+      "forConformance": false,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

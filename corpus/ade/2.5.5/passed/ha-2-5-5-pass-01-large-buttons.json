@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-5-5-pass-01-large-buttons",
+  "testcaseTitle": "Buttons sized at or above 44x44 CSS pixels",
+  "expected": "passed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/target-size.html",
+  "authoring_notes": "Both action buttons have explicit min-width and min-height of 48px, exceeding the 44px AAA threshold.",
+  "wcag_criterion_in_corpus": "2.5.5",
+  "persona_folder": "ade"
+}

@@ -1,0 +1,14 @@
+{
+  "testcaseId": "ha-2-4-5-pass-01-nav-plus-search",
+  "testcaseTitle": "Navigation menu and search both present",
+  "expected": "passed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [
+    "G125",
+    "G161"
+  ],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/multiple-ways.html",
+  "authoring_notes": "Page has primary navigation plus a search form. Two independent ways to locate content.",
+  "wcag_criterion_in_corpus": "2.4.5",
+  "persona_folder": "stefan"
+}

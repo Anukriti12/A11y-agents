@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-5-inap-02-login-page",
+  "testcaseTitle": "Standalone authentication page",
+  "expected": "inapplicable",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/multiple-ways.html",
+  "authoring_notes": "Login page. Exempt as a step in the authentication process.",
+  "wcag_criterion_in_corpus": "2.4.5",
+  "persona_folder": "stefan"
+}

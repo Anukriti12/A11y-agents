@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-1-fail-01-no-skip-mechanism",
+  "testcaseTitle": "Multi-section page with repeated navigation and no bypass",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/bypass-blocks.html",
+  "authoring_notes": "Page has a header navigation block that would be present on every page in the site, followed by content. No skip-link, no main landmark, no <main> element, no heading-based bypass mechanism. Screen reader and keyboard users cannot skip past the nav.",
+  "wcag_criterion_in_corpus": "2.4.1",
+  "persona_folder": "lakshmi"
+}

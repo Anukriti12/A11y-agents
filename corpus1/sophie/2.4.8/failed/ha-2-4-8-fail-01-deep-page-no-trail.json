@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-8-fail-01-deep-page-no-trail",
+  "testcaseTitle": "Deeply nested page with no breadcrumb or location indicator",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/location.html",
+  "authoring_notes": "Page is three levels deep in the site hierarchy but provides no breadcrumb, no current-page indicator, and the nav does not show which section is active.",
+  "wcag_criterion_in_corpus": "2.4.8",
+  "persona_folder": "sophie"
+}

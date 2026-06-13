@@ -1,0 +1,20 @@
+{
+  "testcaseId": "0f8063a09807c4bf8d5f7c796cbf0f2aa20e7e57",
+  "testcaseTitle": "Inapplicable Example 10",
+  "expected": "inapplicable",
+  "ruleId": "78fd32",
+  "ruleName": "Important line height in style attributes is wide enough",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/78fd32/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/78fd32/0f8063a09807c4bf8d5f7c796cbf0f2aa20e7e57.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "1.4.12",
+  "persona_folder": "stefan",
+  "ruleAccessibilityRequirements": {
+    "wcag21:1.4.12": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

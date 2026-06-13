@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-3-inap-01-static-content",
+  "testcaseTitle": "Page has no focusable elements",
+  "expected": "inapplicable",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/focus-order.html",
+  "authoring_notes": "Static article with no interactive elements. Focus order is not applicable.",
+  "wcag_criterion_in_corpus": "2.4.3",
+  "persona_folder": "ade"
+}

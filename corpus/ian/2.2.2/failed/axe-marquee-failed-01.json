@@ -1,0 +1,13 @@
+{
+  "testcaseId": "axe-marquee-failed-01",
+  "testcaseTitle": "axe-core marquee failed example",
+  "expected": "failed",
+  "source": "axe-core integration fixtures",
+  "axe_rule": "marquee",
+  "axe_fixture_url": "https://raw.githubusercontent.com/dequelabs/axe-core/develop/test/integration/rules/marquee/marquee.html",
+  "source_element_ids": [
+    "marqueemarq"
+  ],
+  "wcag_criterion_in_corpus": "2.2.2",
+  "persona_folder": "ian"
+}

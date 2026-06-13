@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-8-fail-02-breadcrumb-missing-current",
+  "testcaseTitle": "Breadcrumb omits the current location",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/location.html",
+  "authoring_notes": "Breadcrumb shows ancestor pages but does not include the current page, leaving the user unsure where they are within the hierarchy.",
+  "wcag_criterion_in_corpus": "2.4.8",
+  "persona_folder": "elias"
+}

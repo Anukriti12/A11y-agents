@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-1-inap-01-no-repeated-blocks",
+  "testcaseTitle": "Single-section page with no repeated blocks of content",
+  "expected": "inapplicable",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/bypass-blocks.html",
+  "authoring_notes": "Page consists of a single content block with no navigation, no header, no footer, no sidebar. There are no repeated blocks to bypass, so 2.4.1 does not apply.",
+  "wcag_criterion_in_corpus": "2.4.1",
+  "persona_folder": "lakshmi"
+}

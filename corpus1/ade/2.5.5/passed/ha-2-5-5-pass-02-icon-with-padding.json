@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-5-5-pass-02-icon-with-padding",
+  "testcaseTitle": "Small icon with generous touch padding reaches 44x44",
+  "expected": "passed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/target-size.html",
+  "authoring_notes": "Visual icon is 16x16 but the surrounding clickable area is 48x48 through padding.",
+  "wcag_criterion_in_corpus": "2.5.5",
+  "persona_folder": "ade"
+}

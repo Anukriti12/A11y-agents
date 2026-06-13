@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-3-1-5-fail-01-dense-academic",
+  "testcaseTitle": "Dense academic prose with no simplification offered",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/reading-level.html",
+  "authoring_notes": "Long compound sentences, specialized vocabulary, passive voice, multiple subordinate clauses. No summary, no glossary, no illustration. Reading indices should land well above lower-secondary.",
+  "wcag_criterion_in_corpus": "3.1.5",
+  "persona_folder": "ian"
+}

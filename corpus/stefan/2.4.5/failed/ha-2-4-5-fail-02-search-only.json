@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-5-fail-02-search-only",
+  "testcaseTitle": "Only a search box, no second discovery method",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/multiple-ways.html",
+  "authoring_notes": "Search is present but no menu, sitemap, or any other location aid.",
+  "wcag_criterion_in_corpus": "2.4.5",
+  "persona_folder": "stefan"
+}

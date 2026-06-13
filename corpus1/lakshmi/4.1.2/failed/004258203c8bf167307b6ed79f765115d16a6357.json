@@ -1,0 +1,20 @@
+{
+  "testcaseId": "004258203c8bf167307b6ed79f765115d16a6357",
+  "testcaseTitle": "Failed Example 1",
+  "expected": "failed",
+  "ruleId": "e086e5",
+  "ruleName": "Form field has non-empty accessible name",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/e086e5/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/e086e5/004258203c8bf167307b6ed79f765115d16a6357.html",
+  "approved": true,
+  "wcag_criterion_in_corpus": "4.1.2",
+  "persona_folder": "lakshmi",
+  "ruleAccessibilityRequirements": {
+    "wcag20:4.1.2": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

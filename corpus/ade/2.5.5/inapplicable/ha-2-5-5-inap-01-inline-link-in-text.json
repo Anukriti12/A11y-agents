@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-5-5-inap-01-inline-link-in-text",
+  "testcaseTitle": "Only interactive element is an inline link within text",
+  "expected": "inapplicable",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/target-size.html",
+  "authoring_notes": "WCAG 2.5.5 explicitly exempts inline links within a sentence. The only target on the page is one such inline link.",
+  "wcag_criterion_in_corpus": "2.5.5",
+  "persona_folder": "ade"
+}

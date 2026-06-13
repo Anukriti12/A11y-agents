@@ -1,0 +1,20 @@
+{
+  "testcaseId": "14ecbd9d655c833f5f9c5ee9563c472faee663c4",
+  "testcaseTitle": "Passed Example 4",
+  "expected": "passed",
+  "ruleId": "b49b2e",
+  "ruleName": "Heading is descriptive",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/b49b2e/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/b49b2e/14ecbd9d655c833f5f9c5ee9563c472faee663c4.html",
+  "approved": null,
+  "wcag_criterion_in_corpus": "2.4.6",
+  "persona_folder": "ian",
+  "ruleAccessibilityRequirements": {
+    "wcag20:2.4.6": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

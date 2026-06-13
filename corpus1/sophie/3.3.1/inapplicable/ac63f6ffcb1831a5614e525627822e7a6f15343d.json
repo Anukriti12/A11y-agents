@@ -1,0 +1,20 @@
+{
+  "testcaseId": "ac63f6ffcb1831a5614e525627822e7a6f15343d",
+  "testcaseTitle": "Inapplicable Example 1",
+  "expected": "inapplicable",
+  "ruleId": "36b590",
+  "ruleName": "Error message describes invalid form field value",
+  "rulePage": "https://www.w3.org/WAI/standards-guidelines/act/rules/36b590/proposed/",
+  "url": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/36b590/ac63f6ffcb1831a5614e525627822e7a6f15343d.html",
+  "approved": null,
+  "wcag_criterion_in_corpus": "3.3.1",
+  "persona_folder": "sophie",
+  "ruleAccessibilityRequirements": {
+    "wcag20:3.3.1": {
+      "forConformance": true,
+      "failed": "not satisfied",
+      "passed": "further testing needed",
+      "inapplicable": "further testing needed"
+    }
+  }
+}

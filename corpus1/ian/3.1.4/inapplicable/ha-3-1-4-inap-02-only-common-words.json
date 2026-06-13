@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-3-1-4-inap-02-only-common-words",
+  "testcaseTitle": "Only abbreviations that have become common words",
+  "expected": "inapplicable",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/abbreviations.html",
+  "authoring_notes": "Words like radar, scuba, and laser are technically acronyms but are part of standard vocabulary; the criterion notes these need not be expanded.",
+  "wcag_criterion_in_corpus": "3.1.4",
+  "persona_folder": "ian"
+}

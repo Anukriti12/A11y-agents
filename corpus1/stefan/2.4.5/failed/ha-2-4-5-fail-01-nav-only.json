@@ -1,0 +1,11 @@
+{
+  "testcaseId": "ha-2-4-5-fail-01-nav-only",
+  "testcaseTitle": "Only a navigation menu, no second discovery method",
+  "expected": "failed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/multiple-ways.html",
+  "authoring_notes": "Only one mechanism (nav menu). No search, no sitemap, no breadcrumb, no TOC.",
+  "wcag_criterion_in_corpus": "2.4.5",
+  "persona_folder": "stefan"
+}

@@ -1,0 +1,14 @@
+{
+  "testcaseId": "ha-3-1-4-pass-01-abbr-with-title",
+  "testcaseTitle": "All abbreviations marked with abbr title attribute",
+  "expected": "passed",
+  "source": "hand-authored from W3C Understanding",
+  "wcag_techniques": [
+    "H28",
+    "G102"
+  ],
+  "understanding_url": "https://www.w3.org/WAI/WCAG21/Understanding/abbreviations.html",
+  "authoring_notes": "Every abbreviation uses <abbr> with a non-empty title expansion. Technique H28.",
+  "wcag_criterion_in_corpus": "3.1.4",
+  "persona_folder": "ian"
+}

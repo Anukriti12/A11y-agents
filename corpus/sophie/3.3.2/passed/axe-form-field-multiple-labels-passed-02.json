@@ -1,0 +1,13 @@
+{
+  "testcaseId": "axe-form-field-multiple-labels-passed-02",
+  "testcaseTitle": "axe-core form-field-multiple-labels passed example",
+  "expected": "passed",
+  "source": "axe-core integration fixtures",
+  "axe_rule": "form-field-multiple-labels",
+  "axe_fixture_url": "https://raw.githubusercontent.com/dequelabs/axe-core/develop/test/integration/rules/form-field-multiple-labels/form-field-multiple-labels.html",
+  "source_element_ids": [
+    "pass2"
+  ],
+  "wcag_criterion_in_corpus": "3.3.2",
+  "persona_folder": "sophie"
+}
