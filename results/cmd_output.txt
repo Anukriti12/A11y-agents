@@ -14,7 +14,7 @@ Total evaluations to run: 1620
   persona_llm rep 1/3: predicted=failed, progress=4/1620
   persona_llm rep 2/3: predicted=failed, progress=5/1620
   persona_llm rep 3/3: predicted=failed, progress=6/1620
-  persona_agent rep 1/3: predicted=passed, progress=7/1620
+  persona_agent rep 1/3: predicted=failed, progress=7/1620
   persona_agent rep 2/3: predicted=passed, progress=8/1620
   persona_agent rep 3/3: predicted=passed, progress=9/1620
 [270a22a8e4ce4d9f073e1484a0d807705207a1d7] persona=ade, wcag=2.1.1, expected=passed
@@ -22,8 +22,8 @@ Total evaluations to run: 1620
   axe rep 2/3: predicted=failed, progress=11/1620
   axe rep 3/3: predicted=failed, progress=12/1620
   persona_llm rep 1/3: predicted=passed, progress=13/1620
-  persona_llm rep 2/3: predicted=passed, progress=14/1620
-  persona_llm rep 3/3: predicted=passed, progress=15/1620
+  persona_llm rep 2/3: predicted=inapplicable, progress=14/1620
+  persona_llm rep 3/3: predicted=inapplicable, progress=15/1620
   persona_agent rep 1/3: predicted=failed, progress=16/1620
   persona_agent rep 2/3: predicted=failed, progress=17/1620
   persona_agent rep 3/3: predicted=failed, progress=18/1620
@@ -56,7 +56,7 @@ Total evaluations to run: 1620
   persona_llm rep 3/3: predicted=inapplicable, progress=42/1620
   persona_agent rep 1/3: predicted=inapplicable, progress=43/1620
   persona_agent rep 2/3: predicted=inapplicable, progress=44/1620
-  persona_agent rep 3/3: predicted=passed, progress=45/1620
+  persona_agent rep 3/3: predicted=inapplicable, progress=45/1620
 [17a371c470316dc29e424101065ebfe9f7b2e990] persona=ade, wcag=2.1.1, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=46/1620
   axe rep 2/3: predicted=failed, progress=47/1620
@@ -101,9 +101,9 @@ Total evaluations to run: 1620
   axe rep 1/3: predicted=failed, progress=82/1620
   axe rep 2/3: predicted=failed, progress=83/1620
   axe rep 3/3: predicted=failed, progress=84/1620
-  persona_llm rep 1/3: predicted=inapplicable, progress=85/1620
-  persona_llm rep 2/3: predicted=inapplicable, progress=86/1620
-  persona_llm rep 3/3: predicted=inapplicable, progress=87/1620
+  persona_llm rep 1/3: predicted=passed, progress=85/1620
+  persona_llm rep 2/3: predicted=passed, progress=86/1620
+  persona_llm rep 3/3: predicted=passed, progress=87/1620
   persona_agent rep 1/3: predicted=failed, progress=88/1620
   persona_agent rep 2/3: predicted=failed, progress=89/1620
   persona_agent rep 3/3: predicted=failed, progress=90/1620
@@ -124,9 +124,9 @@ Total evaluations to run: 1620
   persona_llm rep 1/3: predicted=inapplicable, progress=103/1620
   persona_llm rep 2/3: predicted=inapplicable, progress=104/1620
   persona_llm rep 3/3: predicted=inapplicable, progress=105/1620
-  persona_agent rep 1/3: predicted=inapplicable, progress=106/1620
-  persona_agent rep 2/3: predicted=inapplicable, progress=107/1620
-  persona_agent rep 3/3: predicted=inapplicable, progress=108/1620
+  persona_agent rep 1/3: predicted=passed, progress=106/1620
+  persona_agent rep 2/3: predicted=passed, progress=107/1620
+  persona_agent rep 3/3: predicted=passed, progress=108/1620
 [ha-2-4-3-pass-01-natural-dom-order] persona=ade, wcag=2.4.3, expected=passed
   axe rep 1/3: predicted=passed, progress=109/1620
   axe rep 2/3: predicted=passed, progress=110/1620
@@ -181,9 +181,9 @@ Total evaluations to run: 1620
   axe rep 1/3: predicted=passed, progress=154/1620
   axe rep 2/3: predicted=passed, progress=155/1620
   axe rep 3/3: predicted=passed, progress=156/1620
-  persona_llm rep 1/3: predicted=failed, progress=157/1620
-  persona_llm rep 2/3: predicted=failed, progress=158/1620
-  persona_llm rep 3/3: predicted=failed, progress=159/1620
+  persona_llm rep 1/3: predicted=passed, progress=157/1620
+  persona_llm rep 2/3: predicted=inapplicable, progress=158/1620
+  persona_llm rep 3/3: predicted=passed, progress=159/1620
   persona_agent rep 1/3: predicted=failed, progress=160/1620
   persona_agent rep 2/3: predicted=failed, progress=161/1620
   persona_agent rep 3/3: predicted=failed, progress=162/1620
@@ -243,7 +243,7 @@ Total evaluations to run: 1620
   axe rep 3/3: predicted=failed, progress=210/1620
   persona_llm rep 1/3: predicted=failed, progress=211/1620
   persona_llm rep 2/3: predicted=failed, progress=212/1620
-  persona_llm rep 3/3: predicted=failed, progress=213/1620
+  persona_llm rep 3/3: predicted=inapplicable, progress=213/1620
   persona_agent rep 1/3: predicted=failed, progress=214/1620
   persona_agent rep 2/3: predicted=failed, progress=215/1620
   persona_agent rep 3/3: predicted=failed, progress=216/1620
@@ -252,7 +252,7 @@ Total evaluations to run: 1620
   axe rep 2/3: predicted=passed, progress=218/1620
   axe rep 3/3: predicted=passed, progress=219/1620
   persona_llm rep 1/3: predicted=passed, progress=220/1620
-  persona_llm rep 2/3: predicted=failed, progress=221/1620
+  persona_llm rep 2/3: predicted=passed, progress=221/1620
   persona_llm rep 3/3: predicted=failed, progress=222/1620
   persona_agent rep 1/3: predicted=failed, progress=223/1620
   persona_agent rep 2/3: predicted=failed, progress=224/1620
@@ -331,7 +331,7 @@ Spacing applied: yes
   axe rep 2/3: predicted=failed, progress=281/1620
   axe rep 3/3: predicted=failed, progress=282/1620
   persona_llm rep 1/3: predicted=failed, progress=283/1620
-  persona_llm rep 2/3: predicted=failed, progress=284/1620
+  persona_llm rep 2/3: predicted=inapplicable, progress=284/1620
   persona_llm rep 3/3: predicted=failed, progress=285/1620
 Processing for WCAG 1.4.12 text spacing...
 
@@ -350,8 +350,8 @@ Spacing applied: yes
   axe rep 2/3: predicted=failed, progress=290/1620
   axe rep 3/3: predicted=failed, progress=291/1620
   persona_llm rep 1/3: predicted=inapplicable, progress=292/1620
-  persona_llm rep 2/3: predicted=failed, progress=293/1620
-  persona_llm rep 3/3: predicted=inapplicable, progress=294/1620
+  persona_llm rep 2/3: predicted=inapplicable, progress=293/1620
+  persona_llm rep 3/3: predicted=failed, progress=294/1620
   persona_agent rep 1/3: predicted=failed, progress=295/1620
   persona_agent rep 2/3: predicted=failed, progress=296/1620
   persona_agent rep 3/3: predicted=failed, progress=297/1620
@@ -362,6 +362,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=inapplicable, progress=301/1620
   persona_llm rep 2/3: predicted=inapplicable, progress=302/1620
   persona_llm rep 3/3: predicted=failed, progress=303/1620
+Processing for WCAG 1.4.12 text spacing...
+
+Spacing applied: yes
   persona_agent rep 1/3: predicted=failed, progress=304/1620
   persona_agent rep 2/3: predicted=failed, progress=305/1620
   persona_agent rep 3/3: predicted=failed, progress=306/1620
@@ -372,11 +375,14 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=inapplicable, progress=310/1620
   persona_llm rep 2/3: predicted=inapplicable, progress=311/1620
   persona_llm rep 3/3: predicted=inapplicable, progress=312/1620
+  persona_agent rep 1/3: predicted=failed, progress=313/1620
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
-  persona_agent rep 1/3: predicted=failed, progress=313/1620
   persona_agent rep 2/3: predicted=failed, progress=314/1620
+Processing for WCAG 1.4.12 text spacing...
+
+Spacing applied: yes
   persona_agent rep 3/3: predicted=failed, progress=315/1620
 [41c0b66bc0208aef009343935649f2bec3ae778d] persona=elias, wcag=1.3.5, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=316/1620
@@ -386,8 +392,6 @@ Spacing applied: yes
   persona_llm rep 2/3: predicted=inapplicable, progress=320/1620
   persona_llm rep 3/3: predicted=inapplicable, progress=321/1620
   persona_agent rep 1/3: predicted=failed, progress=322/1620
-WCAG 1.4.12: INAPPLICABLE — no text content found
-
   persona_agent rep 2/3: predicted=failed, progress=323/1620
   persona_agent rep 3/3: predicted=failed, progress=324/1620
 [0dcc810409a65f29f559c4826afbaa71bcba6ae0] persona=elias, wcag=1.4.12, expected=passed
@@ -475,7 +479,7 @@ Spacing applied: yes
   persona_llm rep 3/3: predicted=inapplicable, progress=366/1620
 WCAG 1.4.12: INAPPLICABLE — no text content found
 
-  persona_agent rep 1/3: predicted=inapplicable, progress=367/1620
+  persona_agent rep 1/3: predicted=failed, progress=367/1620
 WCAG 1.4.12: INAPPLICABLE — no text content found
 
   persona_agent rep 2/3: predicted=inapplicable, progress=368/1620
@@ -486,9 +490,9 @@ WCAG 1.4.12: INAPPLICABLE — no text content found
   axe rep 1/3: predicted=failed, progress=370/1620
   axe rep 2/3: predicted=failed, progress=371/1620
   axe rep 3/3: predicted=failed, progress=372/1620
-  persona_llm rep 1/3: predicted=inapplicable, progress=373/1620
-  persona_llm rep 2/3: predicted=inapplicable, progress=374/1620
-  persona_llm rep 3/3: predicted=inapplicable, progress=375/1620
+  persona_llm rep 1/3: predicted=failed, progress=373/1620
+  persona_llm rep 2/3: predicted=failed, progress=374/1620
+  persona_llm rep 3/3: predicted=failed, progress=375/1620
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
@@ -527,9 +531,6 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=failed, progress=391/1620
   persona_llm rep 2/3: predicted=failed, progress=392/1620
   persona_llm rep 3/3: predicted=failed, progress=393/1620
-Processing for WCAG 1.4.12 text spacing...
-
-Spacing applied: yes
   persona_agent rep 1/3: predicted=failed, progress=394/1620
   persona_agent rep 2/3: predicted=failed, progress=395/1620
   persona_agent rep 3/3: predicted=failed, progress=396/1620
@@ -681,10 +682,10 @@ WCAG 1.4.12: INAPPLICABLE — no text content found
   persona_agent rep 1/3: predicted=passed, progress=475/1620
 WCAG 1.4.12: INAPPLICABLE — no text content found
 
-  persona_agent rep 2/3: predicted=passed, progress=476/1620
+  persona_agent rep 2/3: predicted=inapplicable, progress=476/1620
 WCAG 1.4.12: INAPPLICABLE — no text content found
 
-  persona_agent rep 3/3: predicted=inapplicable, progress=477/1620
+  persona_agent rep 3/3: predicted=failed, progress=477/1620
 [37668beb45f00408309f73569e36e63dc9327620] persona=elias, wcag=2.2.2, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=478/1620
   axe rep 2/3: predicted=failed, progress=479/1620
@@ -708,8 +709,8 @@ Spacing applied: yes
   axe rep 1/3: predicted=passed, progress=487/1620
   axe rep 2/3: predicted=passed, progress=488/1620
   axe rep 3/3: predicted=passed, progress=489/1620
-  persona_llm rep 1/3: predicted=failed, progress=490/1620
-  persona_llm rep 2/3: predicted=failed, progress=491/1620
+  persona_llm rep 1/3: predicted=inapplicable, progress=490/1620
+  persona_llm rep 2/3: predicted=inapplicable, progress=491/1620
   persona_llm rep 3/3: predicted=failed, progress=492/1620
 Processing for WCAG 1.4.12 text spacing...
 
@@ -781,7 +782,7 @@ Processing for WCAG 1.4.12 text spacing...
 Spacing applied: yes
   persona_agent rep 3/3: predicted=failed, progress=522/1620
 [ha-2-4-8-inap-01-homepage] persona=elias, wcag=2.4.8, expected=inapplicable
-  axe rep 1/3: predicted=passed, progress=523/1620
+  axe rep 1/3: predicted=error, progress=523/1620
   axe rep 2/3: predicted=passed, progress=524/1620
   axe rep 3/3: predicted=passed, progress=525/1620
   persona_llm rep 1/3: predicted=failed, progress=526/1620
@@ -822,9 +823,9 @@ Spacing applied: yes
   axe rep 1/3: predicted=failed, progress=541/1620
   axe rep 2/3: predicted=failed, progress=542/1620
   axe rep 3/3: predicted=failed, progress=543/1620
-  persona_llm rep 1/3: predicted=failed, progress=544/1620
+  persona_llm rep 1/3: predicted=passed, progress=544/1620
   persona_llm rep 2/3: predicted=passed, progress=545/1620
-  persona_llm rep 3/3: predicted=passed, progress=546/1620
+  persona_llm rep 3/3: predicted=failed, progress=546/1620
   persona_agent rep 1/3: predicted=passed, progress=547/1620
   persona_agent rep 2/3: predicted=passed, progress=548/1620
   persona_agent rep 3/3: predicted=passed, progress=549/1620
@@ -833,7 +834,7 @@ Spacing applied: yes
   axe rep 2/3: predicted=failed, progress=551/1620
   axe rep 3/3: predicted=failed, progress=552/1620
   persona_llm rep 1/3: predicted=passed, progress=553/1620
-  persona_llm rep 2/3: predicted=passed, progress=554/1620
+  persona_llm rep 2/3: predicted=failed, progress=554/1620
   persona_llm rep 3/3: predicted=passed, progress=555/1620
   persona_agent rep 1/3: predicted=failed, progress=556/1620
   persona_agent rep 2/3: predicted=failed, progress=557/1620
@@ -845,9 +846,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=failed, progress=562/1620
   persona_llm rep 2/3: predicted=failed, progress=563/1620
   persona_llm rep 3/3: predicted=failed, progress=564/1620
-  persona_agent rep 1/3: predicted=failed, progress=565/1620
+  persona_agent rep 1/3: predicted=passed, progress=565/1620
   persona_agent rep 2/3: predicted=failed, progress=566/1620
-  persona_agent rep 3/3: predicted=failed, progress=567/1620
+  persona_agent rep 3/3: predicted=passed, progress=567/1620
 [0fd4574e8dd585f4cb14c20f9966bf94f2139ea9] persona=ian, wcag=1.3.1, expected=failed
   axe rep 1/3: predicted=failed, progress=568/1620
   axe rep 2/3: predicted=failed, progress=569/1620
@@ -966,8 +967,8 @@ Spacing applied: yes
   persona_llm rep 2/3: predicted=failed, progress=671/1620
   persona_llm rep 3/3: predicted=failed, progress=672/1620
   persona_agent rep 1/3: predicted=failed, progress=673/1620
-  persona_agent rep 2/3: predicted=passed, progress=674/1620
-  persona_agent rep 3/3: predicted=passed, progress=675/1620
+  persona_agent rep 2/3: predicted=failed, progress=674/1620
+  persona_agent rep 3/3: predicted=failed, progress=675/1620
 [2f1d964151ff5269a6027371956ee3b4a4a23fe7] persona=ian, wcag=2.4.6, expected=failed
   axe rep 1/3: predicted=failed, progress=676/1620
   axe rep 2/3: predicted=failed, progress=677/1620
@@ -1022,8 +1023,8 @@ Spacing applied: yes
   axe rep 1/3: predicted=failed, progress=721/1620
   axe rep 2/3: predicted=failed, progress=722/1620
   axe rep 3/3: predicted=failed, progress=723/1620
-  persona_llm rep 1/3: predicted=passed, progress=724/1620
-  persona_llm rep 2/3: predicted=passed, progress=725/1620
+  persona_llm rep 1/3: predicted=failed, progress=724/1620
+  persona_llm rep 2/3: predicted=failed, progress=725/1620
   persona_llm rep 3/3: predicted=failed, progress=726/1620
   persona_agent rep 1/3: predicted=passed, progress=727/1620
   persona_agent rep 2/3: predicted=passed, progress=728/1620
@@ -1102,9 +1103,9 @@ Spacing applied: yes
   axe rep 1/3: predicted=failed, progress=793/1620
   axe rep 2/3: predicted=failed, progress=794/1620
   axe rep 3/3: predicted=failed, progress=795/1620
-  persona_llm rep 1/3: predicted=passed, progress=796/1620
+  persona_llm rep 1/3: predicted=failed, progress=796/1620
   persona_llm rep 2/3: predicted=passed, progress=797/1620
-  persona_llm rep 3/3: predicted=failed, progress=798/1620
+  persona_llm rep 3/3: predicted=passed, progress=798/1620
   persona_agent rep 1/3: predicted=failed, progress=799/1620
   persona_agent rep 2/3: predicted=failed, progress=800/1620
   persona_agent rep 3/3: predicted=failed, progress=801/1620
@@ -1127,7 +1128,7 @@ Spacing applied: yes
   persona_llm rep 3/3: predicted=passed, progress=816/1620
   persona_agent rep 1/3: predicted=failed, progress=817/1620
   persona_agent rep 2/3: predicted=failed, progress=818/1620
-  persona_agent rep 3/3: predicted=failed, progress=819/1620
+  persona_agent rep 3/3: predicted=inapplicable, progress=819/1620
 [1b172036f8e219ef9b6f591d7f5df26e4ba11327] persona=lakshmi, wcag=1.1.1, expected=passed
   axe rep 1/3: predicted=failed, progress=820/1620
   axe rep 2/3: predicted=failed, progress=821/1620
@@ -1182,9 +1183,9 @@ Spacing applied: yes
   axe rep 1/3: predicted=failed, progress=865/1620
   axe rep 2/3: predicted=failed, progress=866/1620
   axe rep 3/3: predicted=failed, progress=867/1620
-  persona_llm rep 1/3: predicted=inapplicable, progress=868/1620
-  persona_llm rep 2/3: predicted=inapplicable, progress=869/1620
-  persona_llm rep 3/3: predicted=inapplicable, progress=870/1620
+  persona_llm rep 1/3: predicted=failed, progress=868/1620
+  persona_llm rep 2/3: predicted=failed, progress=869/1620
+  persona_llm rep 3/3: predicted=failed, progress=870/1620
   persona_agent rep 1/3: predicted=failed, progress=871/1620
   persona_agent rep 2/3: predicted=failed, progress=872/1620
   persona_agent rep 3/3: predicted=failed, progress=873/1620
@@ -1285,9 +1286,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=inapplicable, progress=958/1620
   persona_llm rep 2/3: predicted=inapplicable, progress=959/1620
   persona_llm rep 3/3: predicted=inapplicable, progress=960/1620
-  persona_agent rep 1/3: predicted=failed, progress=961/1620
-  persona_agent rep 2/3: predicted=failed, progress=962/1620
-  persona_agent rep 3/3: predicted=failed, progress=963/1620
+  persona_agent rep 1/3: predicted=inapplicable, progress=961/1620
+  persona_agent rep 2/3: predicted=inapplicable, progress=962/1620
+  persona_agent rep 3/3: predicted=inapplicable, progress=963/1620
 [17a371c470316dc29e424101065ebfe9f7b2e990] persona=lakshmi, wcag=2.1.1, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=964/1620
   axe rep 2/3: predicted=failed, progress=965/1620
@@ -1296,8 +1297,8 @@ Spacing applied: yes
   persona_llm rep 2/3: predicted=inapplicable, progress=968/1620
   persona_llm rep 3/3: predicted=inapplicable, progress=969/1620
   persona_agent rep 1/3: predicted=failed, progress=970/1620
-  persona_agent rep 2/3: predicted=failed, progress=971/1620
-  persona_agent rep 3/3: predicted=failed, progress=972/1620
+  persona_agent rep 2/3: predicted=inapplicable, progress=971/1620
+  persona_agent rep 3/3: predicted=inapplicable, progress=972/1620
 [07c0b535c3c68a3deeb9fde43c4ba5aca09fb94e] persona=lakshmi, wcag=2.4.1, expected=passed
   axe rep 1/3: predicted=failed, progress=973/1620
   axe rep 2/3: predicted=failed, progress=974/1620
@@ -1345,8 +1346,8 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=passed, progress=1012/1620
   persona_llm rep 2/3: predicted=passed, progress=1013/1620
   persona_llm rep 3/3: predicted=passed, progress=1014/1620
-  persona_agent rep 1/3: predicted=passed, progress=1015/1620
-  persona_agent rep 2/3: predicted=passed, progress=1016/1620
+  persona_agent rep 1/3: predicted=failed, progress=1015/1620
+  persona_agent rep 2/3: predicted=failed, progress=1016/1620
   persona_agent rep 3/3: predicted=passed, progress=1017/1620
 [ecc29b73e37b6a125b3fd9767068dcaa368d467a] persona=lakshmi, wcag=2.4.1, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=1018/1620
@@ -1405,15 +1406,15 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=inapplicable, progress=1066/1620
   persona_llm rep 2/3: predicted=inapplicable, progress=1067/1620
   persona_llm rep 3/3: predicted=inapplicable, progress=1068/1620
-  persona_agent rep 1/3: predicted=failed, progress=1069/1620
+  persona_agent rep 1/3: predicted=inapplicable, progress=1069/1620
   persona_agent rep 2/3: predicted=inapplicable, progress=1070/1620
-  persona_agent rep 3/3: predicted=inapplicable, progress=1071/1620
+  persona_agent rep 3/3: predicted=failed, progress=1071/1620
 [0666607827b30150ed0a5be439f58623b3222131] persona=lakshmi, wcag=4.1.2, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=1072/1620
   axe rep 2/3: predicted=failed, progress=1073/1620
   axe rep 3/3: predicted=failed, progress=1074/1620
   persona_llm rep 1/3: predicted=inapplicable, progress=1075/1620
-  persona_llm rep 2/3: predicted=inapplicable, progress=1076/1620
+  persona_llm rep 2/3: predicted=passed, progress=1076/1620
   persona_llm rep 3/3: predicted=inapplicable, progress=1077/1620
   persona_agent rep 1/3: predicted=inapplicable, progress=1078/1620
   persona_agent rep 2/3: predicted=inapplicable, progress=1079/1620
@@ -1434,7 +1435,7 @@ Spacing applied: yes
   axe rep 3/3: predicted=failed, progress=1092/1620
   persona_llm rep 1/3: predicted=inapplicable, progress=1093/1620
   persona_llm rep 2/3: predicted=inapplicable, progress=1094/1620
-  persona_llm rep 3/3: predicted=failed, progress=1095/1620
+  persona_llm rep 3/3: predicted=inapplicable, progress=1095/1620
   persona_agent rep 1/3: predicted=failed, progress=1096/1620
   persona_agent rep 2/3: predicted=failed, progress=1097/1620
   persona_agent rep 3/3: predicted=failed, progress=1098/1620
@@ -1455,9 +1456,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=passed, progress=1111/1620
   persona_llm rep 2/3: predicted=passed, progress=1112/1620
   persona_llm rep 3/3: predicted=passed, progress=1113/1620
-  persona_agent rep 1/3: predicted=failed, progress=1114/1620
+  persona_agent rep 1/3: predicted=passed, progress=1114/1620
   persona_agent rep 2/3: predicted=failed, progress=1115/1620
-  persona_agent rep 3/3: predicted=passed, progress=1116/1620
+  persona_agent rep 3/3: predicted=failed, progress=1116/1620
 [0bf30cdf02ff26dfca5aa705b7023227da221e05] persona=sophie, wcag=2.2.1, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=1117/1620
   axe rep 2/3: predicted=failed, progress=1118/1620
@@ -1495,7 +1496,7 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=passed, progress=1147/1620
   persona_llm rep 2/3: predicted=passed, progress=1148/1620
   persona_llm rep 3/3: predicted=passed, progress=1149/1620
-  persona_agent rep 1/3: predicted=passed, progress=1150/1620
+  persona_agent rep 1/3: predicted=failed, progress=1150/1620
   persona_agent rep 2/3: predicted=failed, progress=1151/1620
   persona_agent rep 3/3: predicted=failed, progress=1152/1620
 [ha-2-4-8-fail-01-deep-page-no-trail] persona=sophie, wcag=2.4.8, expected=failed
@@ -1542,12 +1543,12 @@ Spacing applied: yes
   axe rep 1/3: predicted=failed, progress=1189/1620
   axe rep 2/3: predicted=failed, progress=1190/1620
   axe rep 3/3: predicted=failed, progress=1191/1620
-  persona_llm rep 1/3: predicted=passed, progress=1192/1620
+  persona_llm rep 1/3: predicted=failed, progress=1192/1620
   persona_llm rep 2/3: predicted=passed, progress=1193/1620
   persona_llm rep 3/3: predicted=passed, progress=1194/1620
-  persona_agent rep 1/3: predicted=failed, progress=1195/1620
-  persona_agent rep 2/3: predicted=failed, progress=1196/1620
-  persona_agent rep 3/3: predicted=failed, progress=1197/1620
+  persona_agent rep 1/3: predicted=passed, progress=1195/1620
+  persona_agent rep 2/3: predicted=passed, progress=1196/1620
+  persona_agent rep 3/3: predicted=passed, progress=1197/1620
 [ha-3-1-4-pass-02-first-use-expansion] persona=sophie, wcag=3.1.4, expected=passed
   axe rep 1/3: predicted=failed, progress=1198/1620
   axe rep 2/3: predicted=failed, progress=1199/1620
@@ -1555,9 +1556,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=failed, progress=1201/1620
   persona_llm rep 2/3: predicted=failed, progress=1202/1620
   persona_llm rep 3/3: predicted=failed, progress=1203/1620
-  persona_agent rep 1/3: predicted=failed, progress=1204/1620
-  persona_agent rep 2/3: predicted=failed, progress=1205/1620
-  persona_agent rep 3/3: predicted=failed, progress=1206/1620
+  persona_agent rep 1/3: predicted=passed, progress=1204/1620
+  persona_agent rep 2/3: predicted=passed, progress=1205/1620
+  persona_agent rep 3/3: predicted=passed, progress=1206/1620
 [ha-3-1-4-fail-01-bare-acronyms] persona=sophie, wcag=3.1.4, expected=failed
   axe rep 1/3: predicted=failed, progress=1207/1620
   axe rep 2/3: predicted=failed, progress=1208/1620
@@ -1665,9 +1666,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=failed, progress=1300/1620
   persona_llm rep 2/3: predicted=failed, progress=1301/1620
   persona_llm rep 3/3: predicted=failed, progress=1302/1620
-  persona_agent rep 1/3: predicted=inapplicable, progress=1303/1620
-  persona_agent rep 2/3: predicted=inapplicable, progress=1304/1620
-  persona_agent rep 3/3: predicted=inapplicable, progress=1305/1620
+  persona_agent rep 1/3: predicted=failed, progress=1303/1620
+  persona_agent rep 2/3: predicted=failed, progress=1304/1620
+  persona_agent rep 3/3: predicted=failed, progress=1305/1620
 [axe-form-field-multiple-labels-passed-02] persona=sophie, wcag=3.3.2, expected=passed
   axe rep 1/3: predicted=failed, progress=1306/1620
   axe rep 2/3: predicted=failed, progress=1307/1620
@@ -1675,9 +1676,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=failed, progress=1309/1620
   persona_llm rep 2/3: predicted=failed, progress=1310/1620
   persona_llm rep 3/3: predicted=failed, progress=1311/1620
-  persona_agent rep 1/3: predicted=failed, progress=1312/1620
-  persona_agent rep 2/3: predicted=passed, progress=1313/1620
-  persona_agent rep 3/3: predicted=passed, progress=1314/1620
+  persona_agent rep 1/3: predicted=passed, progress=1312/1620
+  persona_agent rep 2/3: predicted=inapplicable, progress=1313/1620
+  persona_agent rep 3/3: predicted=inapplicable, progress=1314/1620
 [ha-3-3-2-fail-01-unlabeled-inputs] persona=sophie, wcag=3.3.2, expected=failed
   axe rep 1/3: predicted=failed, progress=1315/1620
   axe rep 2/3: predicted=failed, progress=1316/1620
@@ -1728,7 +1729,7 @@ Spacing applied: yes
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
-  persona_agent rep 1/3: predicted=inapplicable, progress=1357/1620
+  persona_agent rep 1/3: predicted=failed, progress=1357/1620
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
@@ -1744,6 +1745,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=failed, progress=1363/1620
   persona_llm rep 2/3: predicted=failed, progress=1364/1620
   persona_llm rep 3/3: predicted=failed, progress=1365/1620
+Processing for WCAG 1.4.12 text spacing...
+
+Spacing applied: yes
   persona_agent rep 1/3: predicted=passed, progress=1366/1620
 Processing for WCAG 1.4.12 text spacing...
 
@@ -1752,7 +1756,7 @@ Spacing applied: yes
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
-  persona_agent rep 3/3: predicted=failed, progress=1368/1620
+  persona_agent rep 3/3: predicted=passed, progress=1368/1620
 [1134eadf72b2a40c03b8bbf486ebfd3bb34cf986] persona=stefan, wcag=1.4.12, expected=failed
   axe rep 1/3: predicted=failed, progress=1369/1620
   axe rep 2/3: predicted=failed, progress=1370/1620
@@ -1778,10 +1782,7 @@ Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
   persona_agent rep 2/3: predicted=inapplicable, progress=1385/1620
-Processing for WCAG 1.4.12 text spacing...
-
-Spacing applied: yes
-  persona_agent rep 3/3: predicted=inapplicable, progress=1386/1620
+  persona_agent rep 3/3: predicted=passed, progress=1386/1620
 [0128de1beb7862298366680f6920bd3b3874d752] persona=stefan, wcag=1.4.12, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=1387/1620
   axe rep 2/3: predicted=failed, progress=1388/1620
@@ -1796,9 +1797,9 @@ Spacing applied: yes
   axe rep 1/3: predicted=failed, progress=1396/1620
   axe rep 2/3: predicted=failed, progress=1397/1620
   axe rep 3/3: predicted=failed, progress=1398/1620
-  persona_llm rep 1/3: predicted=passed, progress=1399/1620
-  persona_llm rep 2/3: predicted=passed, progress=1400/1620
-  persona_llm rep 3/3: predicted=passed, progress=1401/1620
+  persona_llm rep 1/3: predicted=failed, progress=1399/1620
+  persona_llm rep 2/3: predicted=failed, progress=1400/1620
+  persona_llm rep 3/3: predicted=failed, progress=1401/1620
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
@@ -1817,7 +1818,7 @@ Spacing applied: yes
   axe rep 3/3: predicted=failed, progress=1407/1620
   persona_llm rep 1/3: predicted=failed, progress=1408/1620
   persona_llm rep 2/3: predicted=failed, progress=1409/1620
-  persona_llm rep 3/3: predicted=failed, progress=1410/1620
+  persona_llm rep 3/3: predicted=passed, progress=1410/1620
   persona_agent rep 1/3: predicted=passed, progress=1411/1620
   persona_agent rep 2/3: predicted=passed, progress=1412/1620
   persona_agent rep 3/3: predicted=passed, progress=1413/1620
@@ -1829,7 +1830,7 @@ Spacing applied: yes
   persona_llm rep 2/3: predicted=passed, progress=1418/1620
   persona_llm rep 3/3: predicted=passed, progress=1419/1620
   persona_agent rep 1/3: predicted=failed, progress=1420/1620
-  persona_agent rep 2/3: predicted=passed, progress=1421/1620
+  persona_agent rep 2/3: predicted=failed, progress=1421/1620
   persona_agent rep 3/3: predicted=failed, progress=1422/1620
 [8f0a05348afb0a218f3934157dad1b4d1673ea6a] persona=stefan, wcag=2.2.2, expected=failed
   axe rep 1/3: predicted=failed, progress=1423/1620
@@ -1839,7 +1840,7 @@ Spacing applied: yes
   persona_llm rep 2/3: predicted=failed, progress=1427/1620
   persona_llm rep 3/3: predicted=failed, progress=1428/1620
   persona_agent rep 1/3: predicted=failed, progress=1429/1620
-  persona_agent rep 2/3: predicted=failed, progress=1430/1620
+  persona_agent rep 2/3: predicted=passed, progress=1430/1620
   persona_agent rep 3/3: predicted=failed, progress=1431/1620
 [axe-blink-failed-01] persona=stefan, wcag=2.2.2, expected=failed
   axe rep 1/3: predicted=failed, progress=1432/1620
@@ -1899,8 +1900,11 @@ Spacing applied: yes
   persona_llm rep 2/3: predicted=passed, progress=1481/1620
   persona_llm rep 3/3: predicted=passed, progress=1482/1620
   persona_agent rep 1/3: predicted=failed, progress=1483/1620
+Processing for WCAG 1.4.12 text spacing...
+
+Spacing applied: yes
   persona_agent rep 2/3: predicted=failed, progress=1484/1620
-  persona_agent rep 3/3: predicted=failed, progress=1485/1620
+  persona_agent rep 3/3: predicted=passed, progress=1485/1620
 [ha-2-4-5-fail-02-search-only] persona=stefan, wcag=2.4.5, expected=failed
   axe rep 1/3: predicted=passed, progress=1486/1620
   axe rep 2/3: predicted=passed, progress=1487/1620
@@ -1910,7 +1914,7 @@ Spacing applied: yes
   persona_llm rep 3/3: predicted=passed, progress=1491/1620
   persona_agent rep 1/3: predicted=inapplicable, progress=1492/1620
   persona_agent rep 2/3: predicted=passed, progress=1493/1620
-  persona_agent rep 3/3: predicted=inapplicable, progress=1494/1620
+  persona_agent rep 3/3: predicted=passed, progress=1494/1620
 [ha-2-4-5-inap-01-process-page] persona=stefan, wcag=2.4.5, expected=inapplicable
   axe rep 1/3: predicted=passed, progress=1495/1620
   axe rep 2/3: predicted=passed, progress=1496/1620
@@ -1946,13 +1950,16 @@ Spacing applied: yes
   axe rep 2/3: predicted=failed, progress=1523/1620
   axe rep 3/3: predicted=failed, progress=1524/1620
   persona_llm rep 1/3: predicted=failed, progress=1525/1620
-  persona_llm rep 2/3: predicted=passed, progress=1526/1620
-  persona_llm rep 3/3: predicted=passed, progress=1527/1620
-  persona_agent rep 1/3: predicted=failed, progress=1528/1620
+  persona_llm rep 2/3: predicted=failed, progress=1526/1620
+  persona_llm rep 3/3: predicted=failed, progress=1527/1620
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
+  persona_agent rep 1/3: predicted=failed, progress=1528/1620
   persona_agent rep 2/3: predicted=failed, progress=1529/1620
+Processing for WCAG 1.4.12 text spacing...
+
+Spacing applied: yes
   persona_agent rep 3/3: predicted=failed, progress=1530/1620
 [1e52060759a535934176a5a981446066aad6b31f] persona=stefan, wcag=2.4.6, expected=failed
   axe rep 1/3: predicted=failed, progress=1531/1620
@@ -1968,9 +1975,9 @@ Spacing applied: yes
   axe rep 1/3: predicted=failed, progress=1540/1620
   axe rep 2/3: predicted=failed, progress=1541/1620
   axe rep 3/3: predicted=failed, progress=1542/1620
-  persona_llm rep 1/3: predicted=failed, progress=1543/1620
-  persona_llm rep 2/3: predicted=failed, progress=1544/1620
-  persona_llm rep 3/3: predicted=failed, progress=1545/1620
+  persona_llm rep 1/3: predicted=inapplicable, progress=1543/1620
+  persona_llm rep 2/3: predicted=inapplicable, progress=1544/1620
+  persona_llm rep 3/3: predicted=inapplicable, progress=1545/1620
   persona_agent rep 1/3: predicted=inapplicable, progress=1546/1620
   persona_agent rep 2/3: predicted=inapplicable, progress=1547/1620
   persona_agent rep 3/3: predicted=inapplicable, progress=1548/1620
@@ -1991,9 +1998,9 @@ Spacing applied: yes
   persona_llm rep 1/3: predicted=failed, progress=1561/1620
   persona_llm rep 2/3: predicted=failed, progress=1562/1620
   persona_llm rep 3/3: predicted=failed, progress=1563/1620
-  persona_agent rep 1/3: predicted=failed, progress=1564/1620
-  persona_agent rep 2/3: predicted=failed, progress=1565/1620
-  persona_agent rep 3/3: predicted=inapplicable, progress=1566/1620
+  persona_agent rep 1/3: predicted=inapplicable, progress=1564/1620
+  persona_agent rep 2/3: predicted=inapplicable, progress=1565/1620
+  persona_agent rep 3/3: predicted=failed, progress=1566/1620
 [ha-3-1-4-pass-01-abbr-with-title] persona=stefan, wcag=3.1.4, expected=passed
   axe rep 1/3: predicted=failed, progress=1567/1620
   axe rep 2/3: predicted=failed, progress=1568/1620
@@ -2004,7 +2011,7 @@ Spacing applied: yes
 Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
-  persona_agent rep 1/3: predicted=failed, progress=1573/1620
+  persona_agent rep 1/3: predicted=passed, progress=1573/1620
   persona_agent rep 2/3: predicted=passed, progress=1574/1620
   persona_agent rep 3/3: predicted=passed, progress=1575/1620
 [ha-3-1-4-pass-02-first-use-expansion] persona=stefan, wcag=3.1.4, expected=passed
@@ -2034,9 +2041,6 @@ Spacing applied: yes
   persona_llm rep 2/3: predicted=failed, progress=1589/1620
   persona_llm rep 3/3: predicted=failed, progress=1590/1620
   persona_agent rep 1/3: predicted=failed, progress=1591/1620
-Processing for WCAG 1.4.12 text spacing...
-
-Spacing applied: yes
   persona_agent rep 2/3: predicted=failed, progress=1592/1620
   persona_agent rep 3/3: predicted=failed, progress=1593/1620
 [ha-3-1-4-fail-02-empty-abbr-title] persona=stefan, wcag=3.1.4, expected=failed
@@ -2050,13 +2054,7 @@ Processing for WCAG 1.4.12 text spacing...
 
 Spacing applied: yes
   persona_agent rep 1/3: predicted=failed, progress=1600/1620
-Processing for WCAG 1.4.12 text spacing...
-
-Spacing applied: yes
   persona_agent rep 2/3: predicted=failed, progress=1601/1620
-Processing for WCAG 1.4.12 text spacing...
-
-Spacing applied: yes
   persona_agent rep 3/3: predicted=failed, progress=1602/1620
 [ha-3-1-4-inap-01-no-abbreviations] persona=stefan, wcag=3.1.4, expected=inapplicable
   axe rep 1/3: predicted=failed, progress=1603/1620
@@ -2091,4 +2089,3 @@ Spacing applied: yes
 ======================================================================
 Done. New evaluations: 1620. Skipped (resumed): 0.
 Results: results/experiment_results.jsonl
-======================================================================
