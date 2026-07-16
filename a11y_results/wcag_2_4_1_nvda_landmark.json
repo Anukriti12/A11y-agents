@@ -1,0 +1,30 @@
+{
+  "landmark_navigation_log": [
+    {
+      "press": 0,
+      "key": "F6",
+      "nvda_announcement": null
+    },
+    {
+      "press": 1,
+      "key": "F6",
+      "nvda_announcement": null
+    },
+    {
+      "press": 2,
+      "key": "F6",
+      "nvda_announcement": null
+    },
+    {
+      "press": 3,
+      "key": "F6",
+      "nvda_announcement": null
+    },
+    {
+      "press": 4,
+      "key": "F6",
+      "nvda_announcement": null
+    }
+  ],
+  "main_landmark_reached": false
+}

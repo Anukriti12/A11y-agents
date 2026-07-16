@@ -26,8 +26,12 @@ from PIL import Image
 from playwright.sync_api import sync_playwright
 from pywinauto.application import Application
 
+
 OUTPUT_DIR = Path("a11y_results")
 OUTPUT_DIR.mkdir(exist_ok=True)
+
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 # Set Tesseract path to match your install location
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"

@@ -35,11 +35,11 @@ from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from personas.base_agent import BaseAgenticAgent
-from tools import autocomplete_validator_agent
-from tools.Contrast_Checker_Agent import ContrastCheckerAgent
-from tools import text_formatting_agent
-from tools import animation_detector_agent
-from tools import multiple_ways_checker_agent
+from tools1 import autocomplete_validator_agent
+from tools1.Contrast_Checker_Agent import ContrastCheckerAgent
+from tools1 import text_formatting_agent
+from tools1 import animation_detector_agent
+from tools1 import multiple_ways_checker_agent
 
 load_dotenv()
 

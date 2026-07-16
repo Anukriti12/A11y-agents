@@ -25,12 +25,12 @@ import openai
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from personas.ade_agent import AdeAgent
-from personas.elias_agent import EliasAgent
-from personas.ian_agent import IanAgent
-from personas.lakshmi_agent import LakshmiAgent
-from personas.sophie_agent import SophieAgent
-from personas.stefan_agent import StefanAgent
+from personas1.ade_agent import AdeAgent
+from personas1.elias_agent import EliasAgent
+from personas1.ian_agent import IanAgent
+from personas1.lakshmi_agent import LakshmiAgent
+from personas1.sophie_agent import SophieAgent
+from personas1.stefan_agent import StefanAgent
 
 
 # Override appended to each persona's system prompt to disable tools for

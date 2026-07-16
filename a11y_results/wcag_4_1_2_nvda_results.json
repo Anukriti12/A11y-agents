@@ -1,0 +1,19 @@
+[
+  {
+    "index": 0,
+    "tag": "INPUT",
+    "role": "input",
+    "aria_label": null,
+    "aria_labelledby": null,
+    "inner_text": "",
+    "html_snippet": "<input type=\"image\" value=\"download\" alt=\"Download\">",
+    "aria_checked": null,
+    "aria_expanded": null,
+    "aria_selected": null,
+    "nvda_on_focus": null,
+    "nvda_after_interaction": null,
+    "has_name_announced": false,
+    "has_role_announced": false,
+    "has_state_announced": null
+  }
+]

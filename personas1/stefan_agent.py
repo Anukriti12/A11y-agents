@@ -32,11 +32,11 @@ from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from personas.base_agent import BaseAgenticAgent
-from tools import text_formatting_agent
-from tools import animation_detector_agent
-from tools import multiple_ways_checker_agent
-from tools import heading_structure_agent
-from tools import readability_analyzer_agent
+from tools1 import text_formatting_agent
+from tools1 import animation_detector_agent
+from tools1 import multiple_ways_checker_agent
+from tools1 import heading_structure_agent
+from tools1 import readability_analyzer_agent
 
 load_dotenv()
 

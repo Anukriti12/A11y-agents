@@ -1,0 +1,13 @@
+{
+  "landmarks": {
+    "main": 0,
+    "nav": 0,
+    "header": 0,
+    "footer": 0
+  },
+  "skip_links_found": [],
+  "has_skip_link": false,
+  "tab_sequence_first_10": [],
+  "skip_link_tab_position": null,
+  "skip_link_is_first": false
+}

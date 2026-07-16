@@ -28,12 +28,12 @@ from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from personas.base_agent import BaseAgenticAgent
-from tools import keyboard_navigation_agent
-from tools import custom_widget_keyboard_agent
-from tools import timing_checker_agent
-from tools import focus_order_validator_agent
-from tools import focus_visible_validator_agent
-from tools import target_size_validator_agent
+from tools1 import keyboard_navigation_agent
+from tools1 import custom_widget_keyboard_agent
+from tools1 import timing_checker_agent
+from tools1 import focus_order_validator_agent
+from tools1 import focus_visible_validator_agent
+from tools1 import target_size_validator_agent
 
 load_dotenv()
 

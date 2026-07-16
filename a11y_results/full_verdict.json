@@ -1,0 +1,161 @@
+{
+  "url": "file:///C:/Users/Lokesh%20Chilamcharla/AppData/Local/Temp/tmpj_d9wrya.html",
+  "wcag_1_1_1": {
+    "wcag": "1.1.1 Non-text Content",
+    "verdict": "PASS",
+    "details": "All non-text content has appropriate text alternatives.",
+    "decorative_images_to_review": [],
+    "raw": {
+      "local_alt_results": {
+        "alt_missing": {
+          "count": 0,
+          "items": []
+        },
+        "alt_null": {
+          "count": 0,
+          "items": []
+        },
+        "alt_link": {
+          "count": 0,
+          "items": []
+        },
+        "alt_input": {
+          "count": 0,
+          "items": []
+        },
+        "alt_object": {
+          "count": 0,
+          "items": []
+        }
+      },
+      "nvda_results": [
+        {
+          "index": 0,
+          "tag": "INPUT",
+          "src": null,
+          "alt_attr": "Download",
+          "aria_label": null,
+          "aria_labelledby": null,
+          "role": null,
+          "nvda_announcement": null,
+          "nvda_meaningful": null
+        }
+      ]
+    }
+  },
+  "wcag_1_4_5": {
+    "wcag": "1.4.5 Images of Text",
+    "verdict": "N/A",
+    "details": "Page contains no images.",
+    "raw": {
+      "redundant_alt_results": [],
+      "ocr_results": []
+    }
+  },
+  "wcag_2_4_1": {
+    "wcag": "2.4.1 Bypass Blocks",
+    "verdict": "N/A",
+    "details": "Page has no repeated navigation blocks \u2014 bypass not required.",
+    "raw": {
+      "landmark_audit": {
+        "landmarks": {
+          "main": 0,
+          "nav": 0,
+          "header": 0,
+          "footer": 0
+        },
+        "skip_links_found": [],
+        "has_skip_link": false,
+        "tab_sequence_first_10": [],
+        "skip_link_tab_position": null,
+        "skip_link_is_first": false
+      },
+      "nvda_landmark": {
+        "landmark_navigation_log": [
+          {
+            "press": 0,
+            "key": "F6",
+            "nvda_announcement": null
+          },
+          {
+            "press": 1,
+            "key": "F6",
+            "nvda_announcement": null
+          },
+          {
+            "press": 2,
+            "key": "F6",
+            "nvda_announcement": null
+          },
+          {
+            "press": 3,
+            "key": "F6",
+            "nvda_announcement": null
+          },
+          {
+            "press": 4,
+            "key": "F6",
+            "nvda_announcement": null
+          }
+        ],
+        "main_landmark_reached": false
+      }
+    }
+  },
+  "wcag_4_1_2": {
+    "wcag": "4.1.2 Name, Role, Value",
+    "verdict": "FAIL",
+    "details": [
+      {
+        "source": "NVDA",
+        "element_index": 0,
+        "tag": "INPUT",
+        "role": "input",
+        "html_snippet": "<input type=\"image\" value=\"download\" alt=\"Download\">",
+        "nvda_announcement": null,
+        "reason": "NVDA did not announce an accessible name for this control."
+      },
+      {
+        "source": "NVDA",
+        "element_index": 0,
+        "tag": "INPUT",
+        "role": "input",
+        "html_snippet": "<input type=\"image\" value=\"download\" alt=\"Download\">",
+        "nvda_announcement": null,
+        "reason": "NVDA did not announce the role 'input' for this control."
+      }
+    ],
+    "raw": {
+      "role_validation": [],
+      "aria_tree_interactive": [
+        {
+          "role": "button",
+          "name": "Download",
+          "has_accessible_name": true,
+          "state": {},
+          "node_id": "9",
+          "backend_node_id": 9
+        }
+      ],
+      "nvda_results": [
+        {
+          "index": 0,
+          "tag": "INPUT",
+          "role": "input",
+          "aria_label": null,
+          "aria_labelledby": null,
+          "inner_text": "",
+          "html_snippet": "<input type=\"image\" value=\"download\" alt=\"Download\">",
+          "aria_checked": null,
+          "aria_expanded": null,
+          "aria_selected": null,
+          "nvda_on_focus": null,
+          "nvda_after_interaction": null,
+          "has_name_announced": false,
+          "has_role_announced": false,
+          "has_state_announced": null
+        }
+      ]
+    }
+  }
+}

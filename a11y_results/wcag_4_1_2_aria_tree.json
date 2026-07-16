@@ -1,0 +1,352 @@
+{
+  "full_tree": {
+    "nodes": [
+      {
+        "nodeId": "3",
+        "ignored": false,
+        "role": {
+          "type": "internalRole",
+          "value": "RootWebArea"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 144
+        },
+        "name": {
+          "type": "computedString",
+          "value": "Inapplicable Example 1",
+          "sources": [
+            {
+              "type": "relatedElement",
+              "attribute": "aria-labelledby"
+            },
+            {
+              "type": "attribute",
+              "attribute": "aria-label"
+            },
+            {
+              "type": "attribute",
+              "attribute": "aria-label",
+              "superseded": true
+            },
+            {
+              "type": "relatedElement",
+              "value": {
+                "type": "computedString",
+                "value": "Inapplicable Example 1"
+              },
+              "nativeSource": "title"
+            }
+          ]
+        },
+        "properties": [
+          {
+            "name": "focusable",
+            "value": {
+              "type": "booleanOrUndefined",
+              "value": true
+            }
+          },
+          {
+            "name": "url",
+            "value": {
+              "type": "string",
+              "value": "file:///C:/Users/Lokesh%20Chilamcharla/AppData/Local/Temp/tmpj_d9wrya.html"
+            }
+          }
+        ],
+        "childIds": [
+          "5"
+        ],
+        "backendDOMNodeId": 3,
+        "frameId": "C8C27644A298BD65B0FB7A6C6E703021"
+      },
+      {
+        "nodeId": "5",
+        "ignored": true,
+        "ignoredReasons": [
+          {
+            "name": "uninteresting",
+            "value": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        ],
+        "role": {
+          "type": "role",
+          "value": "none"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 0
+        },
+        "parentId": "3",
+        "childIds": [
+          "8"
+        ],
+        "backendDOMNodeId": 5
+      },
+      {
+        "nodeId": "8",
+        "ignored": false,
+        "role": {
+          "type": "role",
+          "value": "generic"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 88
+        },
+        "name": {
+          "type": "computedString",
+          "value": "",
+          "sources": [
+            {
+              "type": "relatedElement",
+              "attribute": "aria-labelledby"
+            },
+            {
+              "type": "attribute",
+              "attribute": "aria-label"
+            }
+          ]
+        },
+        "properties": [],
+        "parentId": "5",
+        "childIds": [
+          "9"
+        ],
+        "backendDOMNodeId": 8
+      },
+      {
+        "nodeId": "9",
+        "ignored": false,
+        "role": {
+          "type": "role",
+          "value": "button"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 9
+        },
+        "name": {
+          "type": "computedString",
+          "value": "Download",
+          "sources": [
+            {
+              "type": "relatedElement",
+              "attribute": "aria-labelledby"
+            },
+            {
+              "type": "attribute",
+              "attribute": "aria-label"
+            },
+            {
+              "type": "relatedElement",
+              "nativeSource": "label"
+            },
+            {
+              "type": "attribute",
+              "value": {
+                "type": "computedString",
+                "value": "Download"
+              },
+              "attribute": "alt",
+              "attributeValue": {
+                "type": "string",
+                "value": "Download"
+              }
+            },
+            {
+              "type": "attribute",
+              "value": {
+                "type": "computedString",
+                "value": "download"
+              },
+              "attribute": "value",
+              "superseded": true
+            },
+            {
+              "type": "attribute",
+              "attribute": "title",
+              "superseded": true
+            },
+            {
+              "type": "attribute",
+              "value": {
+                "type": "computedString",
+                "value": "Submit"
+              },
+              "attribute": "type",
+              "attributeValue": {
+                "type": "string",
+                "value": "image"
+              },
+              "superseded": true
+            },
+            {
+              "type": "contents",
+              "value": {
+                "type": "computedString",
+                "value": "Download"
+              },
+              "superseded": true
+            },
+            {
+              "type": "attribute",
+              "attribute": "title",
+              "superseded": true
+            }
+          ]
+        },
+        "properties": [
+          {
+            "name": "invalid",
+            "value": {
+              "type": "token",
+              "value": "false"
+            }
+          },
+          {
+            "name": "focusable",
+            "value": {
+              "type": "booleanOrUndefined",
+              "value": true
+            }
+          }
+        ],
+        "parentId": "8",
+        "childIds": [
+          "10"
+        ],
+        "backendDOMNodeId": 9
+      },
+      {
+        "nodeId": "10",
+        "ignored": true,
+        "ignoredReasons": [
+          {
+            "name": "uninteresting",
+            "value": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        ],
+        "role": {
+          "type": "role",
+          "value": "none"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 0
+        },
+        "parentId": "9",
+        "childIds": [
+          "4",
+          "2"
+        ],
+        "backendDOMNodeId": 10
+      },
+      {
+        "nodeId": "4",
+        "ignored": false,
+        "role": {
+          "type": "role",
+          "value": "image"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 99
+        },
+        "name": {
+          "type": "computedString",
+          "value": "",
+          "sources": [
+            {
+              "type": "relatedElement",
+              "attribute": "aria-labelledby"
+            },
+            {
+              "type": "attribute",
+              "attribute": "aria-label"
+            },
+            {
+              "type": "attribute",
+              "attribute": "alt"
+            },
+            {
+              "type": "attribute",
+              "attribute": "title"
+            }
+          ]
+        },
+        "properties": [],
+        "parentId": "10",
+        "childIds": [],
+        "backendDOMNodeId": 4
+      },
+      {
+        "nodeId": "2",
+        "ignored": false,
+        "role": {
+          "type": "internalRole",
+          "value": "StaticText"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 158
+        },
+        "name": {
+          "type": "computedString",
+          "value": "Download",
+          "sources": [
+            {
+              "type": "contents",
+              "value": {
+                "type": "computedString",
+                "value": "Download"
+              }
+            }
+          ]
+        },
+        "properties": [],
+        "parentId": "10",
+        "childIds": [
+          "-1000000003"
+        ],
+        "backendDOMNodeId": 2
+      },
+      {
+        "nodeId": "-1000000003",
+        "ignored": false,
+        "role": {
+          "type": "internalRole",
+          "value": "InlineTextBox"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 101
+        },
+        "name": {
+          "type": "computedString",
+          "value": "Download"
+        },
+        "properties": [],
+        "parentId": "2",
+        "childIds": []
+      }
+    ]
+  },
+  "interactive_elements": [
+    {
+      "role": "button",
+      "name": "Download",
+      "has_accessible_name": true,
+      "state": {},
+      "node_id": "9",
+      "backend_node_id": 9
+    }
+  ]
+}

@@ -27,9 +27,9 @@ from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from personas.base_agent import BaseAgenticAgent
-from tools import heading_structure_agent
-from tools import keyboard_navigation_agent
-from tools.nvda_agent import run_full_analysis
+from tools1 import heading_structure_agent
+from tools1 import keyboard_navigation_agent
+from tools1.nvda_agent import run_full_analysis
 
 load_dotenv()
 
