@@ -77,6 +77,7 @@ class AxeCondition:
             )
 
             issues = self._format_issues(filtered)
+            all_issues = self._format_issues(all_violations)
             label, severity = self._label_and_severity(issues)
 
             return {
@@ -84,6 +85,7 @@ class AxeCondition:
                     "label": label,
                     "severity": severity,
                     "issues": issues,
+                    "all_issues": all_issues,
                     "overall_assessment": axe_result.get("summary", ""),
                 },
                 "metadata": {
@@ -146,9 +148,16 @@ class AxeCondition:
     def _format_issues(self, violations):
         issues = []
         for v in violations:
-            wcag_tags = [
-                t for t in v.get("tags", []) if "wcag" in t.lower()
-            ]
+            tags = v.get("tags", [])
+            wcag_tags = [t for t in tags if "wcag" in t.lower()]
+            if wcag_tags:
+                wcag_label = ", ".join(wcag_tags)
+            
+            # Axe's "best practice" which still gets flagged when running the audit, but is not counted as a WCAG guideline.
+            elif "best-practice" in tags:
+                wcag_label = "best practice"
+            else:
+                wcag_label = "Unknown"
             nodes = v.get("nodes", [])
             evidence = (
                 f"axe rule '{v.get('id')}' failed on {len(nodes)} element(s)"
@@ -156,7 +165,7 @@ class AxeCondition:
             if nodes:
                 evidence += f". Example: {nodes[0].get('html', '')[:100]}"
             issues.append({
-                "wcag": ", ".join(wcag_tags) if wcag_tags else "Unknown",
+                "wcag": wcag_label,
                 "description": v.get("description", ""),
                 "evidence": evidence,
                 "recommendation": v.get("help", ""),
