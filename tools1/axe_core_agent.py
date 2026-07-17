@@ -86,6 +86,7 @@ class AxeCoreAgent:
                     "description": violation.get("description"),
                     "help": violation.get("help"),
                     "helpUrl": violation.get("helpUrl"),
+                    "tags": violation.get("tags", []),
                     "nodes": [
                         {
                             "html": node.get("html"),
