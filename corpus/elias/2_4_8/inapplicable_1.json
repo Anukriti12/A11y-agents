@@ -1,8 +1,0 @@
-{
-  "persona": "elias",
-  "wcag_criterion": "2.4.8",
-  "expected_label": "NOT_APPLICABLE",
-  "source": "SYNTHETIC",
-  "filename": "inapplicable_1.html",
-  "notes": "Synthetic test case for WCAG 2.4.8 | Persona: elias"
-}

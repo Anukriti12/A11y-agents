@@ -1,8 +1,0 @@
-{
-  "persona": "stefan",
-  "wcag_criterion": "2.4.5",
-  "expected_label": "PASS",
-  "source": "SYNTHETIC",
-  "filename": "pass_1.html",
-  "notes": "Synthetic test case for WCAG 2.4.5 | Provides both a navigation menu and a search function."
-}
