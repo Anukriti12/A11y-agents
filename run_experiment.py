@@ -1,21 +1,33 @@
 """
-Main experiment runner for A11yAgents.
+Main experiment runner for A11yAgents / AgentA11y.
 
 Compares three conditions on the same HTML snippets:
   A. Axe            (rule engine baseline, no LLM)
   B. Persona-LLM    (persona prompt, no tools)
   C. Persona-Agent  (persona prompt + specialized tools)
 
+MULTI-MODEL VERSION. `--model` selects the LLM backing conditions B and C:
+    gpt-4o              (needs OPENAI_API_KEY)
+    claude-sonnet-4-6   (needs ANTHROPIC_API_KEY)
+    claude-opus-4-8     (needs ANTHROPIC_API_KEY)
+
+Condition A is model-independent. Use --skip-axe on the second and third
+model runs to avoid re-running identical axe results three times.
+
 Corpus layout (produced by build_corpus.py + fetch_axe_fixtures.py +
 build_handauthored.py):
     corpus1/<persona>/<wcag>/<expected>/<id>.html
     corpus1/<persona>/<wcag>/<expected>/<id>.json
 
-Each HTML is evaluated under all three conditions × N repetitions.
-Results saved as JSONL for easy downstream analysis.
+Each HTML is evaluated under all three conditions x N repetitions.
+Results saved as JSONL for easy downstream analysis. Every row records the
+model, and the resume key includes the model, so multiple models can safely
+share one output file.
 
-python run_experiment.py --corpus corpus1 --repetitions 3 --output results/experiment_results.jsonl
-
+Examples:
+    python run_experiment.py --corpus corpus1 --repetitions 3 --model gpt-4o --output results/results_gpt4o.jsonl
+    python run_experiment.py --corpus corpus1 --repetitions 3 --model claude-sonnet-4-6 --skip-axe --output results/results_sonnet46.jsonl
+    python run_experiment.py --corpus corpus1 --repetitions 3 --model claude-opus-4-8 --skip-axe --output results/results_opus48.jsonl
 """
 
 import argparse
@@ -27,11 +39,10 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from conditions.condition_a_axe import AxeCondition
-from conditions.condition_b_persona_llm import PersonaLLMCondition
-from conditions.condition_c_persona_agent import PersonaAgentCondition
-
 load_dotenv()
+
+
+SUPPORTED_MODELS = ("gpt-4o", "claude-sonnet-4-6", "claude-opus-4-8")
 
 
 # --------------------------------------------------------------------------- #
@@ -141,8 +152,13 @@ def now_iso():
 
 def already_run(output_path):
     """
-    Return set of (snippet_id, condition, persona, repetition) tuples
+    Return set of (snippet_id, condition, persona, repetition, model) tuples
     already recorded, so a partial run can be resumed without re-doing work.
+
+    MODEL IS PART OF THE KEY. Without it, running a second model into the
+    same output file would skip every row as already done. Rows written by
+    the older single-model version have no "model" field; they are keyed as
+    the legacy model name so a pre-existing gpt-4o file still resumes.
     """
     done = set()
     if not os.path.exists(output_path):
@@ -153,15 +169,17 @@ def already_run(output_path):
                 r = json.loads(line)
             except json.JSONDecodeError:
                 continue
-            if "error" in r and not r.get("evaluation"):
-                # Failed row that we may want to retry. Keep it done to avoid
-                # infinite loops; user can delete rows to force retry.
-                pass
+            model = (
+                r.get("model")
+                or r.get("metadata", {}).get("model")
+                or "gpt-4o"  # legacy rows predate the model field
+            )
             key = (
                 r.get("snippet_id"),
                 r.get("condition"),
                 r.get("persona"),
                 r.get("repetition"),
+                model,
             )
             if all(k is not None for k in (key[0], key[1], key[3])):
                 done.add(key)
@@ -179,14 +197,28 @@ CONDITION_NAMES = {
 }
 
 
-def run_experiment(corpus_root, output_path, repetitions, limit, resume):
-    api_key = os.environ.get("OPENAI_API_KEY")
+def run_experiment(corpus_root, output_path, repetitions, limit, resume,
+                   model, skip_axe=False):
+    # Announce the model to every downstream module BEFORE importing the
+    # conditions, so persona agents constructed at import/instantiation time
+    # pick up the right provider.
+    os.environ["A11Y_MODEL"] = model
+
+    from llm_client import key_env_var
+    from conditions.condition_a_axe import AxeCondition
+    from conditions.condition_b_persona_llm import PersonaLLMCondition
+    from conditions.condition_c_persona_agent import PersonaAgentCondition
+
+    env_var = key_env_var(model)
+    api_key = os.environ.get(env_var)
     if not api_key:
-        print("FATAL: OPENAI_API_KEY not set.", file=sys.stderr)
+        print(f"FATAL: {env_var} not set (required for model '{model}').",
+              file=sys.stderr)
         return 2
 
     print("=" * 70)
-    print("A11yAgents evaluation")
+    print("AgentA11y evaluation")
+    print(f"Model: {model}   Key: {env_var}")
     print("=" * 70)
 
     print(f"Loading corpus from {corpus_root}/ ...")
@@ -200,14 +232,13 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume):
         print(f"  {len(done)} evaluations already recorded (resuming)")
 
     print("Instantiating conditions ...")
-    cond_a = AxeCondition()
-    cond_b = PersonaLLMCondition(api_key)
-    cond_c = PersonaAgentCondition(api_key)
-    conditions = [
-        ("A", "axe", cond_a),
-        ("B", "persona_llm", cond_b),
-        ("C", "persona_agent", cond_c),
-    ]
+    conditions = []
+    if skip_axe:
+        print("  Condition A (axe) SKIPPED: model-independent, run it once.")
+    else:
+        conditions.append(("A", "axe", AxeCondition()))
+    conditions.append(("B", "persona_llm", PersonaLLMCondition(api_key, model=model)))
+    conditions.append(("C", "persona_agent", PersonaAgentCondition(api_key, model=model)))
 
     total = len(corpus) * len(conditions) * repetitions
     completed = 0
@@ -226,7 +257,11 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume):
 
         for cond_key, cond_name, cond_obj in conditions:
             for rep in range(repetitions):
-                key = (sid, cond_name, persona, rep)
+                # Condition A has no model, but keying it under the current
+                # model keeps the resume logic uniform. Use --skip-axe to
+                # avoid the duplicate work on later model runs.
+                row_model = "n/a" if cond_name == "axe" else model
+                key = (sid, cond_name, persona, rep, row_model)
                 if key in done:
                     skipped += 1
                     continue
@@ -248,6 +283,7 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume):
                     "snippet_id": sid,
                     "condition": cond_name,
                     "condition_key": cond_key,
+                    "model": row_model,
                     "persona": persona,
                     "wcag_criterion": wcag,
                     "expected": expected,
@@ -268,7 +304,8 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume):
 
     print()
     print("=" * 70)
-    print(f"Done. New evaluations: {completed}. Skipped (resumed): {skipped}.")
+    print(f"Done. Model: {model}")
+    print(f"New evaluations: {completed}. Skipped (resumed): {skipped}.")
     print(f"Results: {output_path}")
     print("=" * 70)
     return 0
@@ -279,7 +316,7 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume):
 # --------------------------------------------------------------------------- #
 
 def main():
-    parser = argparse.ArgumentParser(description="Run the A11yAgents experiment.")
+    parser = argparse.ArgumentParser(description="Run the AgentA11y experiment.")
     parser.add_argument(
         "--corpus", default="corpus1",
         help="Corpus root directory (default: corpus1)",
@@ -287,6 +324,10 @@ def main():
     parser.add_argument(
         "--output", default="results/experiment_results.jsonl",
         help="Output JSONL path (default: results/experiment_results.jsonl)",
+    )
+    parser.add_argument(
+        "--model", default="gpt-4o",
+        help=f"LLM for conditions B and C. One of: {', '.join(SUPPORTED_MODELS)}",
     )
     parser.add_argument(
         "--repetitions", type=int, default=3,
@@ -297,10 +338,19 @@ def main():
         help="Only evaluate the first N snippets (for smoke tests)",
     )
     parser.add_argument(
+        "--skip-axe", action="store_true",
+        help="Skip Condition A. It is model-independent; run it once only.",
+    )
+    parser.add_argument(
         "--no-resume", action="store_true",
         help="Ignore existing results file and re-run everything.",
     )
     args = parser.parse_args()
+
+    if args.model not in SUPPORTED_MODELS:
+        print(f"WARN: '{args.model}' is not in the tested set "
+              f"({', '.join(SUPPORTED_MODELS)}). Continuing anyway.",
+              file=sys.stderr)
 
     os.makedirs(os.path.dirname(args.output) or ".", exist_ok=True)
 
@@ -310,6 +360,8 @@ def main():
         repetitions=args.repetitions,
         limit=args.limit,
         resume=not args.no_resume,
+        model=args.model,
+        skip_axe=args.skip_axe,
     )
 
 

@@ -1,7 +1,20 @@
 """
-Base class for all persona agents in the A11yAgents study.
+Base class for all persona agents in the A11yAgents / AgentA11y study.
 
-Additions in this version, in addition to the tool_trace field:
+MULTI-MODEL VERSION. The agentic loop no longer calls the OpenAI SDK
+directly. It goes through llm_client.make_client(), which returns either an
+OpenAI or an Anthropic adapter depending on the model string. Everything
+else about the loop is unchanged, including tool_trace and per-tool timeouts.
+
+Model selection, in priority order:
+  1. `model=` kwarg passed to the constructor
+  2. A11Y_MODEL environment variable (set by run_experiment.py --model)
+  3. "gpt-4o"
+
+The env var is read inside __init__, not at class-body import time, so
+run_experiment.py can set it after this module is already imported.
+
+Features retained from the previous version:
   1. Per-tool TIMEOUT (default 60s) so a hung tool doesn't block the whole
      agent loop. Timed-out calls are recorded in tool_trace with
      `status="timeout"` and the LLM sees an error dict.
@@ -16,6 +29,8 @@ The return contract from evaluate() is:
   {
       "evaluation": {parsed persona JSON},
       "metadata": {
+          "model": str,
+          "provider": "openai" | "anthropic",
           "tools_called": [names in order],
           "tool_trace": [
               {
@@ -35,6 +50,7 @@ The return contract from evaluate() is:
           "iteration_count": int,
           "total_time_seconds": float,
           "tool_timeout_seconds": float,
+          "usage": {"input_tokens": int, "output_tokens": int},
       }
   }
 """
@@ -42,11 +58,16 @@ The return contract from evaluate() is:
 import json
 import logging
 import os
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from datetime import datetime
 
-import openai
+# Repo root on the path so `import llm_client` works regardless of the
+# directory the experiment is launched from.
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from llm_client import make_client
 
 
 # --------------------------------------------------------------------------- #
@@ -61,6 +82,9 @@ TOOL_TIMEOUT_SEC = float(os.environ.get("A11Y_TOOL_TIMEOUT_SEC", "60"))
 # Cap on per-tool-call output stored in the trace. Set very high; can be
 # lowered if row sizes get unwieldy.
 MAX_TOOL_OUTPUT_BYTES = int(os.environ.get("A11Y_MAX_TOOL_OUTPUT", "100000"))
+
+# Default model when neither the constructor nor A11Y_MODEL specifies one.
+DEFAULT_MODEL = "gpt-4o"
 
 
 # --------------------------------------------------------------------------- #
@@ -110,53 +134,62 @@ class BaseAgenticAgent:
     """Common agentic loop for persona-grounded WCAG evaluation."""
 
     MAX_ITERATIONS = 10
-    MODEL = "gpt-4o"
     TEMPERATURE = 0
-    SEED = 42
 
-    def __init__(self, api_key, persona_name):
-        self.client = openai.OpenAI(api_key=api_key)
+    # Anthropic requires max_tokens. 4096 comfortably fits the persona JSON
+    # verdict plus reasoning. Raise if verdicts start getting truncated.
+    MAX_TOKENS = int(os.environ.get("A11Y_MAX_TOKENS", "4096"))
+
+    def __init__(self, api_key, persona_name, model=None):
+        # Resolved at construction time, not import time, so run_experiment.py
+        # can set A11Y_MODEL after importing the conditions module.
+        self.model = model or os.environ.get("A11Y_MODEL") or DEFAULT_MODEL
+        self.client = make_client(self.model, api_key)
+        self.provider = self.client.provider
         self.persona_name = persona_name
         self.tools_called = []
         self.tool_trace = []
         self.iteration_count = 0
+        self.usage = {"input_tokens": 0, "output_tokens": 0}
+
+    def _accumulate_usage(self, usage):
+        for k in ("input_tokens", "output_tokens"):
+            v = (usage or {}).get(k)
+            if isinstance(v, int):
+                self.usage[k] += v
 
     def evaluate(self, html):
+        system_prompt = self.get_system_prompt()
         messages = [
-            {"role": "system", "content": self.get_system_prompt()},
             {"role": "user", "content": f"Evaluate this HTML:\n\n{html}"},
         ]
 
         self.tools_called = []
         self.tool_trace = []
         self.iteration_count = 0
+        self.usage = {"input_tokens": 0, "output_tokens": 0}
         start_time = time.time()
 
         for iteration in range(self.MAX_ITERATIONS):
             self.iteration_count = iteration + 1
 
-            response = self.client.chat.completions.create(
-                model=self.MODEL,
+            response = self.client.chat(
+                system=system_prompt,
                 messages=messages,
                 tools=self.get_tools(),
-                tool_choice="auto",
                 temperature=self.TEMPERATURE,
-                seed=self.SEED,
+                max_tokens=self.MAX_TOKENS,
             )
+            self._accumulate_usage(response.get("usage"))
 
-            assistant_message = response.choices[0].message
+            if response["tool_calls"]:
+                self.client.append_assistant(messages, response["assistant_msg"])
 
-            if assistant_message.tool_calls:
-                messages.append(assistant_message)
-
-                for tool_call in assistant_message.tool_calls:
-                    tool_name = tool_call.function.name
+                for tool_call in response["tool_calls"]:
+                    tool_name = tool_call["name"]
+                    tool_call_id = tool_call["id"]
+                    arguments = tool_call["arguments"]
                     self.tools_called.append(tool_name)
-
-                    try:
-                        arguments = json.loads(tool_call.function.arguments)
-                    except json.JSONDecodeError:
-                        arguments = {}
 
                     # Run the tool under a wall-clock timeout so one hung
                     # call cannot block the whole evaluation.
@@ -166,14 +199,14 @@ class BaseAgenticAgent:
 
                     # Log the outcome
                     LOGGER.info(
-                        "persona=%s tool=%s status=%s elapsed=%.2f iter=%d",
-                        self.persona_name, tool_name, status,
+                        "model=%s persona=%s tool=%s status=%s elapsed=%.2f iter=%d",
+                        self.model, self.persona_name, tool_name, status,
                         elapsed, self.iteration_count,
                     )
                     if status != "ok":
                         LOGGER.warning(
-                            "persona=%s tool=%s failed: %s",
-                            self.persona_name, tool_name, error,
+                            "model=%s persona=%s tool=%s failed: %s",
+                            self.model, self.persona_name, tool_name, error,
                         )
 
                     # Serialize and possibly truncate for the trace
@@ -199,36 +232,36 @@ class BaseAgenticAgent:
                         "elapsed_seconds": round(elapsed, 3),
                         "status": status,
                         "error": error,
-                        "tool_call_id": tool_call.id,
+                        "tool_call_id": tool_call_id,
                     })
 
                     # Send the FULL (untruncated) result back to the LLM
                     # so its downstream reasoning is not degraded.
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": tool_call.id,
-                        "name": tool_name,
-                        "content": result_json,
-                    })
+                    self.client.append_tool_result(
+                        messages, tool_call_id, tool_name, result_json
+                    )
             else:
                 # Final non-tool message: parse and return.
                 elapsed_total = time.time() - start_time
                 return {
-                    "evaluation": self.parse_output(assistant_message.content),
+                    "evaluation": self.parse_output(response["text"]),
                     "metadata": {
+                        "model": self.model,
+                        "provider": self.provider,
                         "tools_called": self.tools_called,
                         "tool_trace": self.tool_trace,
                         "iteration_count": self.iteration_count,
                         "total_time_seconds": round(elapsed_total, 2),
                         "tool_timeout_seconds": TOOL_TIMEOUT_SEC,
+                        "usage": dict(self.usage),
                     },
                 }
 
         # Exceeded max iterations
         elapsed_total = time.time() - start_time
         LOGGER.warning(
-            "persona=%s exceeded MAX_ITERATIONS=%d",
-            self.persona_name, self.MAX_ITERATIONS,
+            "model=%s persona=%s exceeded MAX_ITERATIONS=%d",
+            self.model, self.persona_name, self.MAX_ITERATIONS,
         )
         return {
             "evaluation": {
@@ -241,11 +274,14 @@ class BaseAgenticAgent:
                 ),
             },
             "metadata": {
+                "model": self.model,
+                "provider": self.provider,
                 "tools_called": self.tools_called,
                 "tool_trace": self.tool_trace,
                 "iteration_count": self.iteration_count,
                 "total_time_seconds": round(elapsed_total, 2),
                 "tool_timeout_seconds": TOOL_TIMEOUT_SEC,
+                "usage": dict(self.usage),
                 "error": "max_iterations_exceeded",
             },
         }

@@ -6,6 +6,9 @@ tool access. The LLM reasons about the HTML directly using its training
 knowledge. This is the ablation that isolates the contribution of the
 specialized accessibility tools.
 
+MULTI-MODEL VERSION. Routes through llm_client.make_client() so the same
+condition runs on gpt-4o, claude-sonnet-4-6, and claude-opus-4-8.
+
 Design:
     We instantiate the persona agent classes just to reuse their
     get_system_prompt() output. Then we make a single LLM call with
@@ -15,15 +18,20 @@ Design:
     This guarantees Condition B and Condition C share the SAME persona
     grounding, so any difference in verdicts is attributable to tool
     access, not prompt differences.
+
+    The persona agents constructed here also build their own LLM clients
+    (unused in this condition), so they are given the same model to avoid
+    a spurious second provider handshake.
 """
 
 import json
 import os
 import sys
 import time
-import openai
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from llm_client import make_client
 
 from personas1.ade_agent import AdeAgent
 from personas1.elias_agent import EliasAgent
@@ -31,6 +39,9 @@ from personas1.ian_agent import IanAgent
 from personas1.lakshmi_agent import LakshmiAgent
 from personas1.sophie_agent import SophieAgent
 from personas1.stefan_agent import StefanAgent
+
+
+DEFAULT_MODEL = "gpt-4o"
 
 
 # Override appended to each persona's system prompt to disable tools for
@@ -43,7 +54,7 @@ IMPORTANT: CONDITION B OVERRIDE
 For THIS evaluation you have NO TOOLS AVAILABLE.
 
 Disregard every instruction above about calling tools, iterating on
-tool output, or "tool: <name>". Those instructions do not apply here.
+tool output, or "tool: <n>". Those instructions do not apply here.
 
 Instead, evaluate the HTML directly using your training knowledge.
 For each of the five WCAG criteria in your matrix:
@@ -60,14 +71,16 @@ ONLY the JSON object, no markdown fences, no preamble.
 
 
 class PersonaLLMCondition:
-    """Persona system prompt, no tool access. GPT-4o direct call."""
+    """Persona system prompt, no tool access. Single direct model call."""
 
-    MODEL = "gpt-4o"
     TEMPERATURE = 0
-    SEED = 42
+    MAX_TOKENS = int(os.environ.get("A11Y_MAX_TOKENS", "4096"))
 
-    def __init__(self, api_key):
-        self.client = openai.OpenAI(api_key=api_key)
+    def __init__(self, api_key, model=None):
+        self.model = model or os.environ.get("A11Y_MODEL") or DEFAULT_MODEL
+        self.client = make_client(self.model, api_key)
+        self.provider = self.client.provider
+
         # Instantiate agents only to reuse their system prompts.
         # We never call their evaluate() method in this condition.
         self.persona_agents = {
@@ -85,18 +98,17 @@ class PersonaLLMCondition:
             agent = self.persona_agents[persona]
             system_prompt = agent.get_system_prompt() + NO_TOOLS_OVERRIDE
 
-            response = self.client.chat.completions.create(
-                model=self.MODEL,
+            response = self.client.chat(
+                system=system_prompt,
                 messages=[
-                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"Evaluate this HTML:\n\n{html}"},
                 ],
+                tools=None,  # the LLM cannot call anything in this condition
                 temperature=self.TEMPERATURE,
-                seed=self.SEED,
-                # No tools parameter; the LLM cannot call anything.
+                max_tokens=self.MAX_TOKENS,
             )
 
-            evaluation = self._parse(response.choices[0].message.content)
+            evaluation = self._parse(response["text"])
 
             return {
                 "evaluation": evaluation,
@@ -105,7 +117,9 @@ class PersonaLLMCondition:
                     "iteration_count": 1,
                     "total_time_seconds": round(time.time() - start, 2),
                     "persona": persona,
-                    "model": self.MODEL,
+                    "model": self.model,
+                    "provider": self.provider,
+                    "usage": response.get("usage", {}),
                 },
             }
         except Exception as e:
@@ -121,6 +135,8 @@ class PersonaLLMCondition:
                     "iteration_count": 1,
                     "total_time_seconds": round(time.time() - start, 2),
                     "persona": persona,
+                    "model": self.model,
+                    "provider": getattr(self, "provider", None),
                     "error": str(e),
                 },
             }
@@ -157,11 +173,18 @@ class PersonaLLMCondition:
 
 
 if __name__ == "__main__":
-    api_key = os.environ.get("OPENAI_API_KEY")
+    from dotenv import load_dotenv
+    from llm_client import key_env_var
+
+    load_dotenv()
+    model = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_MODEL
+    os.environ["A11Y_MODEL"] = model
+
+    api_key = os.environ.get(key_env_var(model))
     if not api_key or api_key == "smoke-test":
-        print("Set OPENAI_API_KEY to run this test.")
+        print(f"Set {key_env_var(model)} to run this test.")
     else:
-        cond = PersonaLLMCondition(api_key)
+        cond = PersonaLLMCondition(api_key, model=model)
         result = cond.evaluate(
             "<html><body><img src='x.jpg'><button></button></body></html>",
             persona="lakshmi",
