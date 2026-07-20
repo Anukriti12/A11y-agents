@@ -210,7 +210,11 @@ Before committing to a full run, prove it works on 2 snippets. 6 evaluations tot
 ```powershell
 Remove-Item results\smoke.jsonl -ErrorAction SilentlyContinue
 python run_experiment.py --corpus corpus1 --limit 2 --repetitions 1 --output results\smoke.jsonl
+
+python run_experiment.py --corpus corpus1 --limit 2 --repetitions 1 --model claude-sonnet-4-6 --output results\smoke_sonnet.jsonl
 ```
+
+
 
 Watch the console. You should see:
 - Both snippets loaded
@@ -252,6 +256,10 @@ Copy-Item results\experiment_results.jsonl results\experiment_results_v1_broken.
 # Full run to fresh output file
 python run_experiment.py --corpus corpus1 --repetitions 3 --output results\experiment_results_v2_fixed.jsonl
 
+python run_experiment.py --corpus corpus1 --repetitions 3 --model gpt-4o --output results\results_gpt4o.jsonl
+python run_experiment.py --corpus corpus1 --repetitions 3 --model claude-sonnet-4-6 --skip-axe --output results\results_sonnet46.jsonl
+python run_experiment.py --corpus corpus1 --repetitions 3 --model claude-opus-4-8 --skip-axe --output results\results_opus48.jsonl
+
 
 **Keep NVDA running the entire time** if the corpus includes Lakshmi snippets. If NVDA closes mid-run, Lakshmi's tool will start failing.
 
@@ -270,6 +278,9 @@ Two commands, in order:
 ```powershell
 python reclassify_traces.py results\experiment_results.jsonl
 python analyze_results.py results\experiment_results_reclassified.jsonl
+
+python reclassify_traces.py results\results_gpt4o.jsonl
+python analyze_results.py results\results_*.jsonl
 ```
 
 This produces `results\analysis\verdicts.csv` and `results\analysis\tool_calls.csv`, plus a summary in the console showing per-persona agreement rates and per-tool statistics.
