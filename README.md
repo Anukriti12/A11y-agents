@@ -228,15 +228,27 @@ Watch the console. You should see:
 
 
 ```powershell
-python -c "
+@'
 import json
-with open('results/smoke.jsonl') as f:
+path = 'results/smoke.jsonl'
+with open(path) as f:
     for line in f:
         r = json.loads(line)
-        if r.get('condition') != 'persona_agent': continue
-        for c in r.get('metadata', {}).get('tool_trace', []):
-            print(f\"{c['name']:<40} status={c['status']:<10} elapsed={c['elapsed_seconds']:.2f}s\")
-"
+        if r.get('condition') != 'persona_agent':
+            continue
+        md = r.get('metadata', {})
+        tools = md.get('tools_called', [])
+        oa = r.get('evaluation', {}).get('overall_assessment', '')[:200]
+        print(f"snippet={r.get('snippet_id')[:15]} persona={r.get('persona')} "
+              f"wcag={r.get('wcag_criterion')} expected={r.get('expected')}")
+        print(f"  predicted={r.get('evaluation', {}).get('label')} "
+              f"time={md.get('total_time_seconds')}s iterations={md.get('iteration_count')}")
+        print(f"  tools_called ({len(tools)}): {tools}")
+        print(f"  assessment: {oa}")
+        print()
+'@ | Out-File -FilePath check_smoke_basic.py -Encoding utf8
+
+python check_smoke_basic.py
 ```
 
 Every line should show `status=ok` (or `status=ok_inapplicable` for legit no-work returns) and `elapsed_seconds` matching the tool type:
