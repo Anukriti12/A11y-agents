@@ -42,6 +42,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
 SUPPORTED_MODELS = ("gpt-4o", "claude-sonnet-4-6", "claude-opus-4-8")
 
 
@@ -208,6 +209,17 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume,
     from conditions.condition_a_axe import AxeCondition
     from conditions.condition_b_persona_llm import PersonaLLMCondition
     from conditions.condition_c_persona_agent import PersonaAgentCondition
+
+    from conditions.condition_d_vanilla_llm import VanillaLLMCondition
+    from conditions.condition_e_vanilla_agent import VanillaAgentCondition
+
+    conditions = [
+        ("A", "axe",           AxeCondition()),
+        ("B", "persona_llm",   PersonaLLMCondition(api_key, model=model)),
+        ("C", "persona_agent", PersonaAgentCondition(api_key, model=model)),
+        ("D", "vanilla_llm",   VanillaLLMCondition(api_key, model=model)),
+        ("E", "vanilla_agent", VanillaAgentCondition(api_key, model=model)),
+    ]
 
     env_var = key_env_var(model)
     api_key = os.environ.get(env_var)
