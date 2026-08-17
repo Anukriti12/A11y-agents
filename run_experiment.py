@@ -1,25 +1,33 @@
 """
 Main experiment runner for A11yAgents / AgentA11y.
 
-Compares three conditions on the same HTML snippets:
+Compares five conditions on the same HTML snippets:
   A. Axe            (rule engine baseline, no LLM)
   B. Persona-LLM    (persona prompt, no tools)
   C. Persona-Agent  (persona prompt + specialized tools)
+  D. Vanilla-LLM    (generic accessibility prompt, no persona, no tools)
+  E. Vanilla-Agent  (generic accessibility prompt, no persona, with all tools)
 
-MULTI-MODEL VERSION. `--model` selects the LLM backing conditions B and C:
+Conditions D and E complete the 2x2 ablation:
+
+                        no tools               with tools
+    no persona    Vanilla-LLM (D)         Vanilla-Agent (E)
+    with persona  Persona-LLM (B)         Persona-Agent (C)
+
+MULTI-MODEL VERSION. `--model` selects the LLM backing conditions B-E:
     gpt-4o              (needs OPENAI_API_KEY)
     claude-sonnet-4-6   (needs ANTHROPIC_API_KEY)
     claude-opus-4-8     (needs ANTHROPIC_API_KEY)
 
 Condition A is model-independent. Use --skip-axe on the second and third
-model runs to avoid re-running identical axe results three times.
+model runs to avoid re-running identical axe results.
 
 Corpus layout (produced by build_corpus.py + fetch_axe_fixtures.py +
 build_handauthored.py):
     corpus1/<persona>/<wcag>/<expected>/<id>.html
     corpus1/<persona>/<wcag>/<expected>/<id>.json
 
-Each HTML is evaluated under all three conditions x N repetitions.
+Each HTML is evaluated under all enabled conditions x N repetitions.
 Results saved as JSONL for easy downstream analysis. Every row records the
 model, and the resume key includes the model, so multiple models can safely
 share one output file.
@@ -40,7 +48,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
-
 
 
 SUPPORTED_MODELS = ("gpt-4o", "claude-sonnet-4-6", "claude-opus-4-8")
@@ -195,6 +202,8 @@ CONDITION_NAMES = {
     "A": "axe",
     "B": "persona_llm",
     "C": "persona_agent",
+    "D": "vanilla_llm",
+    "E": "vanilla_agent",
 }
 
 
@@ -209,18 +218,12 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume,
     from conditions.condition_a_axe import AxeCondition
     from conditions.condition_b_persona_llm import PersonaLLMCondition
     from conditions.condition_c_persona_agent import PersonaAgentCondition
-
     from conditions.condition_d_vanilla_llm import VanillaLLMCondition
     from conditions.condition_e_vanilla_agent import VanillaAgentCondition
 
-    conditions = [
-        ("A", "axe",           AxeCondition()),
-        ("B", "persona_llm",   PersonaLLMCondition(api_key, model=model)),
-        ("C", "persona_agent", PersonaAgentCondition(api_key, model=model)),
-        ("D", "vanilla_llm",   VanillaLLMCondition(api_key, model=model)),
-        ("E", "vanilla_agent", VanillaAgentCondition(api_key, model=model)),
-    ]
-
+    # Resolve API key BEFORE constructing any LLM-backed condition, and
+    # BEFORE the skip-axe branch (axe is model-independent but the other
+    # conditions all need the key).
     env_var = key_env_var(model)
     api_key = os.environ.get(env_var)
     if not api_key:
@@ -249,8 +252,12 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume,
         print("  Condition A (axe) SKIPPED: model-independent, run it once.")
     else:
         conditions.append(("A", "axe", AxeCondition()))
-    conditions.append(("B", "persona_llm", PersonaLLMCondition(api_key, model=model)))
+    conditions.append(("B", "persona_llm",   PersonaLLMCondition(api_key, model=model)))
     conditions.append(("C", "persona_agent", PersonaAgentCondition(api_key, model=model)))
+    conditions.append(("D", "vanilla_llm",   VanillaLLMCondition(api_key, model=model)))
+    conditions.append(("E", "vanilla_agent", VanillaAgentCondition(api_key, model=model)))
+
+    print(f"  Enabled conditions: {', '.join(name for _, name, _ in conditions)}")
 
     total = len(corpus) * len(conditions) * repetitions
     completed = 0
@@ -339,7 +346,7 @@ def main():
     )
     parser.add_argument(
         "--model", default="gpt-4o",
-        help=f"LLM for conditions B and C. One of: {', '.join(SUPPORTED_MODELS)}",
+        help=f"LLM for conditions B-E. One of: {', '.join(SUPPORTED_MODELS)}",
     )
     parser.add_argument(
         "--repetitions", type=int, default=3,

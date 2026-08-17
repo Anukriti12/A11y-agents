@@ -37,7 +37,7 @@ import time
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from tools.axe_core_agent import AxeCoreAgent
+from tools1.axe_core_agent import AxeCoreAgent
 
 
 # Persona to WCAG criteria mapping. Matches the locked matrix in personas/.
