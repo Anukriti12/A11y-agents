@@ -155,9 +155,10 @@ Create a file called `.env` in the repo root (same folder as `run_experiment.py`
 ```powershell
 Set-Content -Path .env -Value "OPENAI_API_KEY=sk-your-key-here"
 ```
+Set-Content -Path .env -Value @"
 AZURE_ANTHROPIC_ENDPOINT=https://2026-internship-project-resource.services.ai.azure.com/anthropic
-
-AZURE_ANTHROPIC_API_KEY=YOUR_KEY_HERE
+AZURE_ANTHROPIC_API_KEY=
+"@
 
 
 
