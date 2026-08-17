@@ -1,0 +1,83 @@
+2026-08-16 17:18:43,145 INFO model=claude-sonnet-4-6 persona=Ade tool=check_keyboard_focusables status=ok elapsed=8.38 iter=1
+2026-08-16 17:18:44,793 INFO model=claude-sonnet-4-6 persona=Ade tool=detect_keyboard_violations status=ok elapsed=1.65 iter=1
+2026-08-16 17:18:51,197 INFO model=claude-sonnet-4-6 persona=Ade tool=check_timing_and_timeouts status=ok elapsed=6.40 iter=1
+2026-08-16 17:18:52,767 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_order status=ok elapsed=1.57 iter=1
+2026-08-16 17:18:54,711 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_visible status=ok elapsed=1.94 iter=1
+2026-08-16 17:18:55,980 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_target_size status=ok elapsed=1.27 iter=1
+2026-08-16 17:19:11,929 INFO model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations status=error elapsed=0.00 iter=1
+2026-08-16 17:19:11,930 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations failed: 
+2026-08-16 17:19:11,931 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts status=error elapsed=0.00 iter=1
+2026-08-16 17:19:11,931 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts failed: 
+2026-08-16 17:19:11,933 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order status=error elapsed=0.00 iter=1
+2026-08-16 17:19:11,934 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order failed: 
+2026-08-16 17:19:11,935 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible status=error elapsed=0.00 iter=1
+2026-08-16 17:19:11,936 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible failed: 
+2026-08-16 17:19:11,938 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size status=error elapsed=0.00 iter=1
+2026-08-16 17:19:11,939 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size failed: 
+2026-08-16 17:19:16,537 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables status=error elapsed=0.00 iter=2
+2026-08-16 17:19:16,537 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables failed: 
+2026-08-16 17:19:16,538 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation status=error elapsed=0.00 iter=2
+2026-08-16 17:19:16,539 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation failed: 
+2026-08-16 17:19:46,764 INFO model=claude-sonnet-4-6 persona=Ade tool=check_keyboard_focusables status=ok elapsed=0.94 iter=1
+2026-08-16 17:19:48,066 INFO model=claude-sonnet-4-6 persona=Ade tool=detect_keyboard_violations status=ok elapsed=1.30 iter=1
+2026-08-16 17:19:52,954 INFO model=claude-sonnet-4-6 persona=Ade tool=check_timing_and_timeouts status=ok elapsed=4.89 iter=1
+2026-08-16 17:19:54,804 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_order status=ok elapsed=1.85 iter=1
+2026-08-16 17:19:56,681 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_visible status=ok elapsed=1.88 iter=1
+2026-08-16 17:19:58,268 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_target_size status=ok elapsed=1.59 iter=1
+2026-08-16 17:20:09,499 INFO model=claude-sonnet-4-6 persona=Ade tool=check_keyboard_focusables status=ok elapsed=1.25 iter=1
+2026-08-16 17:20:11,391 INFO model=claude-sonnet-4-6 persona=Ade tool=detect_keyboard_violations status=ok elapsed=1.89 iter=1
+2026-08-16 17:20:15,571 INFO model=claude-sonnet-4-6 persona=Ade tool=check_timing_and_timeouts status=ok elapsed=4.18 iter=1
+2026-08-16 17:20:16,982 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_order status=ok elapsed=1.41 iter=1
+2026-08-16 17:20:18,331 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_visible status=ok elapsed=1.35 iter=1
+2026-08-16 17:20:19,827 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_target_size status=ok elapsed=1.50 iter=1
+2026-08-16 17:20:31,398 INFO model=claude-sonnet-4-6 persona=Ade tool=check_keyboard_focusables status=ok elapsed=0.82 iter=1
+2026-08-16 17:20:32,720 INFO model=claude-sonnet-4-6 persona=Ade tool=detect_keyboard_violations status=ok elapsed=1.32 iter=1
+2026-08-16 17:20:36,898 INFO model=claude-sonnet-4-6 persona=Ade tool=check_timing_and_timeouts status=ok elapsed=4.18 iter=1
+2026-08-16 17:20:38,178 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_order status=ok elapsed=1.28 iter=1
+2026-08-16 17:20:39,490 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_focus_visible status=ok elapsed=1.31 iter=1
+2026-08-16 17:20:40,829 INFO model=claude-sonnet-4-6 persona=Ade tool=validate_target_size status=ok elapsed=1.34 iter=1
+2026-08-16 17:21:09,585 INFO model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations status=error elapsed=0.00 iter=1
+2026-08-16 17:21:09,586 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations failed: 
+2026-08-16 17:21:09,587 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts status=error elapsed=0.00 iter=1
+2026-08-16 17:21:09,587 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts failed: 
+2026-08-16 17:21:09,589 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order status=error elapsed=0.00 iter=1
+2026-08-16 17:21:09,589 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order failed: 
+2026-08-16 17:21:09,590 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible status=error elapsed=0.00 iter=1
+2026-08-16 17:21:09,591 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible failed: 
+2026-08-16 17:21:09,592 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size status=error elapsed=0.00 iter=1
+2026-08-16 17:21:09,592 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size failed: 
+2026-08-16 17:21:14,092 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables status=error elapsed=0.00 iter=2
+2026-08-16 17:21:14,092 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables failed: 
+2026-08-16 17:21:14,094 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation status=error elapsed=0.00 iter=2
+2026-08-16 17:21:14,094 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation failed: 
+2026-08-16 17:21:34,343 INFO model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations status=error elapsed=0.00 iter=1
+2026-08-16 17:21:34,343 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations failed: 
+2026-08-16 17:21:34,344 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts status=error elapsed=0.00 iter=1
+2026-08-16 17:21:34,344 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts failed: 
+2026-08-16 17:21:34,346 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order status=error elapsed=0.00 iter=1
+2026-08-16 17:21:34,346 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order failed: 
+2026-08-16 17:21:34,347 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible status=error elapsed=0.00 iter=1
+2026-08-16 17:21:34,348 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible failed: 
+2026-08-16 17:21:34,349 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size status=error elapsed=0.00 iter=1
+2026-08-16 17:21:34,349 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size failed: 
+2026-08-16 17:21:38,565 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation status=error elapsed=0.00 iter=2
+2026-08-16 17:21:38,566 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation failed: 
+2026-08-16 17:21:38,567 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables status=error elapsed=0.00 iter=2
+2026-08-16 17:21:38,568 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables failed: 
+2026-08-16 17:21:58,229 INFO model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations status=error elapsed=0.00 iter=1
+2026-08-16 17:21:58,229 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=detect_keyboard_violations failed: 
+2026-08-16 17:21:58,231 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts status=error elapsed=0.00 iter=1
+2026-08-16 17:21:58,231 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_timing_and_timeouts failed: 
+2026-08-16 17:21:58,233 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order status=error elapsed=0.00 iter=1
+2026-08-16 17:21:58,233 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_order failed: 
+2026-08-16 17:21:58,235 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible status=error elapsed=0.00 iter=1
+2026-08-16 17:21:58,235 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_focus_visible failed: 
+2026-08-16 17:21:58,236 INFO model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size status=error elapsed=0.00 iter=1
+2026-08-16 17:21:58,236 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=validate_target_size failed: 
+2026-08-16 17:22:02,583 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation status=error elapsed=0.00 iter=2
+2026-08-16 17:22:02,583 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_navigation failed: 
+2026-08-16 17:22:02,585 INFO model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables status=error elapsed=0.00 iter=2
+2026-08-16 17:22:02,585 WARNING model=claude-sonnet-4-6 persona=Vanilla tool=check_keyboard_focusables failed: 
+2026-08-16 17:22:49,318 INFO model=claude-sonnet-4-6 persona=Ade tool=check_keyboard_focusables status=ok elapsed=4.19 iter=1
+2026-08-16 17:22:50,693 INFO model=claude-sonnet-4-6 persona=Ade tool=detect_keyboard_violations status=ok elapsed=1.37 iter=1
+2026-08-16 17:22:54,955 INFO model=claude-sonnet-4-6 persona=Ade tool=check_timing_and_timeouts status=ok elapsed=4.26 iter=1
