@@ -205,7 +205,7 @@ def run_experiment(corpus_root, output_path, repetitions, limit, resume,
     # pick up the right provider.
     os.environ["A11Y_MODEL"] = model
 
-    from llm_client import key_env_var
+    from llm_client1 import key_env_var
     from conditions.condition_a_axe import AxeCondition
     from conditions.condition_b_persona_llm import PersonaLLMCondition
     from conditions.condition_c_persona_agent import PersonaAgentCondition

@@ -26,7 +26,7 @@ import time
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from llm_client import make_client
+from llm_client1 import make_client
 
 
 DEFAULT_MODEL = "gpt-4o"
@@ -219,7 +219,7 @@ class VanillaLLMCondition:
 
 if __name__ == "__main__":
     from dotenv import load_dotenv
-    from llm_client import key_env_var
+    from llm_client1 import key_env_var
 
     load_dotenv()
     model = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_MODEL

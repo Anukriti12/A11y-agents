@@ -2,7 +2,7 @@
 Base class for all persona agents in the A11yAgents / AgentA11y study.
 
 MULTI-MODEL VERSION. The agentic loop no longer calls the OpenAI SDK
-directly. It goes through llm_client.make_client(), which returns either an
+directly. It goes through llm_client1.make_client(), which returns either an
 OpenAI or an Anthropic adapter depending on the model string. Everything
 else about the loop is unchanged, including tool_trace and per-tool timeouts.
 
@@ -63,11 +63,11 @@ import time
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from datetime import datetime
 
-# Repo root on the path so `import llm_client` works regardless of the
+# Repo root on the path so `import llm_client1` works regardless of the
 # directory the experiment is launched from.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from llm_client import make_client
+from llm_client1 import make_client
 
 
 # --------------------------------------------------------------------------- #

@@ -6,7 +6,7 @@ tool access. The LLM reasons about the HTML directly using its training
 knowledge. This is the ablation that isolates the contribution of the
 specialized accessibility tools.
 
-MULTI-MODEL VERSION. Routes through llm_client.make_client() so the same
+MULTI-MODEL VERSION. Routes through llm_client1.make_client() so the same
 condition runs on gpt-4o, claude-sonnet-4-6, and claude-opus-4-8.
 
 Design:
@@ -31,7 +31,7 @@ import time
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from llm_client import make_client
+from llm_client1 import make_client
 
 from personas1.ade_agent import AdeAgent
 from personas1.elias_agent import EliasAgent
@@ -174,7 +174,7 @@ class PersonaLLMCondition:
 
 if __name__ == "__main__":
     from dotenv import load_dotenv
-    from llm_client import key_env_var
+    from llm_client1 import key_env_var
 
     load_dotenv()
     model = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_MODEL

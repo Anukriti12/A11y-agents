@@ -9,8 +9,25 @@ call in conditions/condition_b_persona_llm.py run unchanged across providers.
 
 Supported models:
     gpt-4o                (OpenAI)
-    claude-sonnet-4-6     (Anthropic)
-    claude-opus-4-8       (Anthropic)
+    claude-sonnet-4-6     (Anthropic direct, or Azure passthrough)
+    claude-opus-4-8       (Anthropic direct, or Azure passthrough)
+
+Azure routing: if the environment variable AZURE_ANTHROPIC_ENDPOINT is set,
+claude-* models route through Azure AI Foundry's Anthropic-native endpoint
+using AZURE_ANTHROPIC_API_KEY. If unset, they use direct Anthropic with
+ANTHROPIC_API_KEY. The rest of the codebase (personas, conditions, runner)
+does not need to know or care.
+
+Set these three env vars in .env when using Azure:
+    AZURE_ANTHROPIC_ENDPOINT=https://YOUR-RESOURCE.services.ai.azure.com/anthropic
+    AZURE_ANTHROPIC_API_KEY=YOUR_KEY
+
+Model string vs deployment name: the model string you pass in (e.g.
+claude-sonnet-4-6) is used both as the local identifier and as the Azure
+deployment name. If Azure gave you a different deployment name than the
+canonical model name, set AZURE_ANTHROPIC_DEPLOYMENT_<MODEL>=<deployment>,
+where <MODEL> is the model string with '-' replaced by '_' and uppercased.
+Example: AZURE_ANTHROPIC_DEPLOYMENT_CLAUDE_SONNET_4_6=my-sonnet.
 
 Adapter contract:
 
@@ -45,6 +62,8 @@ Key provider differences this module hides:
      Anthropic wants ALL tool_result blocks for a turn batched into a
      single user message.
   5. max_tokens is required by Anthropic. `seed` does not exist there.
+  6. Opus 4.8 does not accept temperature (extended thinking manages
+     its own sampling); we omit it for opus-4-* models.
 """
 
 import json
@@ -59,13 +78,30 @@ OPENAI_PREFIXES = ("gpt-", "o1", "o3", "o4")
 ANTHROPIC_PREFIXES = ("claude-",)
 
 
+def _using_azure_anthropic():
+    """Return True if Azure Anthropic env vars are set."""
+    return bool(os.environ.get("AZURE_ANTHROPIC_ENDPOINT"))
+
+
 def make_client(model, api_key=None):
     """Return the right adapter for a model string."""
     if model.startswith(ANTHROPIC_PREFIXES):
+        if _using_azure_anthropic():
+            key = api_key or os.environ.get("AZURE_ANTHROPIC_API_KEY")
+            if not key:
+                raise RuntimeError(
+                    f"Model '{model}' via Azure needs AZURE_ANTHROPIC_API_KEY. "
+                    "Add it to .env."
+                )
+            endpoint = os.environ["AZURE_ANTHROPIC_ENDPOINT"]
+            return AzureAnthropicAdapter(model, key, endpoint)
+
         key = api_key or os.environ.get("ANTHROPIC_API_KEY")
         if not key:
             raise RuntimeError(
-                f"Model '{model}' needs ANTHROPIC_API_KEY. Add it to .env."
+                f"Model '{model}' needs ANTHROPIC_API_KEY (or set "
+                f"AZURE_ANTHROPIC_ENDPOINT + AZURE_ANTHROPIC_API_KEY to "
+                f"route through Azure). Add to .env."
             )
         return AnthropicAdapter(model, key)
 
@@ -84,10 +120,25 @@ def make_client(model, api_key=None):
 
 
 def key_env_var(model):
-    """Which env var a given model needs. Used by run_experiment.py."""
+    """
+    Which env var a given model needs. Used by run_experiment.py to fail
+    fast with a helpful message when the key is missing.
+    """
     if model.startswith(ANTHROPIC_PREFIXES):
+        if _using_azure_anthropic():
+            return "AZURE_ANTHROPIC_API_KEY"
         return "ANTHROPIC_API_KEY"
     return "OPENAI_API_KEY"
+
+
+def _azure_deployment_for(model):
+    """
+    Look up the Azure deployment name for a given model string. If not set
+    via env var, use the model string itself (Azure often lets you name
+    the deployment identically to the model).
+    """
+    key = "AZURE_ANTHROPIC_DEPLOYMENT_" + model.upper().replace("-", "_")
+    return os.environ.get(key, model)
 
 
 # --------------------------------------------------------------------------- #
@@ -157,16 +208,21 @@ class OpenAIAdapter:
 
 
 # --------------------------------------------------------------------------- #
-#  Anthropic                                                                   #
+#  Anthropic (direct)                                                          #
 # --------------------------------------------------------------------------- #
 
 class AnthropicAdapter:
     provider = "anthropic"
 
-    def __init__(self, model, api_key):
+    # Opus 4.x models reject the temperature parameter (extended thinking
+    # manages sampling itself). Match by prefix so future opus versions
+    # inherit the same behavior.
+    OPUS_PREFIXES = ("claude-opus-4-8", "claude-opus-4-7", "claude-opus-4.8", "claude-opus-4.7")
+
+    def __init__(self, model, api_key, client=None):
         import anthropic
         self.model = model
-        self.client = anthropic.Anthropic(api_key=api_key)
+        self.client = client or anthropic.Anthropic(api_key=api_key)
         # Accumulates tool_result blocks for the CURRENT turn. Reset every
         # time a new assistant message is appended.
         self._pending_results = []
@@ -205,6 +261,9 @@ class AnthropicAdapter:
             return block.dict(exclude_none=True)
         return dict(block)
 
+    def _accepts_temperature(self):
+        return not any(p in self.model for p in self.OPUS_PREFIXES)
+
     # ---- main call -------------------------------------------------------- #
 
     def chat(self, system, messages, tools=None, temperature=0, max_tokens=4096):
@@ -214,16 +273,9 @@ class AnthropicAdapter:
             "messages": list(messages),
             "max_tokens": max_tokens,
         }
-
-        # Claude Opus 4.x models manage their own sampling when extended
-        # thinking is enabled and reject an explicitly supplied temperature.
-        # Keep accepting the adapter-level argument so callers do not need to
-        # special-case providers, but omit it from the Anthropic request for
-        # affected Opus variants.
-        opus_variants = ("opus-4-8", "opus-4.8", "opus-4-7", "opus-4.7")
-        if not any(variant in self.model.lower() for variant in opus_variants):
+        # Only include temperature for models that accept it. Opus 4.x rejects it.
+        if self._accepts_temperature():
             kwargs["temperature"] = temperature
-
         if tools:
             kwargs["tools"] = self._convert_tools(tools)
 
@@ -292,6 +344,45 @@ class AnthropicAdapter:
 
 
 # --------------------------------------------------------------------------- #
+#  Anthropic (via Azure AI Foundry passthrough)                                #
+# --------------------------------------------------------------------------- #
+
+class AzureAnthropicAdapter(AnthropicAdapter):
+    """
+    Azure AI Foundry exposes Claude at an Anthropic-compatible endpoint:
+        https://<RESOURCE>.services.ai.azure.com/anthropic
+
+    The Anthropic Python SDK accepts a base_url parameter for exactly this
+    case. The request/response shape is identical to direct Anthropic, so
+    we inherit all of AnthropicAdapter and just override construction.
+
+    Azure uses the deployment name in the "model" field of each request,
+    not the canonical model string. If Azure gave you a deployment named
+    differently from the model, set AZURE_ANTHROPIC_DEPLOYMENT_<MODEL> in
+    the environment (see _azure_deployment_for).
+    """
+
+    provider = "azure_anthropic"
+
+    def __init__(self, model, api_key, endpoint):
+        import anthropic
+        deployment = _azure_deployment_for(model)
+        # Azure endpoint must not include trailing slash for the SDK.
+        base_url = endpoint.rstrip("/")
+        client = anthropic.Anthropic(
+            api_key=api_key,
+            base_url=base_url,
+        )
+        # Store the deployment as self.model so requests use it
+        super().__init__(deployment, api_key, client=client)
+        # But keep the ORIGINAL model string accessible for logging so
+        # results files show "claude-sonnet-4-6", not the deployment name.
+        self.canonical_model = model
+        self.deployment = deployment
+        self.endpoint = base_url
+
+
+# --------------------------------------------------------------------------- #
 #  Self test                                                                   #
 # --------------------------------------------------------------------------- #
 
@@ -303,7 +394,10 @@ if __name__ == "__main__":
     model = sys.argv[1] if len(sys.argv) > 1 else "gpt-4o"
 
     client = make_client(model)
-    print(f"Adapter: {client.provider}  Model: {client.model}")
+    if hasattr(client, "endpoint"):
+        print(f"Adapter: {client.provider}  Model: {client.model}  Endpoint: {client.endpoint}")
+    else:
+        print(f"Adapter: {client.provider}  Model: {client.model}")
 
     demo_tools = [{
         "type": "function",

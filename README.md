@@ -155,6 +155,11 @@ Create a file called `.env` in the repo root (same folder as `run_experiment.py`
 ```powershell
 Set-Content -Path .env -Value "OPENAI_API_KEY=sk-your-key-here"
 ```
+AZURE_ANTHROPIC_ENDPOINT=https://2026-internship-project-resource.services.ai.azure.com/anthropic
+
+AZURE_ANTHROPIC_API_KEY=YOUR_KEY_HERE
+
+
 
 Confirm it loads:
 
@@ -259,6 +264,8 @@ Every line should show `status=ok` (or `status=ok_inapplicable` for legit no-wor
 
 Any `status=tool_error` or Playwright/NVDA tool completing in under a second means that tool is still broken. Debug that ONE tool before running the full experiment.
 
+
+
 ## 9. Run the full experiment
 
 Once smoke passes clean:
@@ -282,6 +289,21 @@ Get-Content results\logs\base_agent_*.log -Wait -Tail 20
 ```
 
 Look for any `status=tool_error` lines. If they start piling up, kill the run (Ctrl+C), fix the tool, and restart. `--resume` is on by default so you won't lose completed rows.
+
+
+OR
+
+
+smoke test:
+
+python llm_client1.py claude-sonnet-4-6
+
+Expected: Adapter: azure_anthropic ... ROUNDTRIP OK
+
+
+If smoke test passes, resume:
+
+python run_experiment.py --corpus corpus1 --repetitions 3 --model claude-sonnet-4-6 --skip-axe --output results/final1_sonnet46.jsonl
 
 ## 10. After the experiment finishes
 
