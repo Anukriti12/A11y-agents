@@ -17,11 +17,17 @@ This completes Lucy's 2x2 ablation design:
   Interaction            = (C - B) - (E - D)
 
 Reuses BaseAgenticAgent for the loop, timeout, tool_trace, and structured
-logging. The only overrides are:
+logging. Overrides:
   - get_system_prompt(): generic accessibility expert, no persona backstory
-  - get_tools(): fresh generic tool schemas (persona-specific interpretation
-                 stripped) for all 18 tools
+  - get_tools(): fresh generic tool schemas for all 18 tools
   - tool_dispatcher: all 18 tools registered
+  - evaluate(): stores current html for injection
+  - execute_tool(): matches the pattern used by all persona agents; injects
+    self._current_html when the LLM omits the html argument (which happens
+    on Vanilla-Agent because there is no persona backstory shaping calls).
+
+base_agent calls execute_tool() via ThreadPoolExecutor, not the dispatcher
+directly, so the override MUST be on execute_tool to be reachable.
 
 Same public interface (evaluate(html, persona)) so run_experiment.py can
 treat all conditions interchangeably. The `persona` argument is used ONLY
@@ -32,6 +38,7 @@ persona reference.
 import os
 import sys
 import tempfile
+import traceback as _traceback
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -108,6 +115,8 @@ Your task: examine the HTML and produce a single verdict for the page against th
 
 You have access to 18 specialized accessibility tools. Each tool inspects one aspect of the HTML (contrast, keyboard navigation, form structure, readability, etc.). Call the tools that are relevant to the criteria above.
 
+CRITICAL: When calling any tool, you MUST pass the full HTML source as the "html" argument. Every tool requires this argument and will fail without it.
+
 Guidelines for tool use:
   1. Call each tool at most once per evaluation.
   2. Only call tools whose output is relevant to the target criteria.
@@ -136,7 +145,7 @@ Return a single JSON object with these fields:
   "overall_assessment": "<one-paragraph summary of the verdict and reasoning>"
 }}
 
-The "label" field is the overall verdict for the target criterion (each snippet targets ONE criterion, though it may test other criteria too). Return ONLY the JSON object. No markdown fences. No preamble.
+The "label" field is the overall verdict for the target criterion (each snippet targets ONE criterion). Return ONLY the JSON object. No markdown fences. No preamble.
 """
 
 
@@ -144,37 +153,37 @@ The "label" field is the overall verdict for the target criterion (each snippet 
 #  Generic tool schemas — persona-agnostic descriptions                        #
 # --------------------------------------------------------------------------- #
 
-# Every tool takes the same {html: string} argument shape.
 _HTML_PARAMS = {
     "type": "object",
-    "properties": {"html": {"type": "string"}},
+    "properties": {
+        "html": {
+            "type": "string",
+            "description": "The full HTML source of the page being evaluated. Required.",
+        },
+    },
     "required": ["html"],
 }
 
-# Persona-neutral descriptions. Structure: [WHAT] [COVERS WCAG] [RETURNS].
-# Kept short so tool selection is driven by criterion match, not narrative.
 GENERIC_TOOL_DESCRIPTIONS = {
     "check_keyboard_focusables": (
         "[WHAT] Enumerates all keyboard-focusable elements on the page. "
-        "[COVERS] WCAG 2.1.1 Keyboard (evidence). "
+        "[COVERS] WCAG 2.1.1 Keyboard. "
         "[RETURNS] focusable_elements list, count, tool_name."
     ),
     "detect_keyboard_violations": (
-        "[WHAT] Detects mouse-only interactives, hover-only behaviors, and "
-        "ARIA widget issues. [COVERS] WCAG 2.1.1 Keyboard (violation detection). "
-        "[RETURNS] wcag_211_status (PASS/FAIL/INAPPLICABLE), mouse_only_interactives, "
-        "hover_only_behaviors, aria_widget_issues, total_issues."
+        "[WHAT] Detects mouse-only interactives, hover-only behaviors, ARIA widget issues. "
+        "[COVERS] WCAG 2.1.1 Keyboard (violation detection). "
+        "[RETURNS] wcag_211_status, mouse_only_interactives, aria_widget_issues."
     ),
     "check_timing_and_timeouts": (
-        "[WHAT] Detects meta-refresh, setTimeout/setInterval, and time-limit "
-        "controls. [COVERS] WCAG 2.2.1 Timing Adjustable. "
-        "[RETURNS] wcag_221_status, meta_refresh_detected, settimeout_calls, "
-        "extend_session_control_found."
+        "[WHAT] Detects meta-refresh, setTimeout/setInterval, time-limit controls. "
+        "[COVERS] WCAG 2.2.1 Timing Adjustable. "
+        "[RETURNS] wcag_221_status, meta_refresh_detected, settimeout_calls."
     ),
     "validate_focus_order": (
-        "[WHAT] Analyzes tab order versus visual reading order; detects positive "
-        "tabindex. [COVERS] WCAG 2.4.3 Focus Order. "
-        "[RETURNS] wcag_243_status, tab_sequence, positive_tabindex_elements, issues."
+        "[WHAT] Analyzes tab order versus visual reading order; detects positive tabindex. "
+        "[COVERS] WCAG 2.4.3 Focus Order. "
+        "[RETURNS] wcag_243_status, tab_sequence, positive_tabindex_elements."
     ),
     "validate_focus_visible": (
         "[WHAT] Detects removed focus outlines without replacement. "
@@ -182,91 +191,78 @@ GENERIC_TOOL_DESCRIPTIONS = {
         "[RETURNS] wcag_247_status, elements_without_focus_indicator."
     ),
     "validate_target_size": (
-        "[WHAT] Measures the bounding rectangle of interactive elements; "
-        "compares against WCAG target-size thresholds. "
-        "[COVERS] WCAG 2.5.5 Target Size (AAA, 44x44) and 2.5.8 (AA, 24x24). "
-        "[RETURNS] wcag_255_status, elements_below_threshold, worst_measured_size."
+        "[WHAT] Measures bounding rectangles of interactive elements against WCAG thresholds. "
+        "[COVERS] WCAG 2.5.5 Target Size (AAA, 44x44px). "
+        "[RETURNS] wcag_255_status, elements_below_threshold."
     ),
     "validate_input_purpose": (
-        "[WHAT] Checks form input autocomplete attributes against the WCAG "
-        "list of 53 valid input purposes. [COVERS] WCAG 1.3.5 Identify Input Purpose. "
-        "[RETURNS] wcag_135_status, fields_analyzed, fields_missing_autocomplete, "
-        "fields_with_invalid_autocomplete."
+        "[WHAT] Checks form input autocomplete attributes against WCAG list of 53 valid purposes. "
+        "[COVERS] WCAG 1.3.5 Identify Input Purpose. "
+        "[RETURNS] wcag_135_status, fields_analyzed, fields_missing_autocomplete."
     ),
     "check_contrast_aa": (
-        "[WHAT] Computes WCAG contrast ratios for every text-bearing element; "
-        "compares against 4.5:1 (normal) or 3:1 (large text). "
+        "[WHAT] Computes contrast ratios for every text element; compares against 4.5:1 / 3:1. "
         "[COVERS] WCAG 1.4.3 Contrast Minimum. "
-        "[RETURNS] wcag_143_status, elements_analyzed, elements_failing, worst_ratio."
+        "[RETURNS] wcag_143_status, elements_failing, worst_ratio."
     ),
     "check_text_spacing_reflow": (
-        "[WHAT] Applies WCAG text-spacing overrides and detects layout breaks "
-        "(clipping, overlap, disappearing controls). "
+        "[WHAT] Applies WCAG text-spacing overrides and detects layout breaks. "
         "[COVERS] WCAG 1.4.12 Text Spacing. "
-        "[RETURNS] wcag_1412_status, layout_broken, blocked_by_important."
+        "[RETURNS] wcag_1412_status, layout_broken."
     ),
     "detect_animations_and_motion": (
-        "[WHAT] Detects CSS animations, autoplay video/audio, animated GIFs, "
-        "marquee/blink; checks pause controls and prefers-reduced-motion respect. "
+        "[WHAT] Detects CSS animations, autoplay video/audio, marquee; checks pause controls. "
         "[COVERS] WCAG 2.2.2 Pause Stop Hide. "
-        "[RETURNS] wcag_222_status, animations_detected, pause_control_present, "
-        "reduced_motion_respected."
+        "[RETURNS] wcag_222_status, animations_detected, pause_control_present."
     ),
     "check_location_indicators": (
-        "[WHAT] Detects breadcrumbs, aria-current='page', nav active-class, "
-        "page title, and H1 heading. [COVERS] WCAG 2.4.8 Location. "
-        "[RETURNS] wcag_248_status, signals_present, evidence."
+        "[WHAT] Detects breadcrumbs, aria-current=page, nav active-class, page title, H1. "
+        "[COVERS] WCAG 2.4.8 Location. "
+        "[RETURNS] wcag_248_status, signals_present."
     ),
     "check_navigation_methods": (
         "[WHAT] Detects site navigation, search, sitemap, breadcrumb, TOC. "
         "[COVERS] WCAG 2.4.5 Multiple Ways. "
-        "[RETURNS] wcag_245_status, distinct_mechanisms_found, mechanisms."
+        "[RETURNS] wcag_245_status, distinct_mechanisms_found."
     ),
     "analyze_heading_structure": (
-        "[WHAT] Analyzes heading hierarchy, detects skipped levels, empty and "
-        "generic headings. [COVERS] WCAG 1.3.1 Info and Relationships and 2.4.6 "
-        "Headings and Labels. [RETURNS] headings, hierarchy_valid, hierarchy_issues, "
-        "generic_headings."
+        "[WHAT] Analyzes heading hierarchy, detects skipped levels, empty and generic headings. "
+        "[COVERS] WCAG 1.3.1 Info and Relationships and 2.4.6 Headings and Labels. "
+        "[RETURNS] headings, hierarchy_valid, hierarchy_issues, generic_headings."
     ),
     "analyze_readability": (
-        "[WHAT] Computes readability formulas (Flesch-Kincaid, SMOG, etc.), "
-        "detects abbreviations via three mechanisms (abbr element, first-use "
-        "expansion, glossary link), checks supplemental content. "
+        "[WHAT] Computes readability formulas, detects abbreviations via three mechanisms, "
+        "checks supplemental content. "
         "[COVERS] WCAG 3.1.4 Abbreviations and 3.1.5 Reading Level. "
         "[RETURNS] readability metrics, wcag_314_status, wcag_315_status."
     ),
     "analyze_readability_and_abbreviations": (
-        "[WHAT] Same tool as analyze_readability; alternate name registered for "
-        "personas with a distinct focus on abbreviation mechanisms. "
+        "[WHAT] Same as analyze_readability; alternate name for abbreviation focus. "
         "[COVERS] WCAG 3.1.4 Abbreviations. "
-        "[RETURNS] readability metrics, wcag_314_status, abbreviation mechanisms."
+        "[RETURNS] readability metrics, wcag_314_status."
     ),
     "validate_form_errors_and_labels": (
-        "[WHAT] Checks form labels, placeholder-as-label, required indicators, "
-        "format hints, fieldset grouping; SUBMITS the form and captures error "
-        "behavior (HTML5 validation, aria-live regions, visible error elements). "
+        "[WHAT] Checks labels, required indicators, format hints; submits form and captures "
+        "error behavior. "
         "[COVERS] WCAG 3.3.1 Error Identification and 3.3.2 Labels or Instructions. "
-        "[RETURNS] wcag_331_status, wcag_332_status, submission_test, issues."
+        "[RETURNS] wcag_331_status, wcag_332_status, submission_test."
     ),
     "check_keyboard_navigation": (
-        "[WHAT] Tabs through the page and tests Enter/Space activation on each "
-        "focus stop; detects dead focus stops, keyboard traps, and modal Escape "
-        "behavior. [COVERS] WCAG 2.1.1 Keyboard (interactive verification). "
-        "[RETURNS] wcag_211_status, activation_test_results, dead_focus_stops, "
-        "keyboard_traps, modal_test."
+        "[WHAT] Tabs through page and tests Enter/Space activation on each focus stop; "
+        "detects dead stops, traps, modal Escape. "
+        "[COVERS] WCAG 2.1.1 Keyboard (interactive verification). "
+        "[RETURNS] wcag_211_status, dead_focus_stops, keyboard_traps."
     ),
     "run_nvda_full_audit": (
-        "[WHAT] Launches the NVDA screen reader and captures announcements for "
-        "images (alt text), landmarks (skip links), and interactive elements "
-        "(name/role/value). Requires Windows + NVDA + Tesseract. "
-        "[COVERS] WCAG 1.1.1 Non-text Content, 2.4.1 Bypass Blocks, 4.1.2 Name Role Value. "
-        "[RETURNS] wcag_111_status, wcag_241_status, wcag_412_status, per-element details."
+        "[WHAT] Launches NVDA screen reader and captures announcements for images, "
+        "landmarks, interactive elements. Requires Windows + NVDA + Tesseract. "
+        "[COVERS] WCAG 1.1.1, 2.4.1, 4.1.2. "
+        "[RETURNS] wcag_111_status, wcag_241_status, wcag_412_status."
     ),
 }
 
 
 def _tool_schema(name):
-    """Build an OpenAI function-calling tool schema for a given tool name."""
     return {
         "type": "function",
         "function": {
@@ -278,22 +274,17 @@ def _tool_schema(name):
 
 
 # --------------------------------------------------------------------------- #
-#  NVDA adapter (mirrors lakshmi_agent's HTML->URI shim)                       #
+#  NVDA adapter                                                                #
 # --------------------------------------------------------------------------- #
 
 def _nvda_execute(html):
-    """
-    nvda_agent.run_full_analysis takes a URL. Adapt to the tool-dispatcher
-    contract by writing HTML to a temp file and passing file:// URI.
-    """
     with tempfile.NamedTemporaryFile(
         mode="w", suffix=".html", delete=False, encoding="utf-8"
     ) as tmp:
         tmp.write(html)
         tmp_path = tmp.name
     try:
-        uri = f"file://{tmp_path}"
-        return run_full_analysis(uri)
+        return run_full_analysis(f"file://{tmp_path}")
     finally:
         try:
             os.unlink(tmp_path)
@@ -302,65 +293,105 @@ def _nvda_execute(html):
 
 
 # --------------------------------------------------------------------------- #
-#  Vanilla-Agent inner class (one instance, no persona)                        #
+#  Vanilla-Agent inner class                                                   #
 # --------------------------------------------------------------------------- #
 
 class _VanillaAgent(BaseAgenticAgent):
-    """Persona-agnostic agent with all 18 tools registered."""
+    """Persona-agnostic agent with all 18 tools and html-injecting execute_tool."""
 
     def __init__(self, api_key):
         super().__init__(api_key, persona_name="Vanilla")
 
         # Instantiate every tool once
-        self.keyboard_agent = keyboard_navigation_agent.KeyboardNavigationAgent()
+        self.keyboard_agent    = keyboard_navigation_agent.KeyboardNavigationAgent()
         self.custom_widget_agent = custom_widget_keyboard_agent.CustomWidgetKeyboardAgent()
-        self.timing_agent = timing_checker_agent.TimingCheckerAgent()
+        self.timing_agent      = timing_checker_agent.TimingCheckerAgent()
         self.focus_order_agent = focus_order_validator_agent.FocusOrderValidatorAgent()
         self.focus_visible_agent = focus_visible_validator_agent.FocusVisibleValidatorAgent()
         self.target_size_agent = target_size_validator_agent.TargetSizeValidatorAgent(level="AAA")
         self.autocomplete_agent = autocomplete_validator_agent.AutocompleteValidatorAgent()
-        self.contrast_agent = ContrastCheckerAgent()
+        self.contrast_agent    = ContrastCheckerAgent()
         self.text_formatting_agent = text_formatting_agent.TextFormattingAgent()
-        self.animation_agent = animation_detector_agent.AnimationDetectorAgent()
+        self.animation_agent   = animation_detector_agent.AnimationDetectorAgent()
         self.multiple_ways_agent = multiple_ways_checker_agent.MultipleWaysCheckerAgent()
-        self.heading_agent = heading_structure_agent.HeadingStructureAgent()
+        self.heading_agent     = heading_structure_agent.HeadingStructureAgent()
         self.readability_agent = readability_analyzer_agent.ReadabilityAnalyzerAgent()
-        self.form_agent = form_validator_agent.FormValidatorAgent()
+        self.form_agent        = form_validator_agent.FormValidatorAgent()
 
-        # Register all 18 tool names
+        # Register all 18 tool names (plain callables — no wrapper needed here
+        # because execute_tool below handles injection before calling them)
         self.tool_dispatcher = {
-            "check_keyboard_focusables": self.keyboard_agent.execute,
-            "detect_keyboard_violations": self.custom_widget_agent.execute,
-            "check_timing_and_timeouts": self.timing_agent.execute,
-            "validate_focus_order": self.focus_order_agent.execute,
-            "validate_focus_visible": self.focus_visible_agent.execute,
-            "validate_target_size": self.target_size_agent.execute,
-            "validate_input_purpose": self.autocomplete_agent.execute,
-            "check_contrast_aa": self.contrast_agent.execute,
-            "check_text_spacing_reflow": self.text_formatting_agent.execute,
-            "detect_animations_and_motion": self.animation_agent.execute,
-            "check_location_indicators": self.multiple_ways_agent.execute,
-            "check_navigation_methods": self.multiple_ways_agent.execute,
-            "analyze_heading_structure": self.heading_agent.execute,
-            "analyze_readability": self.readability_agent.execute,
+            "check_keyboard_focusables":        self.keyboard_agent.execute,
+            "detect_keyboard_violations":       self.custom_widget_agent.execute,
+            "check_timing_and_timeouts":        self.timing_agent.execute,
+            "validate_focus_order":             self.focus_order_agent.execute,
+            "validate_focus_visible":           self.focus_visible_agent.execute,
+            "validate_target_size":             self.target_size_agent.execute,
+            "validate_input_purpose":           self.autocomplete_agent.execute,
+            "check_contrast_aa":               self.contrast_agent.execute,
+            "check_text_spacing_reflow":        self.text_formatting_agent.execute,
+            "detect_animations_and_motion":     self.animation_agent.execute,
+            "check_location_indicators":        self.multiple_ways_agent.execute,
+            "check_navigation_methods":         self.multiple_ways_agent.execute,
+            "analyze_heading_structure":        self.heading_agent.execute,
+            "analyze_readability":              self.readability_agent.execute,
             "analyze_readability_and_abbreviations": self.readability_agent.execute,
-            "validate_form_errors_and_labels": self.form_agent.execute,
-            "check_keyboard_navigation": self.keyboard_agent.execute,
-            "run_nvda_full_audit": _nvda_execute,
+            "validate_form_errors_and_labels":  self.form_agent.execute,
+            "check_keyboard_navigation":        self.keyboard_agent.execute,
+            "run_nvda_full_audit":             _nvda_execute,
         }
 
-        # Per-evaluation state; get_system_prompt() reads this
+        # Stores the current HTML so execute_tool can inject it when
+        # Claude omits the html argument.
+        self._current_html    = ""
         self._current_criteria = []
 
     def set_criteria(self, criteria):
-        """Called by VanillaAgentCondition.evaluate() before running the loop."""
         self._current_criteria = criteria
 
     def get_system_prompt(self):
         return build_vanilla_agent_system_prompt(self._current_criteria)
 
     def get_tools(self):
-        return [_tool_schema(name) for name in self.tool_dispatcher.keys()]
+        return [_tool_schema(name) for name in self.tool_dispatcher]
+
+    def evaluate(self, html):
+        """Store html before running the loop so execute_tool can inject it."""
+        self._current_html = html
+        return super().evaluate(html)
+
+    def execute_tool(self, tool_name, arguments):
+        """
+        Called by BaseAgenticAgent._invoke_with_timeout via ThreadPoolExecutor.
+
+        Matches the pattern used by all persona agents (ade_agent, etc.) but
+        adds html injection: if Claude omits the html argument (which happens
+        on Vanilla-Agent because there is no persona backstory shaping calls),
+        we backfill it from self._current_html so the tool still runs.
+
+        Returns a structured error dict (never raises) so base_agent always
+        gets a result it can log and record.
+        """
+        if tool_name not in self.tool_dispatcher:
+            return {"error": f"Unknown tool: {tool_name}", "tool_name": tool_name, "status": "failed"}
+
+        # Inject html if the LLM forgot to pass it
+        html = (arguments or {}).get("html", "")
+        if not html:
+            html = self._current_html
+        if not html:
+            return {"error": "Missing 'html' parameter and no current html available.",
+                    "tool_name": tool_name, "status": "failed"}
+
+        try:
+            return self.tool_dispatcher[tool_name](html=html)
+        except Exception as e:
+            return {
+                "error": f"{type(e).__name__}: {e}",
+                "traceback": _traceback.format_exc(limit=5),
+                "tool_name": tool_name,
+                "status": "failed",
+            }
 
 
 # --------------------------------------------------------------------------- #
@@ -372,14 +403,8 @@ class VanillaAgentCondition:
 
     def __init__(self, api_key, model=None):
         self.model = model or os.environ.get("A11Y_MODEL") or DEFAULT_MODEL
-        # Must be set BEFORE the agent is constructed, since BaseAgenticAgent
-        # reads it in __init__ to pick its provider adapter.
         os.environ["A11Y_MODEL"] = self.model
-
-        # One vanilla agent, reused for every persona. Persona affects only
-        # which criteria are passed via set_criteria().
         self.agent = _VanillaAgent(api_key)
-
         if self.agent.model != self.model:
             raise RuntimeError(
                 f"Model mismatch: agent resolved {self.agent.model!r}, "
@@ -387,11 +412,6 @@ class VanillaAgentCondition:
             )
 
     def evaluate(self, html, persona):
-        """
-        Evaluate the HTML using the 5 WCAG criteria that this persona would
-        have targeted. The agent has access to all 18 tools; the LLM decides
-        which to call. No persona backstory reaches the LLM.
-        """
         criteria = PERSONA_CRITERIA.get(persona, [])
         if not criteria:
             return {
@@ -399,10 +419,7 @@ class VanillaAgentCondition:
                     "label": "error",
                     "severity": "N/A",
                     "issues": [],
-                    "overall_assessment": (
-                        f"Unknown persona '{persona}'. Known: "
-                        f"{sorted(PERSONA_CRITERIA)}"
-                    ),
+                    "overall_assessment": f"Unknown persona '{persona}'.",
                 },
                 "metadata": {
                     "tools_called": [],
@@ -415,36 +432,36 @@ class VanillaAgentCondition:
                 },
             }
 
-        # Pass criteria into the agent so get_system_prompt() sees them
         self.agent.set_criteria(criteria)
-
-        # BaseAgenticAgent.evaluate() returns {evaluation, metadata}
         result = self.agent.evaluate(html)
 
-        # Add condition-level metadata
         md = result.setdefault("metadata", {})
         md["persona"] = persona
         md["criteria_evaluated"] = criteria
         md["condition_variant"] = "vanilla_agent"
         md.setdefault("model", self.model)
-
         return result
 
 
 if __name__ == "__main__":
     import json
     from dotenv import load_dotenv
-    from llm_client1 import key_env_var
-
     load_dotenv()
+
+    try:
+        from llm_client1 import key_env_var
+    except ImportError:
+        from llm_client import key_env_var
+
     model = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_MODEL
     api_key = os.environ.get(key_env_var(model))
-    if not api_key or api_key == "smoke-test":
+    if not api_key:
         print(f"Set {key_env_var(model)} to run this test.")
-    else:
-        cond = VanillaAgentCondition(api_key, model=model)
-        result = cond.evaluate(
-            "<html><body><img src='x.jpg'><button></button></body></html>",
-            persona="lakshmi",
-        )
-        print(json.dumps(result, indent=2, default=str))
+        sys.exit(1)
+
+    cond = VanillaAgentCondition(api_key, model=model)
+    result = cond.evaluate(
+        "<html><body><img src='x.jpg'><button>Click me</button></body></html>",
+        persona="ade",
+    )
+    print(json.dumps(result, indent=2, default=str))
