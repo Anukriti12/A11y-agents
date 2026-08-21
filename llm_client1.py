@@ -8,9 +8,10 @@ interface so the agentic loop in personas/base_agent.py and the single-shot
 call in conditions/condition_b_persona_llm.py run unchanged across providers.
 
 Supported models:
-    gpt-4o                (OpenAI)
-    claude-sonnet-4-6     (Anthropic direct, or Azure passthrough)
-    claude-opus-4-8       (Anthropic direct, or Azure passthrough)
+    gpt-4o                (OpenAI direct)
+    gpt-5.2               (Azure OpenAI — routes through Azure when AZURE_OPENAI_ENDPOINT set)
+    claude-sonnet-4-6     (Anthropic direct, or Azure Anthropic passthrough)
+    claude-opus-4-8       (Anthropic direct, or Azure Anthropic passthrough)
 
 Azure routing: if the environment variable AZURE_ANTHROPIC_ENDPOINT is set,
 claude-* models route through Azure AI Foundry's Anthropic-native endpoint
@@ -18,9 +19,18 @@ using AZURE_ANTHROPIC_API_KEY. If unset, they use direct Anthropic with
 ANTHROPIC_API_KEY. The rest of the codebase (personas, conditions, runner)
 does not need to know or care.
 
-Set these three env vars in .env when using Azure:
+Set these env vars in .env:
+
+  For Azure Anthropic (claude-* models):
     AZURE_ANTHROPIC_ENDPOINT=https://YOUR-RESOURCE.services.ai.azure.com/anthropic
     AZURE_ANTHROPIC_API_KEY=YOUR_KEY
+
+  For Azure OpenAI (gpt-* models):
+    AZURE_OPENAI_ENDPOINT=https://YOUR-RESOURCE.services.ai.azure.com
+    AZURE_OPENAI_API_KEY=YOUR_KEY              (can be same key as above)
+    AZURE_OPENAI_API_VERSION=2025-01-01-preview (optional, this is the default)
+
+  Both can share the same Azure resource and key — the endpoint suffix differs.
 
 Model string vs deployment name: the model string you pass in (e.g.
 claude-sonnet-4-6) is used both as the local identifier and as the Azure
@@ -74,7 +84,7 @@ import os
 #  Factory                                                                     #
 # --------------------------------------------------------------------------- #
 
-OPENAI_PREFIXES = ("gpt-", "o1", "o3", "o4")
+OPENAI_PREFIXES = ("gpt-", "o1", "o3", "o4", "o5")
 ANTHROPIC_PREFIXES = ("claude-",)
 
 
@@ -106,10 +116,29 @@ def make_client(model, api_key=None):
         return AnthropicAdapter(model, key)
 
     if model.startswith(OPENAI_PREFIXES):
+        if _using_azure_openai():
+            key = (
+                api_key
+                or os.environ.get("AZURE_OPENAI_API_KEY")
+                or os.environ.get("AZURE_ANTHROPIC_API_KEY")  # shared key fallback
+            )
+            if not key:
+                raise RuntimeError(
+                    f"Model '{model}' via Azure needs AZURE_OPENAI_API_KEY "
+                    "(or AZURE_ANTHROPIC_API_KEY as fallback). Add to .env."
+                )
+            endpoint = (
+                os.environ.get("AZURE_OPENAI_ENDPOINT")
+                or os.environ.get("AZURE_ANTHROPIC_ENDPOINT", "").replace("/anthropic", "")
+            )
+            return AzureOpenAIAdapter(model, key, endpoint)
+
         key = api_key or os.environ.get("OPENAI_API_KEY")
         if not key:
             raise RuntimeError(
-                f"Model '{model}' needs OPENAI_API_KEY. Add it to .env."
+                f"Model '{model}' needs OPENAI_API_KEY (or set "
+                f"AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY to route "
+                f"through Azure). Add to .env."
             )
         return OpenAIAdapter(model, key)
 
@@ -128,6 +157,13 @@ def key_env_var(model):
         if _using_azure_anthropic():
             return "AZURE_ANTHROPIC_API_KEY"
         return "ANTHROPIC_API_KEY"
+    if model.startswith(OPENAI_PREFIXES):
+        if _using_azure_openai():
+            # Return whichever Azure key var is actually set
+            if os.environ.get("AZURE_OPENAI_API_KEY"):
+                return "AZURE_OPENAI_API_KEY"
+            if os.environ.get("AZURE_ANTHROPIC_API_KEY"):
+                return "AZURE_ANTHROPIC_API_KEY"
     return "OPENAI_API_KEY"
 
 
@@ -141,6 +177,25 @@ def _azure_deployment_for(model):
     return os.environ.get(key, model)
 
 
+
+
+def _using_azure_openai():
+    """Return True if any Azure endpoint is configured (OpenAI-specific or shared Anthropic)."""
+    return bool(
+        os.environ.get("AZURE_OPENAI_ENDPOINT")
+        or os.environ.get("AZURE_ANTHROPIC_ENDPOINT")
+    )
+
+
+def _azure_openai_deployment_for(model):
+    """
+    Look up the Azure OpenAI deployment name for a given model string.
+    Falls back to the model string itself if no override is set.
+    Example override: AZURE_OPENAI_DEPLOYMENT_GPT_5_2=my-gpt5-deployment
+    """
+    key = "AZURE_OPENAI_DEPLOYMENT_" + model.upper().replace("-", "_").replace(".", "_")
+    return os.environ.get(key, model)
+
 # --------------------------------------------------------------------------- #
 #  OpenAI                                                                      #
 # --------------------------------------------------------------------------- #
@@ -152,17 +207,27 @@ class OpenAIAdapter:
     # with seed + temperature=0, but this minimizes variance.
     SEED = 42
 
+    # Models that require max_completion_tokens instead of max_tokens.
+    # GPT-5.x series and o1/o3/o4 reasoning models use the new param.
+    COMPLETION_TOKENS_PREFIXES = ("gpt-5", "o1", "o3", "o4", "o5")
+
     def __init__(self, model, api_key):
         import openai
         self.model = model
         self.client = openai.OpenAI(api_key=api_key)
 
+    def _uses_completion_tokens(self):
+        return any(self.model.startswith(p) for p in self.COMPLETION_TOKENS_PREFIXES)
+
     def chat(self, system, messages, tools=None, temperature=0, max_tokens=4096):
+        # GPT-5.x and o-series models use max_completion_tokens instead of
+        # max_tokens. Detect by model name prefix.
+        tokens_key = "max_completion_tokens" if self._uses_completion_tokens() else "max_tokens"
         kwargs = {
             "model": self.model,
             "messages": [{"role": "system", "content": system}] + list(messages),
             "temperature": temperature,
-            "max_tokens": max_tokens,
+            tokens_key: max_tokens,
             "seed": self.SEED,
         }
         if tools:
@@ -343,6 +408,111 @@ class AnthropicAdapter:
             })
 
 
+
+# --------------------------------------------------------------------------- #
+#  OpenAI (via Azure AI Foundry / Azure OpenAI Service)                        #
+# --------------------------------------------------------------------------- #
+
+class AzureOpenAIAdapter(OpenAIAdapter):
+    """
+    Routes gpt-* models through Azure OpenAI / Azure AI Foundry.
+
+    Azure OpenAI uses the same request/response shape as direct OpenAI but:
+      - Requires a deployment name in the URL path instead of a model name
+        in the request body (though sending model= is also accepted)
+      - Uses api-key header instead of Authorization: Bearer
+      - Uses a versioned endpoint with ?api-version=
+      - GPT-5.x models require max_completion_tokens instead of max_tokens
+
+    The Azure OpenAI Python SDK handles all of this transparently when
+    initialized with azure_endpoint + api_key + api_version.
+
+    Env vars:
+        AZURE_OPENAI_ENDPOINT    https://YOUR-RESOURCE.services.ai.azure.com
+        AZURE_OPENAI_API_KEY     your key (can be same as AZURE_ANTHROPIC_API_KEY)
+        AZURE_OPENAI_API_VERSION api version (default: 2025-01-01-preview)
+
+    Deployment name override:
+        AZURE_OPENAI_DEPLOYMENT_GPT_5_2=my-deployment-name
+        (if unset, the model string is used as the deployment name)
+    """
+
+    provider = "azure_openai"
+
+    DEFAULT_API_VERSION = "2025-01-01-preview"
+
+    def __init__(self, model, api_key, endpoint):
+        import openai
+        deployment = _azure_openai_deployment_for(model)
+        api_version = os.environ.get(
+            "AZURE_OPENAI_API_VERSION", self.DEFAULT_API_VERSION
+        )
+        # Resolve endpoint: strip any path suffix so we get the bare
+        # resource URL (e.g. https://resource.services.ai.azure.com).
+        # The caller may pass the Anthropic endpoint which has /anthropic.
+        base_endpoint = endpoint.rstrip("/")
+        for suffix in ("/anthropic", "/openai"):
+            if base_endpoint.endswith(suffix):
+                base_endpoint = base_endpoint[: -len(suffix)]
+
+        self.model = deployment        # deployment name used in requests
+        self.canonical_model = model   # original string for logging
+        self.deployment = deployment
+        self.endpoint = base_endpoint
+        self.api_version = api_version
+        self.client = openai.AzureOpenAI(
+            azure_endpoint=base_endpoint,
+            api_key=api_key,
+            api_version=api_version,
+        )
+
+    def chat(self, system, messages, tools=None, temperature=0, max_tokens=4096):
+        # Always use max_completion_tokens for Azure OpenAI GPT-5.x;
+        # fall back to max_tokens for older deployments.
+        tokens_key = "max_completion_tokens" if self._uses_completion_tokens() else "max_tokens"
+        kwargs = {
+            "model": self.model,
+            "messages": [{"role": "system", "content": system}] + list(messages),
+            tokens_key: max_tokens,
+            "seed": self.SEED,
+        }
+        # GPT-5.x and o-series do not support temperature
+        if not self._uses_completion_tokens():
+            kwargs["temperature"] = temperature
+        if tools:
+            kwargs["tools"] = tools
+            kwargs["tool_choice"] = "auto"
+
+        response = self.client.chat.completions.create(**kwargs)
+        msg = response.choices[0].message
+
+        calls = []
+        for tc in (msg.tool_calls or []):
+            try:
+                import json as _json
+                args = _json.loads(tc.function.arguments)
+            except Exception:
+                args = {}
+            calls.append({
+                "id": tc.id,
+                "name": tc.function.name,
+                "arguments": args,
+            })
+
+        usage = getattr(response, "usage", None)
+        return {
+            "text": msg.content,
+            "tool_calls": calls,
+            "assistant_msg": msg,
+            "usage": {
+                "input_tokens": getattr(usage, "prompt_tokens", None),
+                "output_tokens": getattr(usage, "completion_tokens", None),
+            },
+        }
+
+    # append_assistant and append_tool_result are inherited from OpenAIAdapter
+    # unchanged — Azure OpenAI uses identical message format.
+
 # --------------------------------------------------------------------------- #
 #  Anthropic (via Azure AI Foundry passthrough)                                #
 # --------------------------------------------------------------------------- #
@@ -394,10 +564,12 @@ if __name__ == "__main__":
     model = sys.argv[1] if len(sys.argv) > 1 else "gpt-4o"
 
     client = make_client(model)
+    info = f"Adapter: {client.provider}  Model: {client.model}"
     if hasattr(client, "endpoint"):
-        print(f"Adapter: {client.provider}  Model: {client.model}  Endpoint: {client.endpoint}")
-    else:
-        print(f"Adapter: {client.provider}  Model: {client.model}")
+        info += f"  Endpoint: {client.endpoint}"
+    if hasattr(client, "canonical_model") and client.canonical_model != client.model:
+        info += f"  (canonical: {client.canonical_model})"
+    print(info)
 
     demo_tools = [{
         "type": "function",
