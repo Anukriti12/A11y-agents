@@ -1,0 +1,67 @@
+BARRIER GROUNDING CHECKLISTS
+============================================================
+
+For every 'Barrier' label, the specific barrier should match one of the
+categories below for that person. Cite the SOURCE column in the sheet.
+These come from the same authoritative sources the personas are built on.
+
+ADE (motor, keyboard-only)
+--------------------------
+Source: W3C WAI "Diverse Abilities and Barriers" (Physical/Motor); WAI Ade story
+Barrier categories:
+   [ ] Element reachable/operable only by mouse click or hover (no keyboard path)
+   [ ] Keyboard focus trap: cannot Tab out of a component
+   [ ] Focus order does not follow reading/visual order (positive tabindex, DOM reorder)
+   [ ] No visible focus indicator: cannot tell what is focused
+   [ ] Interactive target too small for switch/voice activation
+   [ ] Custom widget (div/span with onclick) not keyboard-operable
+
+ELIAS (low vision + tremor)
+---------------------------
+Source: WAI "Diverse Abilities" (Low Vision); COGA where relevant; WAI Elias story
+Barrier categories:
+   [ ] Text contrast too low to read at magnification
+   [ ] Layout clips or hides content when text/line spacing is increased (no reflow)
+   [ ] No location indicator/breadcrumb; user loses place at 200-300% zoom
+   [ ] Autoplay video/motion causing nausea, especially magnified
+   [ ] Form requires heavy typing with no autocomplete support
+
+IAN (autistic)
+--------------
+Source: COGA "Making Content Usable"; WAI "Diverse Abilities" (Cognitive); WAI Ian story
+Barrier categories:
+   [ ] Ambiguous controls: unlabeled icons, vague link text ("click here")
+   [ ] Inconsistent terminology for the same function across the page
+   [ ] Unexplained jargon or abbreviations
+   [ ] Unexpected change: content moves/updates/times out, disrupting focus
+   [ ] Headings do not describe their sections; unpredictable structure
+
+LAKSHMI (blind, NVDA)
+---------------------
+Source: WAI "Diverse Abilities" (Blindness); WAI Lakshmi story; ARIA practices
+Barrier categories:
+   [ ] Informative image with no/empty alt text
+   [ ] Control with no accessible name (screen reader announces only role)
+   [ ] Missing/incorrect role: custom widget not announced correctly
+   [ ] Visual-only structure: heading is bold text, not a real heading element
+   [ ] No skip link / landmarks: cannot bypass repeated navigation
+
+SOPHIE (Down syndrome)
+----------------------
+Source: COGA "Making Content Usable"; WAI "Diverse Abilities" (Cognitive/Learning); WAI Sophie story
+Barrier categories:
+   [ ] Complex/long sentences, uncommon words, dense text
+   [ ] Multi-step task with no clear guidance; overwhelming
+   [ ] Form errors not identified in plain language ("invalid input")
+   [ ] Time limit causes loss of slowly-entered work
+   [ ] Cannot tell current location or next step
+
+STEFAN (ADHD + dyslexia)
+------------------------
+Source: COGA "Making Content Usable"; WAI "Diverse Abilities" (Dyslexia/ADHD); WAI Stefan story
+Barrier categories:
+   [ ] Dense text / poor spacing / no reflow slows reading to a stop
+   [ ] Unexplained abbreviations or complex wording breaks reading
+   [ ] Moving/flashing/auto-updating content that cannot be paused; loses attention
+   [ ] Only one rigid way to navigate (no search alongside menus)
+   [ ] Headings/labels do not clearly signal what is where; cannot scan

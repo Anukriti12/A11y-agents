@@ -1,0 +1,60 @@
+FIRST-PASS DRAFT LABELS (researcher key — do NOT show to specialists before they label)
+==========================================================================================
+These are heuristic drafts to compare against specialist labels for the agreement analysis.
+Specialists label independently; you compare afterward.
+
+page_id persona   WCAG    WCAG_label    firstpass         reason
+P001    ade       2.4.3   passed        No-Barrier        Interactive elements present and appear keyboard-operable.
+P002    ade       2.5.5   passed        No-Barrier        Interactive elements present and appear keyboard-operable.
+P003    ade       2.5.5   passed        No-Barrier        Interactive elements present and appear keyboard-operable.
+P004    ade       2.5.5   failed        No-Barrier        Interactive elements present and appear keyboard-operable.
+P005    ade       2.1.1   failed        Not-Encountered   No interactive elements; keyboard access is moot.
+P006    ade       2.5.5   failed        No-Barrier        Interactive elements present and appear keyboard-operable.
+P007    ade       2.4.3   inapplicable  Not-Encountered   No interactive elements; keyboard access is moot.
+P008    ade       2.1.1   inapplicable  No-Barrier        Interactive elements present and appear keyboard-operable.
+P009    ade       2.4.7   inapplicable  No-Barrier        Interactive elements present and appear keyboard-operable.
+P010    elias     1.4.3   passed        Not-Encountered   Minimal content; nothing Elias-relevant to evaluate.
+P011    elias     2.4.8   passed        No-Barrier        No pale text, motion, or reflow problem detectable.
+P012    elias     1.4.12  passed        Not-Encountered   Minimal content; nothing Elias-relevant to evaluate.
+P013    elias     2.4.8   failed        Barrier           WCAG failure on an Elias-relevant criterion (contrast/reflow
+P014    elias     1.4.3   failed        Barrier           WCAG failure on an Elias-relevant criterion (contrast/reflow
+P015    elias     1.4.3   failed        Barrier           WCAG failure on an Elias-relevant criterion (contrast/reflow
+P016    elias     2.4.8   inapplicable  Not-Encountered   Minimal content; nothing Elias-relevant to evaluate.
+P017    elias     2.2.2   inapplicable  Not-Encountered   Minimal content; nothing Elias-relevant to evaluate.
+P018    elias     1.4.12  inapplicable  Not-Encountered   Minimal content; nothing Elias-relevant to evaluate.
+P019    ian       3.1.4   passed        No-Barrier        Content appears clear and stable.
+P020    ian       3.1.5   passed        No-Barrier        Content appears clear and stable.
+P021    ian       3.1.4   passed        No-Barrier        Content appears clear and stable.
+P022    ian       2.2.2   failed        Barrier           WCAG failure on Ian-relevant criterion (structure/clarity/ch
+P023    ian       2.4.6   failed        Barrier           WCAG failure on Ian-relevant criterion (structure/clarity/ch
+P024    ian       1.3.1   failed        Barrier           WCAG failure on Ian-relevant criterion (structure/clarity/ch
+P025    ian       3.1.5   inapplicable  No-Barrier        Content appears clear and stable.
+P026    ian       2.2.2   inapplicable  Not-Encountered   Too little content to present clarity/structure barriers.
+P027    ian       3.1.4   inapplicable  No-Barrier        Content appears clear and stable.
+P028    lakshmi   2.1.1   passed        No-Barrier        Meaningful elements appear to have names/roles/alt.
+P029    lakshmi   1.3.1   passed        Not-Encountered   No images or controls; nothing for screen-reader perception 
+P030    lakshmi   4.1.2   passed        Not-Encountered   No images or controls; nothing for screen-reader perception 
+P031    lakshmi   2.4.1   failed        Barrier           WCAG failure on Lakshmi-relevant criterion (name/role/value,
+P032    lakshmi   4.1.2   failed        Barrier           WCAG failure on Lakshmi-relevant criterion (name/role/value,
+P033    lakshmi   4.1.2   failed        Barrier           WCAG failure on Lakshmi-relevant criterion (name/role/value,
+P034    lakshmi   4.1.2   inapplicable  No-Barrier        Meaningful elements appear to have names/roles/alt.
+P035    lakshmi   4.1.2   inapplicable  Not-Encountered   No images or controls; nothing for screen-reader perception 
+P036    lakshmi   1.3.1   inapplicable  Not-Encountered   No images or controls; nothing for screen-reader perception 
+P037    sophie    2.4.8   passed        No-Barrier        Content and any form appear manageable with clear guidance.
+P038    sophie    3.3.1   passed        No-Barrier        Content and any form appear manageable with clear guidance.
+P039    sophie    3.3.2   passed        No-Barrier        Content and any form appear manageable with clear guidance.
+P040    sophie    3.1.4   failed        Barrier           WCAG failure on Sophie-relevant criterion (errors/labels/pla
+P041    sophie    2.4.8   failed        Barrier           WCAG failure on Sophie-relevant criterion (errors/labels/pla
+P042    sophie    2.2.1   failed        Barrier           Time limit can cause loss of slowly-entered work.
+P043    sophie    2.4.8   inapplicable  Not-Encountered   No form or dense content; nothing Sophie-relevant.
+P044    sophie    3.3.2   inapplicable  No-Barrier        Content and any form appear manageable with clear guidance.
+P045    sophie    3.3.1   inapplicable  Not-Encountered   No form or dense content; nothing Sophie-relevant.
+P046    stefan    3.1.4   passed        No-Barrier        Readable, stable, navigable.
+P047    stefan    2.4.5   passed        No-Barrier        Readable, stable, navigable.
+P048    stefan    1.4.12  passed        No-Barrier        Readable, stable, navigable.
+P049    stefan    2.4.6   failed        Barrier           WCAG failure on Stefan-relevant criterion (spacing/motion/na
+P050    stefan    2.4.6   failed        Barrier           WCAG failure on Stefan-relevant criterion (spacing/motion/na
+P051    stefan    2.2.2   failed        Barrier           WCAG failure on Stefan-relevant criterion (spacing/motion/na
+P052    stefan    1.4.12  inapplicable  No-Barrier        Readable, stable, navigable.
+P053    stefan    2.2.2   inapplicable  No-Barrier        Readable, stable, navigable.
+P054    stefan    3.1.4   inapplicable  No-Barrier        Readable, stable, navigable.
