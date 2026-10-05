@@ -78,10 +78,7 @@ motion), some are in the markup (missing alt text, missing labels).
    labels are kept for the kappa computation.
 4. Run `agreement_analysis.py` on the combined sheets.
 
-## The comparison this enables
-
 Once labeled, the key table is, per persona: **WCAG label vs barrier label**.
 - WCAG-pass pages that are barriers → conformance misses real barriers.
 - WCAG-fail pages that are Not-Encountered/No-Barrier → conformance over-flags
   for this person.
-The divergence rows are the qualitative core of the paper.
