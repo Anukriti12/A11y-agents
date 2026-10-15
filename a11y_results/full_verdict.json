@@ -1,9 +1,9 @@
 {
-  "url": "file:///C:/Users/Lokesh%20Chilamcharla/AppData/Local/Temp/tmpj_d9wrya.html",
+  "url": "file://C:\\Users\\iguest\\AppData\\Local\\Temp\\tmppiwads2z.html",
   "wcag_1_1_1": {
     "wcag": "1.1.1 Non-text Content",
-    "verdict": "PASS",
-    "details": "All non-text content has appropriate text alternatives.",
+    "verdict": "N/A",
+    "details": "Page contains no non-text content elements.",
     "decorative_images_to_review": [],
     "raw": {
       "local_alt_results": {
@@ -28,19 +28,7 @@
           "items": []
         }
       },
-      "nvda_results": [
-        {
-          "index": 0,
-          "tag": "INPUT",
-          "src": null,
-          "alt_attr": "Download",
-          "aria_label": null,
-          "aria_labelledby": null,
-          "role": null,
-          "nvda_announcement": null,
-          "nvda_meaningful": null
-        }
-      ]
+      "nvda_results": []
     }
   },
   "wcag_1_4_5": {
@@ -104,58 +92,12 @@
   },
   "wcag_4_1_2": {
     "wcag": "4.1.2 Name, Role, Value",
-    "verdict": "FAIL",
-    "details": [
-      {
-        "source": "NVDA",
-        "element_index": 0,
-        "tag": "INPUT",
-        "role": "input",
-        "html_snippet": "<input type=\"image\" value=\"download\" alt=\"Download\">",
-        "nvda_announcement": null,
-        "reason": "NVDA did not announce an accessible name for this control."
-      },
-      {
-        "source": "NVDA",
-        "element_index": 0,
-        "tag": "INPUT",
-        "role": "input",
-        "html_snippet": "<input type=\"image\" value=\"download\" alt=\"Download\">",
-        "nvda_announcement": null,
-        "reason": "NVDA did not announce the role 'input' for this control."
-      }
-    ],
+    "verdict": "N/A",
+    "details": "Page is purely static with no interactive elements.",
     "raw": {
       "role_validation": [],
-      "aria_tree_interactive": [
-        {
-          "role": "button",
-          "name": "Download",
-          "has_accessible_name": true,
-          "state": {},
-          "node_id": "9",
-          "backend_node_id": 9
-        }
-      ],
-      "nvda_results": [
-        {
-          "index": 0,
-          "tag": "INPUT",
-          "role": "input",
-          "aria_label": null,
-          "aria_labelledby": null,
-          "inner_text": "",
-          "html_snippet": "<input type=\"image\" value=\"download\" alt=\"Download\">",
-          "aria_checked": null,
-          "aria_expanded": null,
-          "aria_selected": null,
-          "nvda_on_focus": null,
-          "nvda_after_interaction": null,
-          "has_name_announced": false,
-          "has_role_announced": false,
-          "has_state_announced": null
-        }
-      ]
+      "aria_tree_interactive": [],
+      "nvda_results": []
     }
   }
 }
