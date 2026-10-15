@@ -281,6 +281,12 @@ python run_experiment.py --corpus corpus1 --repetitions 3 --model claude-sonnet-
 python run_experiment.py --corpus corpus1 --repetitions 3 --model claude-opus-4-8 --skip-axe --output results\results_opus48.jsonl
 
 
+# BARRIER Study
+python run_barrier_experiment.py --model claude-sonnet-4-6 --output results/barrier/barrier_sonnet46.jsonl
+
+python score_barrier_results.py results/barrier/barrier_sonnet46.jsonl --wcag-xlsx results/wcag_eval_analysis1.xlsx
+
+
 **Keep NVDA running the entire time** if the corpus includes Lakshmi snippets. If NVDA closes mid-run, Lakshmi's tool will start failing.
 
 In a second PowerShell window, watch the log live:
