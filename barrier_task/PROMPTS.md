@@ -10,7 +10,7 @@ Evaluate this HTML:
 <the page HTML, with leaky ACT titles such as "Failed Example 3" replaced by "Example page">
 ```
 
-Settings: temperature 0, max tokens 4096, 3 repetitions. Agents run up to 10 tool-calling turns.
+Settings: max tokens 4096, 3 repetitions. Claude models run at their default temperature (temperature is no longer sent; GPT models still get temperature 0 where they accept it). Agents run up to 10 tool-calling turns.
 
 ## How the conditions differ
 

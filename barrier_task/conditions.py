@@ -1,9 +1,10 @@
 """
 The five conditions, re-posed as the barrier task (two labels).
 
-  A  axe            any axe-core violation on the page -> Barrier, none ->
-                    No-Barrier. Not filtered to the persona's WCAG criteria:
-                    no condition is pointed at particular criteria.
+  A  axe            any WCAG-tagged axe-core violation on the page -> Barrier,
+                    none -> No-Barrier. Not filtered to the persona's WCAG
+                    criteria (no condition is pointed at particular criteria);
+                    axe's "best practice" rules are not counted.
   B  persona_llm    barrier persona profile, no tools, one call
   C  persona_agent  barrier persona profile + all 18 tools
   D  vanilla_llm    one-line user description, no tools, one call
@@ -179,6 +180,12 @@ class BarrierVanillaAgent(_AllToolsAgentCondition):
         return prompts.vanilla_system_prompt(persona, with_tools=True)
 
 
+def _is_wcag_violation(issue):
+    """True for an axe issue tagged with a WCAG success criterion."""
+    wcag = str(issue.get("wcag", "")).lower()
+    return wcag not in ("", "best practice", "unknown")
+
+
 class BarrierAxe:
     """axe-core on the whole page: any violation counts as a barrier."""
 
@@ -193,8 +200,11 @@ class BarrierAxe:
             label, issues = "error", []
         else:
             # all_issues = every violation axe reported, before the
-            # persona-criteria filter the WCAG-task condition applies.
-            issues = ev.get("all_issues", ev.get("issues", []))
+            # persona-criteria filter the WCAG-task condition applies. Only
+            # WCAG-tagged violations count: axe's "best practice" rules
+            # (landmarks, region) fire on almost every page fragment.
+            issues = [i for i in ev.get("all_issues", ev.get("issues", []))
+                      if _is_wcag_violation(i)]
             label = "Barrier" if issues else "No-Barrier"
         result["evaluation"] = {
             "label": label,

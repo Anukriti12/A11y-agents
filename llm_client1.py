@@ -72,8 +72,9 @@ Key provider differences this module hides:
      Anthropic wants ALL tool_result blocks for a turn batched into a
      single user message.
   5. max_tokens is required by Anthropic. `seed` does not exist there.
-  6. Opus 4.8 does not accept temperature (extended thinking manages
-     its own sampling); we omit it for opus-4-* models.
+  6. temperature is never sent to Anthropic: anthropic SDK 1.x+ removed it
+     and API version 2026-10-21 rejects it on every model, so Claude
+     requests sample at the model's default.
 """
 
 import json
@@ -279,11 +280,6 @@ class OpenAIAdapter:
 class AnthropicAdapter:
     provider = "anthropic"
 
-    # Opus 4.x models reject the temperature parameter (extended thinking
-    # manages sampling itself). Match by prefix so future opus versions
-    # inherit the same behavior.
-    OPUS_PREFIXES = ("claude-opus-4-8", "claude-opus-4-7", "claude-opus-4.8", "claude-opus-4.7")
-
     def __init__(self, model, api_key, client=None):
         import anthropic
         self.model = model
@@ -326,21 +322,19 @@ class AnthropicAdapter:
             return block.dict(exclude_none=True)
         return dict(block)
 
-    def _accepts_temperature(self):
-        return not any(p in self.model for p in self.OPUS_PREFIXES)
-
     # ---- main call -------------------------------------------------------- #
 
     def chat(self, system, messages, tools=None, temperature=0, max_tokens=4096):
+        # `temperature` is accepted so callers stay provider-neutral, but it is
+        # not sent to Anthropic: anthropic SDK 1.x and later no longer take it
+        # (TypeError), and API version 2026-10-21 rejects it on every model.
+        # Claude requests therefore sample at the model's default temperature.
         kwargs = {
             "model": self.model,
             "system": system,
             "messages": list(messages),
             "max_tokens": max_tokens,
         }
-        # Only include temperature for models that accept it. Opus 4.x rejects it.
-        if self._accepts_temperature():
-            kwargs["temperature"] = temperature
         if tools:
             kwargs["tools"] = self._convert_tools(tools)
 
