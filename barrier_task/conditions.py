@@ -134,6 +134,32 @@ class BarrierVanillaLLM(_SingleCallCondition):
         return prompts.vanilla_system_prompt(persona, with_tools=False)
 
 
+def _page_bound_execute_tool(agent):
+    """
+    Run every tool on the page being judged, whatever HTML the model passed.
+
+    The model is asked to pass the page as the "html" argument, and now and
+    then it passes a shortened or edited copy; tools then check a different
+    page from the one being labeled. The page is set by _VanillaAgent.evaluate.
+
+    Also drops a "persona" field from tool outputs: the motion tool always
+    reports persona "stefan", which would put a persona name in front of the
+    vanilla agent.
+    """
+    inner = agent.execute_tool
+
+    def execute_tool(tool_name, arguments):
+        arguments = dict(arguments or {})
+        if agent._current_html:
+            arguments["html"] = agent._current_html
+        result = inner(tool_name, arguments)
+        if isinstance(result, dict):
+            result.pop("persona", None)
+        return result
+
+    return execute_tool
+
+
 class _AllToolsAgentCondition:
     """An 18-tool agent whose system prompt is chosen per persona."""
 
@@ -148,7 +174,7 @@ class _AllToolsAgentCondition:
         if self.agent.model != self.model:
             raise RuntimeError(f"Model mismatch: agent resolved {self.agent.model!r}, expected {self.model!r}.")
         self.agent.parse_output = _parse_text
-        # _VanillaAgent.execute_tool already fills in a missing html argument.
+        self.agent.execute_tool = _page_bound_execute_tool(self.agent)
         tool_framing.apply(self.agent, tool_framing_arm)
 
     def system_prompt(self, persona):

@@ -51,15 +51,23 @@ ROOT = Path(__file__).resolve().parent
 STUDY = ROOT / "barrier_study"
 DEFAULT_LABELS = STUDY / "ground_truth" / "barrier_labels_v1.csv"
 
+# A title that names the test outcome ("Failed Example 3", "axe-core
+# form-field-multiple-labels passed example") gives away the WCAG label.
 LEAKY_TITLE = re.compile(
-    r"<title>\s*(passed|failed|inapplicable)\s+example[^<]*</title>", re.IGNORECASE
+    r"<title>[^<]*\b(passed|failed|inapplicable)\b[^<]*\bexample\b[^<]*</title>", re.IGNORECASE
 )
+# A heading that names the criterion under test ("Test page for WCAG 3.3.2").
+LEAKY_CRITERION = re.compile(r"Test page for WCAG\s*\d+(\.\d+)+", re.IGNORECASE)
+# An element id naming the test outcome (axe fixtures use id="pass2", id="fail1").
+LEAKY_ID = re.compile(r"""\bid\s*=\s*(["'])(pass|fail|inapplicable)(\d*)\1""", re.IGNORECASE)
 
 
 def sanitize(html):
-    """Remove WCAG-label giveaways from the page. Returns (html, changed)."""
+    """Remove WCAG-label and criterion giveaways from the page. Returns (html, changed)."""
     clean, n = LEAKY_TITLE.subn("<title>Example page</title>", html)
-    return clean, n > 0
+    clean, m = LEAKY_CRITERION.subn("Test page", clean)
+    clean, k = LEAKY_ID.subn(lambda x: f"id={x.group(1)}field{x.group(3)}{x.group(1)}", clean)
+    return clean, (n + m + k) > 0
 
 
 def load_rows(labels_csv):
