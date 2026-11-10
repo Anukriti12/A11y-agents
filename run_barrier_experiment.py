@@ -3,6 +3,11 @@ Run the five conditions on the BARRIER task: "is this page a barrier for
 this person?", scored against the specialist labels instead of the WCAG
 folder labels. Companion to run_experiment.py, which is left unchanged.
 
+Two labels: Barrier / No-Barrier. Ground truth is the label_binary column of
+the labels CSV (Not-Encountered folded into No-Barrier). No condition is told
+which WCAG criterion a page was built to test, and both agent conditions get
+all 18 tools.
+
 Input: a labels CSV from barrier_study/ground_truth/export_labels.py. Each
 row is one (page, persona) pair; the HTML is read from the de-identified
 specialist packet copy (P0xx_<persona>.html).
@@ -19,6 +24,12 @@ Usage:
         --output results/barrier/barrier_sonnet46.jsonl
     python run_barrier_experiment.py --model gpt-5.2 --conditions B,C,D,E \
         --output results/barrier/barrier_gpt52.jsonl
+
+    # Tool-framing arms for the agent conditions (see barrier_task/tool_framing.py):
+    python run_barrier_experiment.py --model claude-sonnet-4-6 --conditions C,E \
+        --tool-framing neutral --output results/barrier/barrier_sonnet46_neutral.jsonl
+    python run_barrier_experiment.py --model claude-sonnet-4-6 --conditions C,E \
+        --tool-framing measurements --output results/barrier/barrier_sonnet46_measurements.jsonl
 
     python score_barrier_results.py results/barrier/barrier_sonnet46.jsonl
 """
@@ -38,7 +49,7 @@ load_dotenv()
 
 ROOT = Path(__file__).resolve().parent
 STUDY = ROOT / "barrier_study"
-DEFAULT_LABELS = STUDY / "ground_truth" / "barrier_labels_v0.csv"
+DEFAULT_LABELS = STUDY / "ground_truth" / "barrier_labels_v1.csv"
 
 LEAKY_TITLE = re.compile(
     r"<title>\s*(passed|failed|inapplicable)\s+example[^<]*</title>", re.IGNORECASE
@@ -57,7 +68,9 @@ def load_rows(labels_csv):
         page_path = STUDY / r["page_file"]
         html = page_path.read_text(encoding="utf-8", errors="replace")
         html, sanitized = sanitize(html)
-        rows.append({**r, "html": html, "sanitized": sanitized})
+        # Older label files have no label_binary column; fold Not-Encountered here.
+        binary = r.get("label_binary") or ("Barrier" if r["label"] == "Barrier" else "No-Barrier")
+        rows.append({**r, "label_binary": binary, "html": html, "sanitized": sanitized})
     return rows
 
 
@@ -74,20 +87,28 @@ def already_run(output_path):
     return done
 
 
-def dry_run(rows, condition_keys, repetitions):
-    from barrier_task import prompts
+def dry_run(rows, condition_keys, repetitions, framing):
+    from barrier_task import prompts, tool_framing
     r = rows[0]
     print(f"{len(rows)} rows, {sum(x['sanitized'] for x in rows)} with leaky titles neutralized")
     per_row = sum(1 if k == "A" else repetitions for k in condition_keys)
     print(f"Planned evaluations: {len(rows)} rows x {per_row} per row "
           f"(axe once, others x{repetitions}) = {len(rows) * per_row}")
-    print(f"\nExample row: {r['page_id']} ({r['persona']}), specialist label = {r['label']}")
+    print(f"\nExample row: {r['page_id']} ({r['persona']}), specialist label = {r['label_binary']}")
     print("\n--- persona system prompt (B; C adds the tool note) ---")
     print(prompts.persona_system_prompt(r["persona"], with_tools=False))
     print("\n--- vanilla system prompt (D; E adds the tool note) ---")
     print(prompts.vanilla_system_prompt(r["persona"], with_tools=False))
     print("\n--- user message ---")
     print(prompts.user_message(r["html"]))
+    print(f"\n--- tool framing for C and E: {framing} ---")
+    if framing == "original":
+        print("Original tool names, descriptions and outputs (as in the WCAG run).")
+    else:
+        for orig, (neutral, desc) in tool_framing.NEUTRAL_TOOLS.items():
+            print(f"  {neutral}  (was {orig}): {desc}")
+        if framing == "measurements":
+            print("Tool outputs are passed through tool_framing.strip_verdicts().")
 
 
 def main():
@@ -102,6 +123,9 @@ def main():
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--output", default=None)
     ap.add_argument("--no-resume", action="store_true")
+    ap.add_argument("--tool-framing", default="original",
+                    choices=["original", "neutral", "measurements"],
+                    help="How agent conditions C and E see their tools (default original)")
     ap.add_argument("--dry-run", action="store_true",
                     help="Print prompts and the run plan; make no API calls")
     args = ap.parse_args()
@@ -115,7 +139,7 @@ def main():
     condition_keys = [k.strip().upper() for k in args.conditions.split(",") if k.strip()]
 
     if args.dry_run:
-        dry_run(rows, condition_keys, args.repetitions)
+        dry_run(rows, condition_keys, args.repetitions, args.tool_framing)
         return 0
 
     os.environ["A11Y_MODEL"] = args.model
@@ -131,15 +155,25 @@ def main():
             return 2
 
     safe_model = re.sub(r"[^A-Za-z0-9.-]", "_", args.model)
-    output = Path(args.output or ROOT / "results" / "barrier" / f"barrier_{safe_model}.jsonl")
+    suffix = "" if args.tool_framing == "original" else f"_{args.tool_framing}"
+    output = Path(args.output or ROOT / "results" / "barrier" / f"barrier_{safe_model}_binary{suffix}.jsonl")
     output.parent.mkdir(parents=True, exist_ok=True)
     done = set() if args.no_resume else already_run(output)
 
     conditions = []
     for key in condition_keys:
         name, cls = CONDITIONS[key]
+        if key == "A":
+            cond = cls()
+        elif key in ("C", "E"):
+            cond = cls(api_key, model=args.model, tool_framing_arm=args.tool_framing)
+            if args.tool_framing != "original":
+                # Keep arms apart in results and in the scorer's grouping.
+                name = f"{name}[{args.tool_framing}]"
+        else:
+            cond = cls(api_key, model=args.model)
         print(f"Instantiating {key}:{name} ...")
-        conditions.append((key, name, cls() if key == "A" else cls(api_key, model=args.model)))
+        conditions.append((key, name, cond))
 
     total = len(rows) * sum(1 if k == "A" else args.repetitions for k, _, _ in conditions)
     n = 0
@@ -166,10 +200,13 @@ def main():
                     "condition_key": key,
                     "model": row_model,
                     "repetition": rep,
-                    "expected": row["label"],
+                    "label_scheme": "binary",
+                    "expected": row["label_binary"],
+                    "expected_3label": row["label"],
                     "evaluated": ev.get("label", "error"),
-                    "correct": ev.get("label") == row["label"],
+                    "correct": ev.get("label") == row["label_binary"],
                     "label_version": row.get("label_version", ""),
+                    "tool_framing": args.tool_framing if key in ("C", "E") else "n/a",
                     "wcag": row["wcag"],
                     "wcag_label": row["wcag_label"],
                     "snippet_id": row["snippet_id"],
@@ -182,7 +219,7 @@ def main():
                     f.write(json.dumps(record, default=str) + "\n")
                 mark = "ok " if record["correct"] else "   "
                 print(f"[{n}/{total}] {mark}{row['page_id']} {row['persona']:8} {name:14} rep{rep} "
-                      f"expected={row['label']:15} got={record['evaluated']}")
+                      f"expected={row['label_binary']:10} got={record['evaluated']}")
     print(f"Done. Results in {output}")
     return 0
 

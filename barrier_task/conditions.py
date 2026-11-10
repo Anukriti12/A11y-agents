@@ -1,50 +1,63 @@
 """
-The five conditions, re-posed as the barrier task.
+The five conditions, re-posed as the barrier task (two labels).
 
-These wrap the existing condition and persona-agent classes without editing
-them: the agents are constructed exactly as in run_experiment.py, and only
-the system prompt (and an html-injecting execute_tool) is replaced on each
-instance. Tool sets, model settings and the agentic loop are unchanged, so
-the WCAG-task and barrier-task runs differ only in the question asked.
-
-  A  axe            axe-core violations on the persona's criteria -> Barrier,
-                    none -> No-Barrier (axe cannot say Not-Encountered)
+  A  axe            any axe-core violation on the page -> Barrier, none ->
+                    No-Barrier. Not filtered to the persona's WCAG criteria:
+                    no condition is pointed at particular criteria.
   B  persona_llm    barrier persona profile, no tools, one call
-  C  persona_agent  barrier persona profile + that persona's original tools
+  C  persona_agent  barrier persona profile + all 18 tools
   D  vanilla_llm    one-line user description, no tools, one call
   E  vanilla_agent  one-line user description + all 18 tools
 
+C and E use the same agent (conditions/condition_e_vanilla_agent._VanillaAgent)
+with the same 18 tools and differ only in the system prompt, so C vs E and
+B vs D both isolate the persona description, and C vs B and E vs D isolate the
+tools. C and E take tool_framing ("original" | "neutral" | "measurements"),
+which controls how the tools are described and what tool outputs the model
+sees; see barrier_task/tool_framing.py.
+
+The existing condition and agent classes are not edited; only the system
+prompt, the tool interface and the output parser are replaced on instances.
+
 Every condition returns {"evaluation": {...}, "metadata": {...}} where
-evaluation["label"] is one of prompts.LABELS or "error".
+evaluation["label"] is "Barrier", "No-Barrier" or "error".
 """
 
 import os
 import sys
 import time
-import types
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from barrier_task import prompts
+from barrier_task import prompts, tool_framing
 
 DEFAULT_MODEL = "gpt-4o"
 TEMPERATURE = 0
 MAX_TOKENS = int(os.environ.get("A11Y_MAX_TOKENS", "4096"))
 
 
+def _key(label):
+    return str(label).lower().replace("-", "").replace("_", "").replace(" ", "")
+
+
 def _validate(parsed):
-    """Coerce a parsed model answer into the barrier envelope."""
+    """Coerce a parsed model answer into the two-label barrier envelope."""
     if not isinstance(parsed, dict):
         return _error("Model output was not a JSON object")
     if parsed.get("label") == "error":
         return parsed
-    label = str(parsed.get("label", "")).strip()
-    # Tolerate case/spacing drift ("no barrier", "NOT_ENCOUNTERED").
-    norm = {l.lower().replace("-", "").replace("_", "").replace(" ", ""): l for l in prompts.LABELS}
-    key = label.lower().replace("-", "").replace("_", "").replace(" ", "")
-    if key not in norm:
-        return _error(f"Unrecognized label {label!r}", raw=str(parsed)[:500])
-    parsed["label"] = norm[key]
+    raw_label = str(parsed.get("label", "")).strip()
+    key = _key(raw_label)
+    if key == "barrier":
+        label = "Barrier"
+    elif key in ("nobarrier", "notencountered"):
+        # A model that still answers Not-Encountered is not reporting a barrier.
+        label = "No-Barrier"
+    else:
+        return _error(f"Unrecognized label {raw_label!r}", raw=str(parsed)[:500])
+    if label != raw_label:
+        parsed["label_as_returned"] = raw_label
+    parsed["label"] = label
     parsed.setdefault("severity", "N/A")
     parsed.setdefault("barriers", [])
     parsed.setdefault("confidence", "")
@@ -68,24 +81,6 @@ def _parse_text(text):
         parsed.setdefault("barriers", [])
         parsed.setdefault("rationale", parsed.get("overall_assessment", ""))
     return _validate(parsed)
-
-
-def _injecting_execute_tool(original):
-    """Wrap an agent's execute_tool so a missing html argument is filled in."""
-    def execute_tool(self, tool_name, arguments):
-        arguments = dict(arguments or {})
-        if not arguments.get("html"):
-            arguments["html"] = getattr(self, "_barrier_html", "")
-        return original(tool_name, arguments)
-    return execute_tool
-
-
-def _retarget(agent, system_prompt):
-    """Point an existing agent instance at the barrier task."""
-    agent.get_system_prompt = lambda: system_prompt
-    agent.parse_output = _parse_text
-    agent.execute_tool = types.MethodType(_injecting_execute_tool(agent.execute_tool), agent)
-    return agent
 
 
 class _SingleCallCondition:
@@ -138,52 +133,54 @@ class BarrierVanillaLLM(_SingleCallCondition):
         return prompts.vanilla_system_prompt(persona, with_tools=False)
 
 
-class BarrierPersonaAgent:
-    """Persona agents from personas1/ with their own tools, barrier prompt."""
+class _AllToolsAgentCondition:
+    """An 18-tool agent whose system prompt is chosen per persona."""
 
-    def __init__(self, api_key, model=None):
+    variant = None
+
+    def __init__(self, api_key, model=None, tool_framing_arm="original"):
         self.model = model or os.environ.get("A11Y_MODEL") or DEFAULT_MODEL
-        os.environ["A11Y_MODEL"] = self.model
-        from conditions.condition_c_persona_agent import PersonaAgentCondition
-        self.agents = PersonaAgentCondition(api_key, model=self.model).agents
-        for persona, agent in self.agents.items():
-            _retarget(agent, prompts.persona_system_prompt(persona, with_tools=True))
-
-    def evaluate(self, html, persona):
-        agent = self.agents[persona]
-        agent._barrier_html = html
-        result = agent.evaluate(html)
-        result["evaluation"] = _validate(result.get("evaluation"))
-        md = result.setdefault("metadata", {})
-        md.update(persona=persona, condition_variant="barrier_persona_agent")
-        md.setdefault("model", self.model)
-        return result
-
-
-class BarrierVanillaAgent:
-    """The 18-tool vanilla agent, barrier prompt with a one-line user description."""
-
-    def __init__(self, api_key, model=None):
-        self.model = model or os.environ.get("A11Y_MODEL") or DEFAULT_MODEL
+        self.tool_framing = tool_framing_arm
         os.environ["A11Y_MODEL"] = self.model
         from conditions.condition_e_vanilla_agent import _VanillaAgent
         self.agent = _VanillaAgent(api_key)
+        if self.agent.model != self.model:
+            raise RuntimeError(f"Model mismatch: agent resolved {self.agent.model!r}, expected {self.model!r}.")
         self.agent.parse_output = _parse_text
+        # _VanillaAgent.execute_tool already fills in a missing html argument.
+        tool_framing.apply(self.agent, tool_framing_arm)
+
+    def system_prompt(self, persona):
+        raise NotImplementedError
 
     def evaluate(self, html, persona):
-        prompt = prompts.vanilla_system_prompt(persona, with_tools=True)
+        prompt = self.system_prompt(persona)
         self.agent.get_system_prompt = lambda: prompt
-        # _VanillaAgent.evaluate already injects html into tool calls.
         result = self.agent.evaluate(html)
         result["evaluation"] = _validate(result.get("evaluation"))
         md = result.setdefault("metadata", {})
-        md.update(persona=persona, condition_variant="barrier_vanilla_agent")
+        md.update(persona=persona, condition_variant=self.variant,
+                  tool_framing=self.tool_framing)
         md.setdefault("model", self.model)
         return result
 
 
+class BarrierPersonaAgent(_AllToolsAgentCondition):
+    variant = "barrier_persona_agent"
+
+    def system_prompt(self, persona):
+        return prompts.persona_system_prompt(persona, with_tools=True)
+
+
+class BarrierVanillaAgent(_AllToolsAgentCondition):
+    variant = "barrier_vanilla_agent"
+
+    def system_prompt(self, persona):
+        return prompts.vanilla_system_prompt(persona, with_tools=True)
+
+
 class BarrierAxe:
-    """axe-core, filtered to the persona's criteria as in the WCAG run."""
+    """axe-core on the whole page: any violation counts as a barrier."""
 
     def __init__(self):
         from conditions.condition_a_axe import AxeCondition
@@ -192,16 +189,21 @@ class BarrierAxe:
     def evaluate(self, html, persona):
         result = self.axe.evaluate(html, persona)
         ev = result.get("evaluation", {})
-        wcag_label = ev.get("label")
-        label = {"failed": "Barrier", "passed": "No-Barrier"}.get(wcag_label, "error")
+        if ev.get("label") == "error":
+            label, issues = "error", []
+        else:
+            # all_issues = every violation axe reported, before the
+            # persona-criteria filter the WCAG-task condition applies.
+            issues = ev.get("all_issues", ev.get("issues", []))
+            label = "Barrier" if issues else "No-Barrier"
         result["evaluation"] = {
             "label": label,
             "severity": "N/A",
             "barriers": [{"what_blocks": i.get("description", ""), "evidence": i.get("wcag", "")}
-                         for i in ev.get("issues", [])],
+                         for i in issues],
             "confidence": "",
-            "rationale": f"axe-core label {wcag_label!r} mapped to {label!r}",
-            "axe_issues": ev.get("issues", []),
+            "rationale": f"{len(issues)} axe-core violation(s) on the page",
+            "axe_issues": issues,
         }
         result.setdefault("metadata", {})["condition_variant"] = "barrier_axe"
         return result

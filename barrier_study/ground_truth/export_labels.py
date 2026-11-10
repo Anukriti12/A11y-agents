@@ -6,6 +6,10 @@ Only rows with a filled YOUR LABEL cell are exported, so this can be re-run
 as more personas are annotated. WCAG metadata is joined from
 reference/selected_pages.csv for analysis only; it is never shown to models.
 
+Two-label columns are added for the main analysis:
+  label_binary  Barrier | No-Barrier   (Not-Encountered folded into No-Barrier)
+  wcag_binary   failed  | not-failed   (passed and inapplicable folded together)
+
 Usage:
     python barrier_study/ground_truth/export_labels.py
     python barrier_study/ground_truth/export_labels.py --version v1 --out barrier_study/ground_truth/barrier_labels_v1.csv
@@ -28,9 +32,9 @@ COLS = ["page_id", "persona", "person", "wcag", "page_source", "path",
         "label", "barrier_text", "source_category", "severity",
         "confidence", "notes"]
 
-FIELDS = ["page_id", "persona", "specialist", "label", "severity",
+FIELDS = ["page_id", "persona", "specialist", "label", "label_binary", "severity",
           "confidence", "barrier_text", "source_category", "notes",
-          "page_file", "wcag", "wcag_label", "page_source", "snippet_id",
+          "page_file", "wcag", "wcag_label", "wcag_binary", "page_source", "snippet_id",
           "label_version"]
 
 
@@ -65,6 +69,7 @@ def main():
                 "persona": r["persona"],
                 "specialist": specialist,
                 "label": label,
+                "label_binary": "Barrier" if label == "Barrier" else "No-Barrier",
                 "severity": r["severity"] or "",
                 "confidence": r["confidence"] or "",
                 "barrier_text": r["barrier_text"] or "",
@@ -73,6 +78,7 @@ def main():
                 "page_file": f"specialist_packets/pages_specialist_{specialist}/{r['page_id']}_{r['persona']}.html",
                 "wcag": sel.get("wcag", ""),
                 "wcag_label": sel.get("wcag_label", ""),
+                "wcag_binary": "failed" if sel.get("wcag_label") == "failed" else "not-failed",
                 "page_source": sel.get("source", ""),
                 "snippet_id": sel.get("snippet_id", ""),
                 "label_version": args.version,

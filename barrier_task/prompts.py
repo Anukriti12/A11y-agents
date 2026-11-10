@@ -3,8 +3,13 @@ Prompts for the barrier task.
 
 The WCAG task asked "does this page pass/fail/not apply to criterion X?".
 The barrier task asks the question the specialists answered: "is this page
-a barrier for this person?", with the same three labels and definitions as
-barrier_study/MASTER_INSTRUCTIONS.md.
+a barrier for this person?". It uses two labels, Barrier and No-Barrier: the
+specialists' Not-Encountered is folded into No-Barrier (the person is not
+blocked either way), because annotators and models could not separate the two
+reliably in the pilot.
+
+No condition is told which WCAG criterion a page was built to test. Each
+judges the whole page for the person, as the specialists did.
 
 Persona conditions (B, C) get the barrier-first persona profile and task
 question from barrier_study/persona_prompts/<persona>_profile.py, i.e. the
@@ -27,7 +32,7 @@ PROFILE_DIR = ROOT / "barrier_study" / "persona_prompts"
 
 PERSONAS = ["ade", "elias", "ian", "lakshmi", "sophie", "stefan"]
 
-LABELS = ("Barrier", "No-Barrier", "Not-Encountered")
+LABELS = ("Barrier", "No-Barrier")
 
 PERSON_DESCRIPTORS = {
     "ade":     "a keyboard-only user with limited mobility who cannot use a mouse",
@@ -55,11 +60,11 @@ could use it.
 
 Choose exactly one label:
   - "Barrier": this person would be blocked, significantly delayed, or excluded.
-  - "No-Barrier": this person encounters the relevant elements but can complete the task.
-  - "Not-Encountered": the page has nothing that this person's needs make relevant.
+  - "No-Barrier": this person can use the page. This includes pages with
+    nothing that this person's needs make relevant.
 
-Use "Not-Encountered" only when the page truly has nothing relevant to this
-person, not merely because it looks fine.
+A barrier does not require a form or a task. Content this person cannot
+read, understand, perceive, reach or operate is a barrier on its own.
 
 If the label is "Barrier", also give:
   - severity: "Blocking" | "Frustrating" | "Minor"
@@ -69,7 +74,7 @@ Otherwise severity is "N/A" and "barriers" is [].
 
 Return ONLY this JSON object, no markdown fences, no preamble:
 {
-  "label": "Barrier" | "No-Barrier" | "Not-Encountered",
+  "label": "Barrier" | "No-Barrier",
   "severity": "Blocking" | "Frustrating" | "Minor" | "N/A",
   "barriers": [
     {"what_blocks": "<1-2 sentences>", "evidence": "<HTML fragment>"}
